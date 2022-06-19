@@ -22,7 +22,7 @@ import { Link } from "react-router-dom";
 import { css, jsx } from "@emotion/react";
 
 const linkStyle = {
-  "text-decoration": "none",
+  textDecoration: "none",
   color: "inherit",
 };
 

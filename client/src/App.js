@@ -1,7 +1,5 @@
 import React from "react";
-import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
-import AddIcon from "@mui/icons-material/Add";
 import SideMenu from "./components/SideMenu";
 import { Button, ThemeProvider, createTheme } from "@mui/material";
 //import testman from "./images/testman.png";
@@ -10,6 +8,10 @@ import { css, jsx } from "@emotion/react";
 import Header from "./components/Header";
 import TestCases from "./components/TestCases";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Dashboard from "./components/Dashboard";
+import Releases from "./components/Releases";
+import Projects from "./components/Projects";
+import Users from "./components/Users";
 
 const appMain = css`
   width: 100%;
@@ -44,6 +46,10 @@ const App = () => {
           <SideMenu />
           <Routes>
             <Route path="/testcases" element={<TestCases />}></Route>
+            <Route path="/dashboard" element={<Dashboard />}></Route>
+            <Route path="/releases" element={<Releases />}></Route>
+            <Route path="/projects" element={<Projects />}></Route>
+            <Route path="/projects" element={<Users />}></Route>
           </Routes>
           <CssBaseline />
         </React.Fragment>
