@@ -6,15 +6,11 @@ import {
   ButtonBase,
   IconButton,
   List,
-  Modal,
   Paper,
   Typography,
-  Backdrop,
-  Fade,
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogActions,
   Button,
   Divider,
 } from "@mui/material";
@@ -53,16 +49,14 @@ function TestSuiteListData() {
         >
           <Typography variant="h6">Test Suites</Typography>
           <div>
-            <ButtonBase>
-              <IconButton
-                color="primary"
-                aria-label="add test suite"
-                style={{ float: "right" }}
-                onClick={handleOpen}
-              >
-                <CreateNewFolder />
-              </IconButton>
-            </ButtonBase>
+            <IconButton
+              color="primary"
+              aria-label="add test suite"
+              style={{ float: "right" }}
+              onClick={handleOpen}
+            >
+              <CreateNewFolder />
+            </IconButton>
             <Dialog open={open} onClose={handleClose}>
               <DialogTitle>
                 <div
@@ -73,11 +67,9 @@ function TestSuiteListData() {
                   }}
                 >
                   <Typography variant="h6">Add Test Suite</Typography>
-                  <ButtonBase>
-                    <IconButton onClick={handleClose}>
-                      <Close />
-                    </IconButton>
-                  </ButtonBase>
+                  <IconButton onClick={handleClose}>
+                    <Close />
+                  </IconButton>
                 </div>
               </DialogTitle>
               <DialogContent>

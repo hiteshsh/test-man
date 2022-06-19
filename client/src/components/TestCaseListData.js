@@ -1,6 +1,6 @@
 import React from "react";
 import { AddCircle } from "@mui/icons-material";
-import { ButtonBase, IconButton, Paper, Typography } from "@mui/material";
+import { IconButton, Paper, Typography } from "@mui/material";
 
 function TestCaseListData() {
   const [open, setOpen] = React.useState(false);
@@ -17,11 +17,10 @@ function TestCaseListData() {
           minHeight: "150px",
         }}
       >
-        <ButtonBase>
-          <IconButton color="primary" aria-label="add test case">
-            <AddCircle />
-          </IconButton>
-        </ButtonBase>
+        <IconButton color="primary" aria-label="add test case">
+          <AddCircle />
+        </IconButton>
+
         <Typography>No Test case Found. Please add </Typography>
       </div>
     </Paper>
