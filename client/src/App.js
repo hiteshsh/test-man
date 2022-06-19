@@ -9,6 +9,7 @@ import { Button, ThemeProvider, createTheme } from "@mui/material";
 import { css, jsx } from "@emotion/react";
 import Header from "./components/Header";
 import TestCases from "./components/TestCases";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 const appMain = css`
   width: 100%;
@@ -32,18 +33,22 @@ const theme = createTheme({
 
 const App = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <React.Fragment>
-        <CssBaseline />
+    <Router>
+      <ThemeProvider theme={theme}>
+        <React.Fragment>
+          <CssBaseline />
 
-        <div css={appMain}>
-          <Header />
-        </div>
-        <SideMenu />
-        <TestCases />
-        <CssBaseline />
-      </React.Fragment>
-    </ThemeProvider>
+          <div css={appMain}>
+            <Header />
+          </div>
+          <SideMenu />
+          <Routes>
+            <Route path="/testcases" element={<TestCases />}></Route>
+          </Routes>
+          <CssBaseline />
+        </React.Fragment>
+      </ThemeProvider>
+    </Router>
   );
 };
 

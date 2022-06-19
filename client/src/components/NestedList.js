@@ -17,6 +17,14 @@ import {
   WorkOutline,
 } from "@mui/icons-material";
 import { display } from "@mui/system";
+import { Link } from "react-router-dom";
+/** @jsxImportSource @emotion/react */
+import { css, jsx } from "@emotion/react";
+
+const linkStyle = {
+  "text-decoration": "none",
+  color: "inherit",
+};
 
 export default function NestedList() {
   const [open, setOpen] = React.useState(true);
@@ -59,31 +67,39 @@ export default function NestedList() {
           }}
         />
       </ListItemButton>
-      <ListItemButton>
-        <ListItemIcon>
-          <Dashboard />
-        </ListItemIcon>
-        <ListItemText primary="Dashboard" />
-      </ListItemButton>
-      <ListItemButton>
-        <ListItemIcon>
-          <Folder />
-        </ListItemIcon>
-        <ListItemText primary="Test Cases" />
-      </ListItemButton>
-      <ListItemButton>
-        <ListItemIcon>
-          <WorkHistory />
-        </ListItemIcon>
-        <ListItemText primary="Releases" />
-      </ListItemButton>
+      <Link to="/dashboard" style={linkStyle}>
+        <ListItemButton>
+          <ListItemIcon>
+            <Dashboard />
+          </ListItemIcon>
+          <ListItemText primary="Dashboard" />
+        </ListItemButton>
+      </Link>
+      <Link to="/testcases" style={linkStyle}>
+        <ListItemButton>
+          <ListItemIcon>
+            <Folder />
+          </ListItemIcon>
+          <ListItemText primary="Test Cases" />
+        </ListItemButton>
+      </Link>
+      <Link to="/releases" style={linkStyle}>
+        <ListItemButton>
+          <ListItemIcon>
+            <WorkHistory />
+          </ListItemIcon>
+          <ListItemText primary="Releases" />
+        </ListItemButton>
+      </Link>
       <Divider />
-      <ListItemButton>
-        <ListItemIcon>
-          <WorkOutline />
-        </ListItemIcon>
-        <ListItemText primary="All Projects" />
-      </ListItemButton>
+      <Link to="/projects" style={linkStyle}>
+        <ListItemButton>
+          <ListItemIcon>
+            <WorkOutline />
+          </ListItemIcon>
+          <ListItemText primary="All Projects" />
+        </ListItemButton>
+      </Link>
       <ListItemButton onClick={handleClick}>
         <ListItemIcon>
           <AdminPanelSettings />
@@ -93,12 +109,14 @@ export default function NestedList() {
       </ListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <Group />
-            </ListItemIcon>
-            <ListItemText primary="Users" />
-          </ListItemButton>
+          <Link to="/users" style={linkStyle}>
+            <ListItemButton sx={{ pl: 4 }}>
+              <ListItemIcon>
+                <Group />
+              </ListItemIcon>
+              <ListItemText primary="Users" />
+            </ListItemButton>
+          </Link>
         </List>
       </Collapse>
     </List>
