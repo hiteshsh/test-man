@@ -16,10 +16,7 @@ import {
   WorkHistory,
   WorkOutline,
 } from "@mui/icons-material";
-import { display } from "@mui/system";
 import { Link } from "react-router-dom";
-/** @jsxImportSource @emotion/react */
-import { css, jsx } from "@emotion/react";
 
 const linkStyle = {
   textDecoration: "none",

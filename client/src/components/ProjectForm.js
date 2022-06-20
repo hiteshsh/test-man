@@ -12,10 +12,9 @@ const mainForm = css`
 const initialValues = {
   name: "",
   description: "",
-  projectId: "",
 };
 
-function TestSuiteForm() {
+function ProjectForm() {
   const [values, setValues] = useState(initialValues);
 
   //useEffect(() => {}, [values]);
@@ -79,4 +78,4 @@ function TestSuiteForm() {
   );
 }
 
-export default TestSuiteForm;
+export default ProjectForm;

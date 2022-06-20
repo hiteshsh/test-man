@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import React from "react";
 import ProjectsList from "./ProjectList";
-import ProjectsHeader from "./ProjectsHeder";
+import ProjectsHeader from "./ProjectsHeader";
 
 function Projects() {
   return (
