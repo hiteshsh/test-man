@@ -1,9 +1,7 @@
-import {
-  Box,
-} from "@mui/material";
+import { Box } from "@mui/material";
 import React from "react";
 import TestCasesHeader from "./TestCasesHeader";
-import TestSuiteList from "./TestSuiteList";
+import TestSuiteList from "../testsuites/TestSuiteList";
 
 const TestCases = () => {
   return (

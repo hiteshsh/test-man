@@ -6,12 +6,12 @@ import { ThemeProvider, createTheme } from "@mui/material";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import Header from "./components/Header";
-import TestCases from "./components/TestCases";
+import TestCases from "./components/testcases/TestCases";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Dashboard from "./components/Dashboard";
-import Releases from "./components/Releases";
-import Projects from "./components/Projects";
-import Users from "./components/Users";
+import Releases from "./components/releases/Releases";
+import Projects from "./components/projects/Projects";
+import Users from "./components/users/Users";
 
 const appMain = css`
   width: 100%;

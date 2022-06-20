@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
-import TestCaseListData from "./TestCaseListData";
+import TestCaseListData from "../testcases/TestCaseListData";
 import TestSuiteListData from "./TestSuiteListData";
 
 const TestSuiteList = () => {
