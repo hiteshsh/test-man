@@ -14,10 +14,10 @@ function TestCaseListData() {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          minHeight: "150px",
+          minHeight: "200px",
         }}
       >
-        <IconButton color="primary" aria-label="add test case">
+        <IconButton size="large" color="primary" aria-label="add test case">
           <AddCircle />
         </IconButton>
 
