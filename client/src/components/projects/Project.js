@@ -18,8 +18,6 @@ import React, { useEffect } from "react";
 import Axios from "axios";
 
 function Project() {
-  
-
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {

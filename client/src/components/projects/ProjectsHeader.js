@@ -12,11 +12,10 @@ import {
 } from "@mui/material";
 import React from "react";
 import ProjectForm from "./ProjectForm";
+import Handlepopup from "../common/Handlepopup";
 
 function ProjectsHeader() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const { openPopup, handleOpenPopup, handleClosePopup } = Handlepopup();
   return (
     <Paper
       elevation={0}
@@ -47,11 +46,11 @@ function ProjectsHeader() {
               size="medium"
               startIcon={<Add />}
               sx={{ textTransform: "none" }}
-              onClick={handleOpen}
+              onClick={handleOpenPopup}
             >
               Add Project
             </Button>
-            <Dialog open={open} onClose={handleClose}>
+            <Dialog open={openPopup} onClose={handleClosePopup}>
               <DialogTitle>
                 <div
                   style={{
@@ -61,7 +60,7 @@ function ProjectsHeader() {
                   }}
                 >
                   <Typography variant="h6">Add Project</Typography>
-                  <IconButton onClick={handleClose}>
+                  <IconButton onClick={handleClosePopup}>
                     <Close />
                   </IconButton>
                 </div>

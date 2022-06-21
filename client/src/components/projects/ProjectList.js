@@ -11,39 +11,21 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-import React, { useEffect } from "react";
+import React from "react";
 import ProjectForm from "./ProjectForm";
-import Axios from "axios";
 import Project from "./Project";
+import ProjectListAPI from "./ProjectListAPI";
+import Handlepopup from "../common/Handlepopup";
 
 const linkStyle = {
   textDecoration: "none",
 };
 
-function getAllProjects() {
-  Axios.get("projects").then((response) => {
-    console.log(response);
-  });
-}
-
 function ProjectsList() {
-  const [projects, setProjects] = React.useState(null);
-  const [error, setError] = React.useState(null);
+  const { projects, error } = ProjectListAPI();
 
-  useEffect(() => {
-    // invalid url will trigger an 404 error
-    Axios.get("/projects")
-      .then((response) => {
-        setProjects(response.data);
-      })
-      .catch((error) => {
-        setError(error);
-      });
-  }, []);
-  console.log(projects);
-  const [openPopup, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClosePopup = () => setOpen(false);
+  console.log("projects:", projects);
+  const { openPopup, handleOpenPopup, handleClosePopup } = Handlepopup();
   return (
     <Box>
       <Grid
@@ -56,7 +38,7 @@ function ProjectsList() {
         marginRight={3}
       >
         <Grid item md={3}>
-          <Link style={linkStyle} onClick={handleOpen}>
+          <Link style={linkStyle} onClick={handleOpenPopup}>
             <Paper
               sx={{
                 height: "100%",

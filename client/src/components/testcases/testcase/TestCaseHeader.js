@@ -1,22 +1,14 @@
 import React from "react";
 
-import { CloudDownload, CloudUpload, NavigateNext } from "@mui/icons-material";
-import {
-  Breadcrumbs,
-  Button,
-  Grid,
-  Link,
-  Paper,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { NavigateNext } from "@mui/icons-material";
+import { Breadcrumbs, Grid, Link, Paper, Typography } from "@mui/material";
 
 function handleClick(event) {
   event.preventDefault();
   console.info("You clicked a breadcrumb.");
 }
 
-const TestCasesHeader = () => {
+const TestCaseHeader = () => {
   const breadcrumbs = [
     <Link
       underline="hover"
@@ -38,8 +30,18 @@ const TestCasesHeader = () => {
     >
       Rapido
     </Link>,
+    <Link
+      underline="hover"
+      key="2"
+      color="inherit"
+      href="/material-ui/getting-started/installation/"
+      onClick={handleClick}
+      variant="body2"
+    >
+      Test Cases
+    </Link>,
     <Typography key="3" color="text.primary" variant="body2">
-      Test cases
+      Add Test cases
     </Typography>,
   ];
   return (
@@ -62,29 +64,10 @@ const TestCasesHeader = () => {
         border={"0px solid"}
       >
         <Grid item md={4}>
-          <Typography variant="h5">Test Cases</Typography>
+          <Typography variant="h5">Add Test Case</Typography>
         </Grid>
         <Grid item md={4}></Grid>
-        <Grid item md={4}>
-          <Stack spacing={2} direction="row" sx={{ float: "right" }}>
-            <Button
-              variant="contained"
-              size="medium"
-              startIcon={<CloudDownload />}
-              sx={{ textTransform: "none" }}
-            >
-              Export
-            </Button>
-            <Button
-              variant="contained"
-              size="medium"
-              startIcon={<CloudUpload />}
-              sx={{ textTransform: "none" }}
-            >
-              Import
-            </Button>
-          </Stack>
-        </Grid>
+        <Grid item md={4}></Grid>
       </Grid>
       <Breadcrumbs
         separator={<NavigateNext fontSize="small" />}
@@ -96,4 +79,4 @@ const TestCasesHeader = () => {
   );
 };
 
-export default TestCasesHeader;
+export default TestCaseHeader;

@@ -12,6 +12,8 @@ import Dashboard from "./components/Dashboard";
 import Releases from "./components/releases/Releases";
 import Projects from "./components/projects/Projects";
 import Users from "./components/users/Users";
+import TestCaseForm from "./components/testcases/testcase/TestCaseForm";
+import TestCaseNew from "./components/testcases/testcase/TestCaseNew";
 
 const appMain = css`
   width: 100%;
@@ -50,6 +52,7 @@ const App = () => {
             <Route path="/releases" element={<Releases />}></Route>
             <Route path="/projects" element={<Projects />}></Route>
             <Route path="/projects" element={<Users />}></Route>
+            <Route path="/testcase/new" element={<TestCaseNew />}></Route>
           </Routes>
           <CssBaseline />
         </React.Fragment>

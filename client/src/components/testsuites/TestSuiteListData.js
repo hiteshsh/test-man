@@ -3,7 +3,6 @@ import { Close, CreateNewFolder } from "@mui/icons-material";
 import { Box } from "@mui/system";
 
 import {
-  ButtonBase,
   IconButton,
   List,
   Paper,
@@ -11,10 +10,10 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  Button,
   Divider,
 } from "@mui/material";
 import TestSuiteForm from "./TestSuiteForm";
+import Handlepopup from "../common/Handlepopup";
 
 const style = {
   position: "absolute",
@@ -29,9 +28,7 @@ const style = {
 };
 
 function TestSuiteListData() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const { openPopup, handleOpenPopup, handleClosePopup } = Handlepopup();
   return (
     <Paper elevation={0}>
       <List
@@ -53,11 +50,11 @@ function TestSuiteListData() {
               color="primary"
               aria-label="add test suite"
               style={{ float: "right" }}
-              onClick={handleOpen}
+              onClick={handleOpenPopup}
             >
               <CreateNewFolder />
             </IconButton>
-            <Dialog open={open} onClose={handleClose}>
+            <Dialog open={openPopup} onClose={handleClosePopup}>
               <DialogTitle>
                 <div
                   style={{
@@ -67,7 +64,7 @@ function TestSuiteListData() {
                   }}
                 >
                   <Typography variant="h6">Add Test Suite</Typography>
-                  <IconButton onClick={handleClose}>
+                  <IconButton onClick={handleClosePopup}>
                     <Close />
                   </IconButton>
                 </div>
