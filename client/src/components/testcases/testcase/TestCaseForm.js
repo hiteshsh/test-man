@@ -1,9 +1,19 @@
-import { Box, TextField, Button, Stack, Grid, Paper } from "@mui/material";
+import {
+  Box,
+  TextField,
+  Button,
+  Stack,
+  Grid,
+  Paper,
+  Checkbox,
+  FormControlLabel,
+} from "@mui/material";
 import { useState } from "react";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import React from "react";
 
 const initialValues = {
   name: "",
@@ -13,10 +23,14 @@ const initialValues = {
   suiteId: "",
   priority: "",
   expectedResult: "",
+  isAutomated: false,
 };
+
+const label = { inputprops: { "aria-label": "Checkbox" } };
 
 function TestCaseForm() {
   const [values, setValues] = useState(initialValues);
+  const [checked, setChecked] = React.useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -32,6 +46,11 @@ function TestCaseForm() {
       ...initialValues,
       [name]: value,
     });
+    setChecked(false);
+  };
+
+  const handleChange = () => {
+    setChecked(!checked);
   };
 
   return (
@@ -67,7 +86,7 @@ function TestCaseForm() {
               name="description"
               required
               variant="outlined"
-              label="Description"
+              label="Steps"
               value={values.description}
               fullWidth
               onChange={handleInputChange}
@@ -95,15 +114,15 @@ function TestCaseForm() {
               <InputLabel>Suite</InputLabel>
               <Select
                 required
-                name="suite"
+                name="suiteId"
                 variant="outlined"
                 value={values.suiteId}
                 label="Suite"
                 onChange={handleInputChange}
               >
-                <MenuItem value={"functional"}>Suite1</MenuItem>
-                <MenuItem value={"performance"}>Suite2</MenuItem>
-                <MenuItem value={"security"}>Suite3</MenuItem>
+                <MenuItem value={"Suite1"}>Suite1</MenuItem>
+                <MenuItem value={"Suite2"}>Suite2</MenuItem>
+                <MenuItem value={"Suite3"}>Suite3</MenuItem>
               </Select>
             </FormControl>
           </Grid>
@@ -112,15 +131,15 @@ function TestCaseForm() {
               <InputLabel>Section</InputLabel>
               <Select
                 required
-                name="section"
+                name="sectionId"
                 variant="outlined"
                 value={values.sectionId}
                 label="Section"
                 onChange={handleInputChange}
               >
-                <MenuItem value={"functional"}>Section1</MenuItem>
-                <MenuItem value={"performance"}>Section2</MenuItem>
-                <MenuItem value={"security"}>Section3</MenuItem>
+                <MenuItem value={"Section1"}>Section1</MenuItem>
+                <MenuItem value={"Section2"}>Section2</MenuItem>
+                <MenuItem value={"Section3"}>Section3</MenuItem>
               </Select>
             </FormControl>
           </Grid>
@@ -158,10 +177,30 @@ function TestCaseForm() {
             </FormControl>
           </Grid>
           <Grid item xs={12}>
+            <FormControl sx={{ m: 1, minWidth: 465 }}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    {...label}
+                    name="isAutomated"
+                    color="primary"
+                    onChange={handleChange}
+                    checked={checked}
+                  />
+                }
+                label="Automated"
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={12}>
             <div style={{ float: "right", margin: "10px" }}>
               <Stack spacing={2} direction="row">
                 <Button variant="outlined" onClick={reset}>
                   Reset
+                </Button>
+
+                <Button variant="outlined" type="submit">
+                  Save & Add more
                 </Button>
                 <Button variant="contained" type="submit">
                   Save
