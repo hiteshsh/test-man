@@ -6,12 +6,12 @@ import TestSuiteListData from "./TestSuiteListData";
 
 const TestSuiteList = () => {
   return (
-    <Box marginTop={4} marginLeft={3} marginRight={3} border="0px solid">
-      <Grid container direction="row" spacing={2} sx={{ display: "flex" }}>
-        <Grid item md={3}>
+    <Box border="0px solid">
+    <Grid container minHeight="315px" padding={2}>
+        <Grid item md={3} padding={2}>
           <TestSuiteListData />
         </Grid>
-        <Grid item md={9}>
+        <Grid item md={9} padding={2}>
           <TestCaseListData />
         </Grid>
       </Grid>

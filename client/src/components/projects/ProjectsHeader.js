@@ -22,7 +22,6 @@ function ProjectsHeader() {
       square
       sx={{
         backgroundColor: "#f6f8fa",
-
         height: "70px",
         fontWeight: "medium",
         padding: "20px",
@@ -34,13 +33,14 @@ function ProjectsHeader() {
         justifyContent="center"
         alignItems="center"
         border={"0px solid"}
+        padding={2}
       >
         <Grid item md={4}>
           <Typography variant="h5">Projects</Typography>
         </Grid>
         <Grid item md={4}></Grid>
         <Grid item md={4}>
-          <Stack spacing={2} direction="row" sx={{ float: "right" }}>
+          <Stack direction="row" sx={{ float: "right" }}>
             <Button
               variant="contained"
               size="medium"

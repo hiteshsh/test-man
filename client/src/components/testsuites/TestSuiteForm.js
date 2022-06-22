@@ -52,6 +52,7 @@ function TestSuiteForm() {
         name="name"
         fullWidth
         onChange={handleInputChange}
+        size="small"
       />
 
       <TextField
@@ -63,6 +64,7 @@ function TestSuiteForm() {
         onChange={handleInputChange}
         multiline
         rows={4}
+        size="small"
       />
 
       <div>

@@ -69,7 +69,7 @@ function TestCaseForm() {
     >
       <Paper elevation={0}>
         <Grid container padding={2}>
-          <Grid item xs={12}>
+          <Grid item xs={12} padding={1}>
             <TextField
               variant="outlined"
               required
@@ -81,7 +81,7 @@ function TestCaseForm() {
               size="small"
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={6} padding={1}>
             <TextField
               name="description"
               required
@@ -95,7 +95,7 @@ function TestCaseForm() {
               size="small"
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={6} padding={1}>
             <TextField
               name="expectedResult"
               required
@@ -109,8 +109,12 @@ function TestCaseForm() {
               size="small"
             />
           </Grid>
-          <Grid item xs={6}>
-            <FormControl sx={{ m: 1, minWidth: 465 }} size="small" required>
+          <Grid item xs={6} padding={1}>
+            <FormControl
+              sx={{ m: 1, minWidth: 150, width: "97%" }}
+              size="small"
+              required
+            >
               <InputLabel>Suite</InputLabel>
               <Select
                 required
@@ -126,8 +130,12 @@ function TestCaseForm() {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={6}>
-            <FormControl sx={{ m: 1, minWidth: 465 }} size="small" required>
+          <Grid item xs={6} padding={1}>
+            <FormControl
+              sx={{ m: 1, minWidth: 150, width: "97%" }}
+              size="small"
+              required
+            >
               <InputLabel>Section</InputLabel>
               <Select
                 required
@@ -143,8 +151,11 @@ function TestCaseForm() {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={6}>
-            <FormControl sx={{ m: 1, minWidth: 465 }} size="small">
+          <Grid item xs={6} padding={1}>
+            <FormControl
+              sx={{ m: 1, minWidth: 150, width: "97%" }}
+              size="small"
+            >
               <InputLabel>Type</InputLabel>
               <Select
                 required
@@ -160,8 +171,12 @@ function TestCaseForm() {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={6}>
-            <FormControl sx={{ m: 1, minWidth: 465 }} size="small" required>
+          <Grid item xs={6} padding={1}>
+            <FormControl
+              sx={{ m: 1, minWidth: 150, width: "97%" }}
+              size="small"
+              required
+            >
               <InputLabel>Priority</InputLabel>
               <Select
                 name="priority"
@@ -176,8 +191,8 @@ function TestCaseForm() {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12}>
-            <FormControl sx={{ m: 1, minWidth: 465 }}>
+          <Grid item xs={12} padding={1}>
+            <FormControl sx={{ m: 1, minWidth: 150, width: "97%" }}>
               <FormControlLabel
                 control={
                   <Checkbox
@@ -192,7 +207,7 @@ function TestCaseForm() {
               />
             </FormControl>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} padding={2}>
             <div style={{ float: "right", margin: "10px" }}>
               <Stack spacing={2} direction="row">
                 <Button variant="outlined" onClick={reset}>

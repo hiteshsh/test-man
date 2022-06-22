@@ -48,7 +48,6 @@ const TestCasesHeader = () => {
       square
       sx={{
         backgroundColor: "#f6f8fa",
-
         height: "70px",
         fontWeight: "medium",
         padding: "20px",
@@ -60,9 +59,16 @@ const TestCasesHeader = () => {
         justifyContent="center"
         alignItems="center"
         border={"0px solid"}
+        padding={2}
       >
         <Grid item md={4}>
           <Typography variant="h5">Test Cases</Typography>
+          <Breadcrumbs
+            separator={<NavigateNext fontSize="small" />}
+            aria-label="breadcrumb"
+          >
+            {breadcrumbs}
+          </Breadcrumbs>
         </Grid>
         <Grid item md={4}></Grid>
         <Grid item md={4}>
@@ -86,12 +92,6 @@ const TestCasesHeader = () => {
           </Stack>
         </Grid>
       </Grid>
-      <Breadcrumbs
-        separator={<NavigateNext fontSize="small" />}
-        aria-label="breadcrumb"
-      >
-        {breadcrumbs}
-      </Breadcrumbs>
     </Paper>
   );
 };

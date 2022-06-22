@@ -28,16 +28,8 @@ function ProjectsList() {
   const { openPopup, handleOpenPopup, handleClosePopup } = Handlepopup();
   return (
     <Box>
-      <Grid
-        container
-        direction="row"
-        sx={{ display: "flex" }}
-        minHeight="250px"
-        marginTop={4}
-        marginLeft={3}
-        marginRight={3}
-      >
-        <Grid item md={3}>
+      <Grid container minHeight="315px" padding={2}>
+        <Grid item md={3} padding={2}>
           <Link style={linkStyle} onClick={handleOpenPopup}>
             <Paper
               sx={{
@@ -79,9 +71,12 @@ function ProjectsList() {
             </DialogContent>
           </Dialog>
         </Grid>
-        <Grid item md={3} paddingLeft="24px">
-          <Project />
-        </Grid>
+        {projects &&
+          projects.map((project) => (
+            <Grid item md={3} padding={2} key={project._id}>
+              <Project name={project.name} />
+            </Grid>
+          ))}
       </Grid>
     </Box>
   );

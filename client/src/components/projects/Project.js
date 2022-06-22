@@ -17,7 +17,7 @@ import {
 import React, { useEffect } from "react";
 import Axios from "axios";
 
-function Project() {
+function Project(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -55,7 +55,7 @@ function Project() {
               <MoreVert />
             </IconButton>
           }
-          title="Rapido"
+          title={props.name}
         />
         <Menu
           id="basic-menu"

@@ -7,7 +7,7 @@ const ProjectListAPI = () => {
 
   useEffect(() => {
     // invalid url will trigger an 404 error
-    function fetchMyAPI() {
+    function getAllProjects() {
       Axios.get("/projects")
         .then((response) => {
           setProjects(response.data);
@@ -16,18 +16,8 @@ const ProjectListAPI = () => {
           setError(error);
         });
     }
-    fetchMyAPI();
+    getAllProjects();
   }, []);
-
-  // useEffect(() => {
-  //   async function fetchMyAPI() {
-  //     let response = await fetch('api/data')
-  //     response = await response.json()
-  //     dataSet(response)
-  //   }
-
-  //   fetchMyAPI()
-  // }, [])
 
   return { projects, error };
 };
