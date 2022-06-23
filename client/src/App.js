@@ -53,6 +53,7 @@ const App = () => {
             <Route path="/projects" element={<Projects />}></Route>
             <Route path="/projects" element={<Users />}></Route>
             <Route path="/testcase/new" element={<TestCaseNew />}></Route>
+            <Route path="/users" element={<Users />}></Route>
           </Routes>
           <CssBaseline />
         </React.Fragment>
