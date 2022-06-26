@@ -1,6 +1,6 @@
 import React from "react";
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
-import { Box } from "@mui/material";
+import { Box, Chip } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
 
 const rows = [
@@ -81,7 +81,7 @@ export default function UserList() {
   const editUser = (e) => {};
 
   const columns = [
-    { field: "id", headerName: "ID", width: 70 },
+    { field: "id", headerName: "Id", width: 70 },
     { field: "emailId", headerName: "Email Id", width: 300 },
     { field: "name", headerName: "Name", width: 200 },
     { field: "role", headerName: "Role", width: 150 },
@@ -89,6 +89,22 @@ export default function UserList() {
       field: "status",
       headerName: "Status",
       width: 150,
+      renderCell: (params) => {
+        if (params.value === "Active") {
+          return (
+            <Chip
+              label={params.value}
+              size="small"
+              style={{
+                backgroundColor: "rgb(20, 184, 166)",
+                color: "rgb(255, 255, 255)",
+              }}
+            />
+          );
+        } else {
+          return <Chip label={params.value} size="small" />;
+        }
+      },
     },
     {
       field: "actions",
@@ -135,6 +151,7 @@ export default function UserList() {
           pageSize={5}
           rowsPerPageOptions={[5]}
           checkboxSelection
+          disableSelectionOnClick
           sx={{
             ".MuiDataGrid-columnSeparator": {
               display: "none",
