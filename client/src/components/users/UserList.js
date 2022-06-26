@@ -102,7 +102,16 @@ export default function UserList() {
             />
           );
         } else {
-          return <Chip label={params.value} size="small" />;
+          return (
+            <Chip
+              label={params.value}
+              size="small"
+              style={{
+                color: "rgb(255, 255, 255)",
+                backgroundColor: "rgb(209, 67, 67)",
+              }}
+            />
+          );
         }
       },
     },
