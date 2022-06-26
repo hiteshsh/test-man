@@ -90,7 +90,7 @@ function UserForm() {
         name="emailId"
         variant="outlined"
         label="EmailId"
-        value={values.emailId}
+        value={values.emailIds}
         fullWidth
         onChange={handleInputChange}
         size="small"
