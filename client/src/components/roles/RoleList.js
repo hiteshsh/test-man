@@ -46,7 +46,7 @@ export default function RoleList() {
   return (
     <Box border="0px solid">
       <Grid container minHeight="315px" padding={2}>
-        <Grid item md={3} padding={2}>
+        <Grid item md={4} padding={2}>
           <Paper elevation={0}>
             <List
               sx={{ width: "100%", bgcolor: "background.paper" }}
@@ -59,6 +59,7 @@ export default function RoleList() {
                   alignItems: "center",
                   paddingLeft: "16px",
                   justifyContent: "space-between",
+                  minHeight: "50px",
                 }}
               >
                 <Typography variant="h6">Roles</Typography>
@@ -79,7 +80,7 @@ export default function RoleList() {
             </List>
           </Paper>
         </Grid>
-        <Grid item md={9} padding={2}></Grid>
+        <Grid item md={8} padding={2}></Grid>
       </Grid>
     </Box>
   );

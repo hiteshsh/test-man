@@ -20,6 +20,7 @@ function TestSuiteListDataHeader() {
         alignItems: "center",
         paddingLeft: "16px",
         justifyContent: "space-between",
+        minHeight: "50px",
       }}
     >
       <Typography variant="h6">Test Suites</Typography>
