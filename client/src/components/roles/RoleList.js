@@ -33,30 +33,35 @@ const rolesAndPriviledgeList = [
     name: "Lead",
     priviledge: [
       {
-        name: "view",
-        modules: [
-          { module: "project", allowed: true, disabled: true, show: true },
-          { module: "Test Case", allowed: true, disabled: true, show: true },
-          { module: "Release", allowed: true, disabled: true, show: true },
-          { module: "Dashboard", allowed: true, disabled: true, show: true },
+        name: "project",
+        type: [
+          { name: "view", allowed: true, disabled: true, show: true },
+          { name: "addEdit", allowed: true, disabled: false, show: true },
+          { name: "del", allowed: true, disabled: false, show: true },
         ],
       },
       {
-        name: "addEdit",
-        modules: [
-          { module: "project", allowed: true, disabled: true, show: true },
-          { module: "Test Case", allowed: true, disabled: true, show: true },
-          { module: "Release", allowed: true, disabled: true, show: true },
-          { module: "Dashboard", allowed: true, disabled: true, show: false },
+        name: "test case",
+        type: [
+          { name: "view", allowed: true, disabled: true, show: true },
+          { name: "addEdit", allowed: true, disabled: true, show: true },
+          { name: "del", allowed: true, disabled: true, show: true },
         ],
       },
       {
-        name: "del",
-        modules: [
-          { module: "project", allowed: true, disabled: true,show: true },
-          { module: "Test Case", allowed: true, disabled: true ,show: true},
-          { module: "Release", allowed: true, disabled: true,show: false },
-          { module: "Dashboard", allowed: true, disabled: true, show: false},
+        name: "Release",
+        type: [
+          { name: "view", allowed: true, disabled: true, show: true },
+          { name: "addEdit", allowed: true, disabled: true, show: true },
+          { name: "del", allowed: true, disabled: false, show: true },
+        ],
+      },
+      {
+        name: "Dashboard",
+        type: [
+          { name: "view", allowed: true, disabled: false, show: true },
+          { name: "addEdit", allowed: false, disabled: true, show: false },
+          { name: "del", allowed: false, disabled: true, show: false },
         ],
       },
     ],
@@ -139,25 +144,30 @@ export default function RoleList() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.map((row) => (
-                  <TableRow
-                    key={row.priveldgeName}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row">
-                      {row.priveldgeName}
-                    </TableCell>
-                    <TableCell align="center">
-                      <Checkbox checked={row.view} />
-                    </TableCell>
-                    <TableCell align="center">
-                      <Checkbox checked={row.addEdit} />
-                    </TableCell>
-                    <TableCell align="center">
-                      <Checkbox checked={row.del} />
-                    </TableCell>
-                  </TableRow>
-                ))}
+                {rolesAndPriviledgeList
+                  .find((e) => e.id === "123")
+                  .priviledge.map((row) => (
+                    <TableRow
+                      key={row.name}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell component="th" scope="row">
+                        {row.name}
+                      </TableCell>
+                      {row.type.map((type) => (
+                        <TableCell align="center" key={type.name}>
+                          {type.show ? (
+                            <Checkbox
+                              checked={type.allowed}
+                              disabled={type.disabled}
+                            />
+                          ) : (
+                            <></>
+                          )}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  ))}
               </TableBody>
               <TableFooter></TableFooter>
             </Table>
