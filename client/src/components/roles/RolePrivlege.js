@@ -15,6 +15,7 @@ import {
 import React from "react";
 
 function RolePrivlege(props) {
+  console.log("role", props.role.priviledge);
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -27,36 +28,33 @@ function RolePrivlege(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.list
-            .find((e) => e.id === props.id)
-            .priviledge.map((row) => (
-              <TableRow
-                key={row.name}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {row.name}
+          {props.role.priviledge.map((row) => (
+            <TableRow
+              key={row.name}
+              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                {row.name}
+              </TableCell>
+              {row.type.map((type) => (
+                <TableCell align="center" key={type.name + "_" + row.name}>
+                  {type.show ? (
+                    <Checkbox
+                      key={type.name + "_" + row.name}
+                      checked={type.allowed}
+                      disabled={type.disabled}
+                    />
+                  ) : (
+                    <></>
+                  )}
                 </TableCell>
-                {row.type.map((type) => (
-                  <TableCell align="center" key={type.name + "_" + row.name}>
-                    {type.show ? (
-                      <Checkbox
-                        key={type.name + "_" + row.name}
-                        checked={type.allowed}
-                        disabled={type.disabled}
-                      />
-                    ) : (
-                      <></>
-                    )}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))}
-          <Divider />
+              ))}
+            </TableRow>
+          ))}
         </TableBody>
         <TableFooter>
           <TableRow>
-            <TableCell colspan="4">
+            <TableCell colSpan="4">
               <Stack
                 spacing={2}
                 padding={2}

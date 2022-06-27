@@ -8,7 +8,7 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RolePrivlege from "./RolePrivlege";
 
 const linkStyle = {
@@ -58,21 +58,105 @@ const rolesAndPriviledgeList = [
   {
     id: "124",
     name: "Manager",
-    priviledge: [],
+    priviledge: [
+      {
+        name: "project",
+        type: [
+          { name: "view", allowed: true, disabled: true, show: true },
+          { name: "addEdit", allowed: false, disabled: false, show: true },
+          { name: "del", allowed: true, disabled: false, show: true },
+        ],
+      },
+      {
+        name: "test case",
+        type: [
+          { name: "view", allowed: true, disabled: true, show: true },
+          { name: "addEdit", allowed: true, disabled: true, show: true },
+          { name: "del", allowed: true, disabled: true, show: true },
+        ],
+      },
+      {
+        name: "Release",
+        type: [
+          { name: "view", allowed: true, disabled: true, show: true },
+          { name: "addEdit", allowed: true, disabled: true, show: true },
+          { name: "del", allowed: true, disabled: false, show: true },
+        ],
+      },
+      {
+        name: "Dashboard",
+        type: [
+          { name: "view", allowed: true, disabled: false, show: true },
+          { name: "addEdit", allowed: false, disabled: true, show: false },
+          { name: "del", allowed: false, disabled: true, show: false },
+        ],
+      },
+    ],
   },
   {
     id: "125",
     name: "Tester",
-    priviledge: [],
+    priviledge: [
+      {
+        name: "project",
+        type: [
+          { name: "view", allowed: true, disabled: true, show: true },
+          { name: "addEdit", allowed: false, disabled: false, show: true },
+          { name: "del", allowed: false, disabled: false, show: true },
+        ],
+      },
+      {
+        name: "test case",
+        type: [
+          { name: "view", allowed: true, disabled: true, show: true },
+          { name: "addEdit", allowed: false, disabled: false, show: true },
+          { name: "del", allowed: false, disabled: true, show: true },
+        ],
+      },
+      {
+        name: "Release",
+        type: [
+          { name: "view", allowed: true, disabled: true, show: true },
+          { name: "addEdit", allowed: false, disabled: false, show: true },
+          { name: "del", allowed: false, disabled: false, show: true },
+        ],
+      },
+      {
+        name: "Dashboard",
+        type: [
+          { name: "view", allowed: false, disabled: false, show: true },
+          { name: "addEdit", allowed: false, disabled: true, show: false },
+          { name: "del", allowed: false, disabled: true, show: false },
+        ],
+      },
+    ],
   },
 ];
 
 export default function RoleList() {
+  const onClickRole = (id) => {
+    const role = rolesAndPriviledgeList.find((e) => e.id === id);
+    setValues(role);
+    console.log(values);
+  };
+
+  const initialValues = rolesAndPriviledgeList.find((e) => e.name === "Lead");
+
+  const [values, setValues] = useState(initialValues);
+
   var rolesEl = rolesAndPriviledgeList.map((role) => (
     <ListItemButton key={role.id}>
-      <ListItemText inset primary={role.name} sx={{ paddingLeft: "2px" }} />
+      <ListItemText
+        inset
+        primary={role.name}
+        sx={{ paddingLeft: "2px" }}
+        onClick={() => {
+          onClickRole(role.id);
+        }}
+      />
     </ListItemButton>
   ));
+
   return (
     <Box border="0px solid">
       <Grid container minHeight="315px" padding={2}>
@@ -104,14 +188,14 @@ export default function RoleList() {
                   minHeight={"300px"}
                   padding="20px"
                 >
-                  There are no Roles
+                  There are no Roles created
                 </Typography>
               )}
             </List>
           </Paper>
         </Grid>
         <Grid item md={8} padding={2}>
-          <RolePrivlege list={rolesAndPriviledgeList} id="123" />
+          <RolePrivlege role={values} id="123" />
         </Grid>
       </Grid>
     </Box>
