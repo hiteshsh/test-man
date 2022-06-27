@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import Handlepopup from "../common/Handlepopup";
+import RoleForm from "./RoleForm";
 
 function RolesHeader() {
   const { openPopup, handleOpenPopup, handleClosePopup } = Handlepopup();
@@ -64,7 +65,9 @@ function RolesHeader() {
                   </IconButton>
                 </div>
               </DialogTitle>
-              <DialogContent></DialogContent>
+              <DialogContent>
+                <RoleForm />
+              </DialogContent>
             </Dialog>
           </Stack>
         </Grid>

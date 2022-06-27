@@ -47,7 +47,7 @@ export default function NestedList() {
         component="a"
         href="#customized-list"
         sx={{
-          bgcolor: "#f6f8fa",
+          bgcolor: "#F0F0F0",
           margin: "10px",
           display: "flex",
         }}
