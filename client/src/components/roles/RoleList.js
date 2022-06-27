@@ -155,9 +155,13 @@ export default function RoleList() {
                         {row.name}
                       </TableCell>
                       {row.type.map((type) => (
-                        <TableCell align="center" key={type.name}>
+                        <TableCell
+                          align="center"
+                          key={type.name + "_" + row.name}
+                        >
                           {type.show ? (
                             <Checkbox
+                              key={type.name + "_" + row.name}
                               checked={type.allowed}
                               disabled={type.disabled}
                             />
