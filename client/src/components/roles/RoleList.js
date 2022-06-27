@@ -1,26 +1,15 @@
-import { AddCircle } from "@mui/icons-material";
 import {
   Box,
-  Checkbox,
   Divider,
   Grid,
-  IconButton,
   List,
   ListItemButton,
-  ListItemIcon,
   ListItemText,
   Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableFooter,
-  TableHead,
-  TableRow,
   Typography,
 } from "@mui/material";
 import React from "react";
-import { Link } from "react-router-dom";
+import RolePrivlege from "./RolePrivlege";
 
 const linkStyle = {
   textDecoration: "none",
@@ -78,17 +67,6 @@ const rolesAndPriviledgeList = [
   },
 ];
 
-function createData(priveldgeName, view, addEdit, del) {
-  return { priveldgeName, view, addEdit, del };
-}
-
-const rows = [
-  createData("Project", true, false, true),
-  createData("Test Case", true, false, true),
-  createData("Release", true, false, true),
-  createData("Dashboard", true, false, true),
-];
-
 export default function RoleList() {
   var rolesEl = rolesAndPriviledgeList.map((role) => (
     <ListItemButton key={role.id}>
@@ -133,49 +111,7 @@ export default function RoleList() {
           </Paper>
         </Grid>
         <Grid item md={8} padding={2}>
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>Permissions</TableCell>
-                  <TableCell align="center">View</TableCell>
-                  <TableCell align="center">Add & Edit</TableCell>
-                  <TableCell align="center">Delete</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rolesAndPriviledgeList
-                  .find((e) => e.id === "123")
-                  .priviledge.map((row) => (
-                    <TableRow
-                      key={row.name}
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    >
-                      <TableCell component="th" scope="row">
-                        {row.name}
-                      </TableCell>
-                      {row.type.map((type) => (
-                        <TableCell
-                          align="center"
-                          key={type.name + "_" + row.name}
-                        >
-                          {type.show ? (
-                            <Checkbox
-                              key={type.name + "_" + row.name}
-                              checked={type.allowed}
-                              disabled={type.disabled}
-                            />
-                          ) : (
-                            <></>
-                          )}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  ))}
-              </TableBody>
-              <TableFooter></TableFooter>
-            </Table>
-          </TableContainer>
+          <RolePrivlege list={rolesAndPriviledgeList} id="123" />
         </Grid>
       </Grid>
     </Box>
