@@ -16,6 +16,7 @@ import {
   WorkHistory,
   WorkOutline,
 } from "@mui/icons-material";
+import { VerifiedUser } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 
 const linkStyle = {
@@ -65,25 +66,25 @@ export default function NestedList() {
         />
       </ListItemButton>
       <Link to="/dashboard" style={linkStyle}>
-        <ListItemButton>
+        <ListItemButton sx={{ pl: 4 }}>
           <ListItemIcon>
-            <Dashboard />
+            <Dashboard fontSize="small" />
           </ListItemIcon>
           <ListItemText primary="Dashboard" />
         </ListItemButton>
       </Link>
       <Link to="/testcases" style={linkStyle}>
-        <ListItemButton>
+        <ListItemButton sx={{ pl: 4 }}>
           <ListItemIcon>
-            <Folder />
+            <Folder fontSize="small" />
           </ListItemIcon>
           <ListItemText primary="Test Cases" />
         </ListItemButton>
       </Link>
       <Link to="/releases" style={linkStyle}>
-        <ListItemButton>
+        <ListItemButton sx={{ pl: 4 }}>
           <ListItemIcon>
-            <WorkHistory />
+            <WorkHistory fontSize="small" />
           </ListItemIcon>
           <ListItemText primary="Releases" />
         </ListItemButton>
@@ -109,9 +110,17 @@ export default function NestedList() {
           <Link to="/users" style={linkStyle}>
             <ListItemButton sx={{ pl: 4 }}>
               <ListItemIcon>
-                <Group />
+                <Group fontSize="small" />
               </ListItemIcon>
               <ListItemText primary="Users" />
+            </ListItemButton>
+          </Link>
+          <Link to="/roles" style={linkStyle}>
+            <ListItemButton sx={{ pl: 4 }}>
+              <ListItemIcon>
+                <VerifiedUser fontSize="small" />
+              </ListItemIcon>
+              <ListItemText primary="Roles" />
             </ListItemButton>
           </Link>
         </List>
