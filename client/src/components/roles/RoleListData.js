@@ -1,8 +1,11 @@
+import { Delete, Edit } from "@mui/icons-material";
 import {
   Box,
   Divider,
+  IconButton,
   List,
   ListItemButton,
+  ListItemSecondaryAction,
   ListItemText,
   Paper,
   Typography,
@@ -10,16 +13,25 @@ import {
 import React from "react";
 
 export default function RoleListData(props) {
-  var rolesEl = props.list.map((role) => (
-    <ListItemButton key={role.id}>
-      <ListItemText
-        inset
-        primary={role.name}
-        sx={{ paddingLeft: "2px" }}
-        onClick={(e) => {
-          props.onClickRole(role.id, e);
-        }}
-      />
+  console.log("selected index", props.selectedIndex);
+
+  var rolesEl = props.list.map((role, index) => (
+    <ListItemButton
+      key={role.id}
+      selected={props.selectedIndex === index}
+      onClick={(e) => {
+        props.onClickRole(role.id, e, index);
+      }}
+    >
+      <ListItemText inset primary={role.name} sx={{ paddingLeft: "2px" }} />
+      <ListItemSecondaryAction>
+        <IconButton size="small">
+          <Delete />
+        </IconButton>
+        <IconButton size="small">
+          <Edit />
+        </IconButton>
+      </ListItemSecondaryAction>
     </ListItemButton>
   ));
   return (

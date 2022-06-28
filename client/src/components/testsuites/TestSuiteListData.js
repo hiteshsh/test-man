@@ -32,13 +32,19 @@ const testSuiteList = [
   {
     _id: "1234",
     name: "test suite 1",
-    sections: [{ name: "listing1" }, { name: "finding1" }],
+    sections: [
+      { _id: "sec1", name: "listing1" },
+      { _id: "sec2", name: "finding1" },
+    ],
     key: false,
   },
   {
     _id: "1235",
     name: "test suite 2",
-    sections: [{ name: "listing2" }, { name: "finding2" }],
+    sections: [
+      { _id: "sec3", name: "listing2" },
+      { _id: "sec4", name: "finding2" },
+    ],
     key: false,
   },
 ];
@@ -52,7 +58,7 @@ function TestSuiteListData() {
 
   function SectionListUI(suite) {
     return suite.sections.map((section) => (
-      <ListItemButton key={section.name} sx={{ pl: 8 }}>
+      <ListItemButton key={section._id} sx={{ pl: 8 }}>
         <ListItemText primary={section.name} />
       </ListItemButton>
     ));
@@ -60,7 +66,7 @@ function TestSuiteListData() {
 
   var testSuiteListEl = testSuiteList.map((suite) =>
     suite.sections.length < 0 ? (
-      <ListItemButton key={suite._id}>
+      <ListItemButton key="new_project">
         <ListItemIcon>
           <FolderOutlined />
         </ListItemIcon>
@@ -68,15 +74,19 @@ function TestSuiteListData() {
       </ListItemButton>
     ) : (
       <div key={suite._id}>
-      
-        <ListItemButton onClick={handleClick}>
+        <ListItemButton onClick={handleClick} key={suite._id}>
           <ListItemIcon>
             <FolderOutlined />
           </ListItemIcon>
           <ListItemText primary={suite.name} />
           {open ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
-        <Collapse in={open} timeout="auto" unmountOnExit>
+        <Collapse
+          key={suite.sections._id}
+          in={open}
+          timeout="auto"
+          unmountOnExit
+        >
           <List component="div" disablePadding>
             {SectionListUI(suite)}
           </List>

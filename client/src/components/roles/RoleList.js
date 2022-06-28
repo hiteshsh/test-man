@@ -121,12 +121,15 @@ const rolesAndPriviledgeList = [
 ];
 
 export default function RoleList() {
-  const initialValues = rolesAndPriviledgeList.find((e) => e.name === "Lead");
+  const initialIndex = 0;
+  const [selectedIndex, setSelectedIndex] = React.useState(initialIndex);
 
-  const [values, setValues] = useState(initialValues);
+  const [values, setValues] = useState(rolesAndPriviledgeList[initialIndex]);
 
-  const onClickRole = (id, e) => {
+  const onClickRole = (id, e, index) => {
+    console.log("index", index);
     e.preventDefault();
+    setSelectedIndex(index);
     const role = rolesAndPriviledgeList.find((e) => e.id === id);
     setValues(role);
   };
@@ -139,6 +142,7 @@ export default function RoleList() {
             list={rolesAndPriviledgeList}
             values={values}
             onClickRole={onClickRole}
+            selectedIndex={selectedIndex}
           />
         </Grid>
         <Grid item md={8} padding={2}>
