@@ -22,7 +22,7 @@ const rolesAndPriviledgeList = [
     name: "Lead",
     priviledge: [
       {
-        name: "project",
+        name: "Project",
         type: [
           { name: "view", allowed: true, disabled: true, show: true },
           { name: "addEdit", allowed: true, disabled: false, show: true },
@@ -30,18 +30,18 @@ const rolesAndPriviledgeList = [
         ],
       },
       {
-        name: "test case",
+        name: "Test case",
         type: [
           { name: "view", allowed: true, disabled: true, show: true },
-          { name: "addEdit", allowed: true, disabled: true, show: true },
-          { name: "del", allowed: true, disabled: true, show: true },
+          { name: "addEdit", allowed: true, disabled: false, show: true },
+          { name: "del", allowed: true, disabled: false, show: true },
         ],
       },
       {
         name: "Release",
         type: [
           { name: "view", allowed: true, disabled: true, show: true },
-          { name: "addEdit", allowed: true, disabled: true, show: true },
+          { name: "addEdit", allowed: true, disabled: false, show: true },
           { name: "del", allowed: true, disabled: false, show: true },
         ],
       },
@@ -60,7 +60,7 @@ const rolesAndPriviledgeList = [
     name: "Manager",
     priviledge: [
       {
-        name: "project",
+        name: "Project",
         type: [
           { name: "view", allowed: true, disabled: true, show: true },
           { name: "addEdit", allowed: false, disabled: false, show: true },
@@ -68,7 +68,7 @@ const rolesAndPriviledgeList = [
         ],
       },
       {
-        name: "test case",
+        name: "Test case",
         type: [
           { name: "view", allowed: true, disabled: true, show: true },
           { name: "addEdit", allowed: true, disabled: true, show: true },
@@ -98,7 +98,7 @@ const rolesAndPriviledgeList = [
     name: "Tester",
     priviledge: [
       {
-        name: "project",
+        name: "Project",
         type: [
           { name: "view", allowed: true, disabled: true, show: true },
           { name: "addEdit", allowed: false, disabled: false, show: true },
@@ -106,7 +106,7 @@ const rolesAndPriviledgeList = [
         ],
       },
       {
-        name: "test case",
+        name: "Test case",
         type: [
           { name: "view", allowed: true, disabled: true, show: true },
           { name: "addEdit", allowed: false, disabled: false, show: true },
