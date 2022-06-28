@@ -18,7 +18,7 @@ function RolePrivlege(props) {
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
-          <TableRow>
+          <TableRow sx={{ background: "#F0F0F0" }}>
             <TableCell>Permissions</TableCell>
             <TableCell align="center">View</TableCell>
             <TableCell align="center">Add & Edit</TableCell>
