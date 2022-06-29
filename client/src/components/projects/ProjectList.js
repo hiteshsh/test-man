@@ -22,7 +22,7 @@ const linkStyle = {
 };
 
 function ProjectsList() {
-  const { projects, error } = ProjectListAPI();
+  const { projects, error, isLoading } = ProjectListAPI();
 
   console.log("projects:", projects);
   const { openPopup, handleOpenPopup, handleClosePopup } = Handlepopup();
@@ -71,6 +71,8 @@ function ProjectsList() {
             </DialogContent>
           </Dialog>
         </Grid>
+        {error && <div>{error}</div>}
+        {isLoading && <div>Loading...</div>}
         {projects &&
           projects.map((project) => (
             <Grid item md={3} padding={2} key={project._id}>
