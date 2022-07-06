@@ -1,6 +1,7 @@
 import {
   Button,
   Checkbox,
+  Divider,
   Paper,
   Stack,
   Table,
@@ -14,19 +15,20 @@ import {
 import React from "react";
 
 function RolePrivlege(props) {
+  const role = props.roles[props.selectedIndex];
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow sx={{ background: "#F0F0F0" }}>
-            <TableCell>Permissions</TableCell>
+            <TableCell>{role?.name} &gt; Permissions</TableCell>
             <TableCell align="center">View</TableCell>
             <TableCell align="center">Add & Edit</TableCell>
             <TableCell align="center">Delete</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.role.priviledge.map((row) => (
+          {role?.priviledge.map((row) => (
             <TableRow
               key={row.name}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -34,7 +36,7 @@ function RolePrivlege(props) {
               <TableCell component="th" scope="row">
                 {row.name}
               </TableCell>
-              {row.type.map((type) => (
+              {row.ptype.map((type) => (
                 <TableCell align="center" key={type.name + "_" + row.name}>
                   {type.show ? (
                     <Checkbox

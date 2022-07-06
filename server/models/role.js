@@ -6,12 +6,12 @@ const RoleSchema = mongoose.Schema({
   priviledge: [
     {
       name: { type: String },
-      type: [
+      ptype: [
         {
           name: { type: String },
-          allowed: boolean,
-          show: boolean,
-          disabled: boolean,
+          allowed: { type: Boolean },
+          show: { type: Boolean },
+          disabled: { type: Boolean },
         },
       ],
     },

@@ -13,14 +13,12 @@ import {
 import React from "react";
 
 export default function RoleListData(props) {
-  console.log("selected index", props.selectedIndex);
-
-  var rolesEl = props.list.map((role, index) => (
+  var rolesEl = props.roles.map((role, index) => (
     <ListItemButton
-      key={role.id}
+      key={role._id}
       selected={props.selectedIndex === index}
       onClick={(e) => {
-        props.onClickRole(role.id, e, index);
+        props.onClickRole(role._id, e, index);
       }}
     >
       <ListItemText inset primary={role.name} sx={{ paddingLeft: "2px" }} />
@@ -53,7 +51,7 @@ export default function RoleListData(props) {
           <Typography variant="h6">Roles</Typography>
         </Box>
         <Divider />
-        {props.list.length > 0 ? (
+        {props.roles.length > 0 ? (
           rolesEl
         ) : (
           <Typography

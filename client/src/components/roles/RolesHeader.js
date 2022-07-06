@@ -36,7 +36,9 @@ function RolesHeader() {
         padding={2}
       >
         <Grid item md={4}>
-          <Typography variant="h5">Roles</Typography>
+          <Typography variant="h5" style={{ fontWeight: 600 }}>
+            Roles
+          </Typography>
         </Grid>
         <Grid item md={4}></Grid>
         <Grid item md={4}>

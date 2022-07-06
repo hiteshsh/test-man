@@ -84,11 +84,11 @@ export default function UserList() {
     { field: "id", headerName: "Id", width: 70 },
     { field: "emailId", headerName: "Email Id", width: 300 },
     { field: "name", headerName: "Name", width: 200 },
-    { field: "role", headerName: "Role", width: 150 },
+    { field: "role", headerName: "Role", width: 200 },
     {
       field: "status",
       headerName: "Status",
-      width: 150,
+      width: 200,
       renderCell: (params) => {
         if (params.value === "Active") {
           return (
@@ -151,13 +151,13 @@ export default function UserList() {
       marginLeft={3}
       marginRight={3}
       border="0px solid"
-      width="80%"
+      width="90%"
     >
-      <div style={{ height: 400, width: "100%", backgroundColor: "#ffff" }}>
+      <div style={{ height: 500, width: "100%", backgroundColor: "#ffff" }}>
         <DataGrid
           rows={rows}
           columns={columns}
-          pageSize={5}
+          pageSize={10}
           rowsPerPageOptions={[5]}
           checkboxSelection
           disableSelectionOnClick

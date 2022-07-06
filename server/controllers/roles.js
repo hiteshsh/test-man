@@ -41,7 +41,7 @@ export const addRole = async (req, res) => {
   }
 };
 
-export const deleteUserById = async (req, res) => {
+export const deleteRoleById = async (req, res) => {
   try {
     const removedRole = await Role.remove({
       _id: req.params.id,

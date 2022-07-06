@@ -23,7 +23,7 @@ const appMain = css`
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#333996",
+      main: "#467fcf",
       light: "#3c44b126",
     },
     secondary: {

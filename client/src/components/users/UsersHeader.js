@@ -36,7 +36,9 @@ function UsersHeader() {
         padding={2}
       >
         <Grid item md={4}>
-          <Typography variant="h5">Users</Typography>
+          <Typography variant="h5" style={{ fontWeight: 600 }}>
+            Users
+          </Typography>
         </Grid>
         <Grid item md={4}></Grid>
         <Grid item md={4}>
