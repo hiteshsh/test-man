@@ -5,7 +5,7 @@ import RoleListData from "./RoleListData";
 import RolePrivlege from "./RolePrivlege";
 
 export default function RoleList() {
-  const { roles, error, isLoading } = RoleListAPI();
+  const { roles, error, isLoading, setRoles } = RoleListAPI();
   console.log("roles after", roles);
 
   const [selectedIndex, setSelectedIndex] = React.useState(0);
@@ -15,7 +15,30 @@ export default function RoleList() {
     e.preventDefault();
     setSelectedIndex(index);
     console.log("roles in on click", roles);
-    //const role = roles.find((e) => e._id === _id);
+  };
+
+  const onChangeCheckbox = (e, key) => {
+    e.preventDefault();
+    const splitString = key.split("_");
+    const roleName = splitString[0];
+    const priveledge = splitString[1];
+    const type = splitString[2];
+
+    const rolesNew = [...roles];
+    rolesNew.map((role) => {
+      if (role.name === roleName) {
+        role.priviledge.map((priv) => {
+          if (priv.name === priveledge) {
+            priv.ptype.map((ptype) => {
+              if (ptype.name === type) {
+                ptype.allowed = !ptype.allowed;
+              }
+            });
+          }
+        });
+      }
+    });
+    setRoles(rolesNew);
   };
 
   return (
@@ -35,7 +58,11 @@ export default function RoleList() {
         </Grid>
         <Grid item md={8} padding={2}>
           {roles && roles.length > 0 && (
-            <RolePrivlege roles={roles} selectedIndex={selectedIndex} />
+            <RolePrivlege
+              roles={roles}
+              selectedIndex={selectedIndex}
+              onChangeCheckbox={onChangeCheckbox}
+            />
           )}
         </Grid>
       </Grid>

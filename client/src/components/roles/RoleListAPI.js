@@ -29,7 +29,7 @@ const RoleListAPI = () => {
     getAllRoles();
   }, []);
 
-  return { roles, error, isLoading };
+  return { roles, error, isLoading, setRoles };
 };
 
 export default RoleListAPI;

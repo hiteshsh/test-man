@@ -40,9 +40,15 @@ function RolePrivlege(props) {
                 <TableCell align="center" key={type.name + "_" + row.name}>
                   {type.show ? (
                     <Checkbox
-                      key={type.name + "_" + row.name}
+                      key={role.name + "_" + type.name + "_" + row.name}
                       checked={type.allowed}
                       disabled={type.disabled}
+                      onChange={(e) => {
+                        props.onChangeCheckbox(
+                          e,
+                          role.name + "_" + row.name + "_" + type.name
+                        );
+                      }}
                     />
                   ) : (
                     <></>
