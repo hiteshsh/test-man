@@ -1,10 +1,16 @@
 import { Dashboard, Folder, MoreVert, WorkHistory } from "@mui/icons-material";
 import {
   Badge,
+  Button,
   Card,
   CardActions,
   CardContent,
   CardHeader,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   IconButton,
   LinearProgress,
   Menu,
@@ -20,12 +26,39 @@ import Axios from "axios";
 function Project(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const [openDialog, setOpenDialog] = React.useState(false);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handleDelete = () => {
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+
+  const handleDeleteSubmit = (event) => {
+    console.log("delete element id", event.currentTarget.id);
+    const projectId = event.currentTarget.id;
+    Axios.delete("/project/" + projectId)
+      .then((response) => {
+        console.log(response);
+
+        if (!response.status === 200) {
+          throw Error("Error deleting project");
+        }
+        window.location = "/projects";
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+
   return (
     <Paper
       sx={{
@@ -68,8 +101,30 @@ function Project(props) {
         >
           <MenuItem onClick={handleClose}>Edit</MenuItem>
           <MenuItem onClick={handleClose}>Copy</MenuItem>
-          <MenuItem onClick={handleClose}>Delete</MenuItem>
+          <MenuItem onClick={handleDelete}>Delete</MenuItem>
         </Menu>
+        <Dialog
+          open={openDialog}
+          onClose={handleCloseDialog}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Are you sure you want to delete the project?"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Deleting this project will remove the project from the list
+              forever
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseDialog}>No</Button>
+            <Button id={props.id} onClick={handleDeleteSubmit} autoFocus>
+              Yes
+            </Button>
+          </DialogActions>
+        </Dialog>
 
         <CardContent
           sx={{

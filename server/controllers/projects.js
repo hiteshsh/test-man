@@ -43,6 +43,19 @@ export const createProject = async (req, res) => {
   }
 };
 
+export const deleteProjectById = async (req, res) => {
+  try {
+    console.log("deleting project", req.params.projectId);
+    const removedProject = await Project.deleteOne({
+      _id: req.params.projectId,
+    });
+
+    res.status(200).json(removedProject);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
 export const validate = (method) => {
   switch (method) {
     case "createProject": {

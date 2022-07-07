@@ -43,8 +43,6 @@ function ProjectForm() {
     };
     console.log("submit", project);
     Axios.post("/project", project).then((res) => {
-      console.log(res);
-      console.log(res.data);
       window.location = "/projects";
     });
   };

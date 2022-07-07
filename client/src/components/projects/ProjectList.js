@@ -76,7 +76,7 @@ function ProjectsList() {
         {projects &&
           projects.map((project) => (
             <Grid item md={3} padding={2} key={project._id}>
-              <Project name={project.name} />
+              <Project name={project.name} id={project._id} />
             </Grid>
           ))}
       </Grid>

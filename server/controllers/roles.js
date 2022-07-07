@@ -43,7 +43,7 @@ export const addRole = async (req, res) => {
 
 export const deleteRoleById = async (req, res) => {
   try {
-    const removedRole = await Role.remove({
+    const removedRole = await Role.deleteOne({
       _id: req.params.id,
     });
 
