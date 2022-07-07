@@ -15,8 +15,11 @@ const initialValues = {
   description: "",
 };
 
-function ProjectForm() {
-  const [values, setValues] = useState(initialValues);
+function ProjectForm({ project, editForm }) {
+  const [values, setValues] = useState(
+    editForm    
+      ? { name: project.name, description: project.description }: initialValues
+  );
 
   //useEffect(() => {}, [values]);
   const handleInputChange = (e) => {
@@ -37,14 +40,26 @@ function ProjectForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const project = {
-      description: values.description,
-      name: values.name,
-    };
-    console.log("submit", project);
-    Axios.post("/project", project).then((res) => {
-      window.location = "/projects";
-    });
+    if (editForm) {
+      const project = {
+        id: project._id,
+        description: values.description,
+        name: values.name,
+      };
+      console.log("submit", project);
+      Axios.put("/project", project).then((res) => {
+        window.location = "/projects";
+      });
+    } else {
+      const project = {
+        description: values.description,
+        name: values.name,
+      };
+      console.log("submit", project);
+      Axios.post("/project", project).then((res) => {
+        window.location = "/projects";
+      });
+    }
   };
 
   return (

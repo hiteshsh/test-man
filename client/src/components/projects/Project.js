@@ -1,4 +1,10 @@
-import { Dashboard, Folder, MoreVert, WorkHistory } from "@mui/icons-material";
+import {
+  Close,
+  Dashboard,
+  Folder,
+  MoreVert,
+  WorkHistory,
+} from "@mui/icons-material";
 import {
   Badge,
   Button,
@@ -22,11 +28,14 @@ import {
 } from "@mui/material";
 import React, { useEffect } from "react";
 import Axios from "axios";
+import ProjectForm from "./ProjectForm";
+import Handlepopup from "../common/Handlepopup";
 
-function Project(props) {
+function Project({ project }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const [openDialog, setOpenDialog] = React.useState(false);
+  const { openPopup, handleOpenPopup, handleClosePopup } = Handlepopup();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -35,7 +44,12 @@ function Project(props) {
     setAnchorEl(null);
   };
   const handleDelete = () => {
+    handleClose();
     setOpenDialog(true);
+  };
+  const handleEdit = () => {
+    handleClose();
+    handleOpenPopup();
   };
 
   const handleCloseDialog = () => {
@@ -43,7 +57,6 @@ function Project(props) {
   };
 
   const handleDeleteSubmit = (event) => {
-    console.log("delete element id", event.currentTarget.id);
     const projectId = event.currentTarget.id;
     Axios.delete("/project/" + projectId)
       .then((response) => {
@@ -88,7 +101,7 @@ function Project(props) {
               <MoreVert />
             </IconButton>
           }
-          title={props.name}
+          title={project.name}
         />
         <Menu
           id="basic-menu"
@@ -99,7 +112,7 @@ function Project(props) {
             "aria-labelledby": "basic-button",
           }}
         >
-          <MenuItem onClick={handleClose}>Edit</MenuItem>
+          <MenuItem onClick={handleEdit}>Edit</MenuItem>
           <MenuItem onClick={handleClose}>Copy</MenuItem>
           <MenuItem onClick={handleDelete}>Delete</MenuItem>
         </Menu>
@@ -120,10 +133,30 @@ function Project(props) {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleCloseDialog}>No</Button>
-            <Button id={props.id} onClick={handleDeleteSubmit} autoFocus>
+            <Button id={project._id} onClick={handleDeleteSubmit} autoFocus>
               Yes
             </Button>
           </DialogActions>
+        </Dialog>
+
+        <Dialog open={openPopup} onClose={handleClosePopup}>
+          <DialogTitle>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <Typography variant="h6">Edit Project</Typography>
+              <IconButton onClick={handleClosePopup}>
+                <Close />
+              </IconButton>
+            </div>
+          </DialogTitle>
+          <DialogContent>
+            <ProjectForm project={project} editForm />
+          </DialogContent>
         </Dialog>
 
         <CardContent
