@@ -26,7 +26,7 @@ const testCaseList = [
       },
     ],
     project: {
-      id: "",
+      id: "1234",
       name: "project1",
     },
     testsuite: {

@@ -6,6 +6,7 @@ import RolePrivlege from "./RolePrivlege";
 
 export default function RoleList() {
   const { roles, error, isLoading, setRoles } = RoleListAPI();
+
   console.log("roles after", roles);
 
   const [selectedIndex, setSelectedIndex] = React.useState(0);
@@ -41,6 +42,15 @@ export default function RoleList() {
     setRoles(rolesNew);
   };
 
+  const onSaveRole = (e) => {
+    e.preventDefault();
+    var role = roles[selectedIndex];
+  };
+
+  const onResetRole = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <Box border="0px solid">
       {error && <div>{error}</div>}
@@ -62,6 +72,8 @@ export default function RoleList() {
               roles={roles}
               selectedIndex={selectedIndex}
               onChangeCheckbox={onChangeCheckbox}
+              onSaveRole={onSaveRole}
+              onResetRole={onResetRole}
             />
           )}
         </Grid>

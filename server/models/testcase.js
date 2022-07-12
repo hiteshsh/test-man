@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 const testcaseSchema = mongoose.Schema({
   testCaseId: { type: String, required: true },
+  key: { type: String },
   title: { type: String, required: true },
   description: { type: String, required: true },
   type: {
@@ -17,10 +18,13 @@ const testcaseSchema = mongoose.Schema({
     enum: ["active", "inactive"],
     default: "active",
   },
-  createdAt: {
-    type: Date,
-    default: new Date(),
-  },
+  steps: [
+    {
+      step: Number,
+      instruction: String,
+      expectedResult: String,
+    },
+  ],
   projectId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "project",
@@ -44,6 +48,24 @@ const testcaseSchema = mongoose.Schema({
   automated: {
     type: Boolean,
     default: false,
+  },
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "user",
+    required: false,
+  },
+  updatedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "user",
+    required: false,
+  },
+  createdAt: {
+    type: Date,
+    default: new Date(),
+  },
+  updatedAt: {
+    type: Date,
+    default: new Date(),
   },
 });
 

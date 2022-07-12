@@ -24,10 +24,10 @@ export default function RoleListData(props) {
       <ListItemText inset primary={role.name} sx={{ paddingLeft: "2px" }} />
       <ListItemSecondaryAction>
         <IconButton size="small">
-          <Delete />
+          <Delete fontSize="inherit" />
         </IconButton>
         <IconButton size="small">
-          <Edit />
+          <Edit fontSize="inherit" />
         </IconButton>
       </ListItemSecondaryAction>
     </ListItemButton>

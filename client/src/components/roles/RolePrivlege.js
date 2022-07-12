@@ -16,6 +16,7 @@ import React from "react";
 
 function RolePrivlege(props) {
   const role = props.roles[props.selectedIndex];
+  console.log("selected Role", role);
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -69,8 +70,12 @@ function RolePrivlege(props) {
                   float: "right",
                 }}
               >
-                <Button variant="outlined">Reset</Button>
-                <Button variant="contained" type="submit">
+                <Button variant="outlined" onClick={(e) => {props.onResetRole(e)}}>Reset</Button>
+                <Button
+                  variant="contained"
+                  type="submit"
+                  onClick={(e) => {props.onSaveRole(e)}}
+                >
                   Save
                 </Button>
               </Stack>

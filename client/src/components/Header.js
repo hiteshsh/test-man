@@ -3,6 +3,7 @@ import {
   AccountCircle,
   AccountCircleOutlined,
   AccountCircleTwoTone,
+  Menu,
 } from "@mui/icons-material";
 import { AppBar, Grid, IconButton, Toolbar, Typography } from "@mui/material";
 import React from "react";
@@ -17,8 +18,13 @@ function Header() {
   return (
     <AppBar position="static" css={appBar}>
       <Toolbar>
-        <Grid container>
-          <Grid item md={4}>
+        <Grid container alignItems="center" >
+          <Grid item md={0}>
+            <IconButton>
+              <Menu style={{ color: "#fff" }} />
+            </IconButton>
+          </Grid>
+          <Grid item md={3}>
             <Typography variant="h6">Test-Man</Typography>
           </Grid>
           <Grid item md={4}></Grid>
