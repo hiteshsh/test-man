@@ -9,11 +9,11 @@ const sectionSchema = mongoose.Schema({
     ref: "testSuite",
     required: true,
   },
-  projectId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "project",
-    required: true,
-  },
+  // projectId: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: "project",
+  //   required: true,
+  // },
   status: {
     type: String,
     enum: ["active", "inactive"],

@@ -11,23 +11,36 @@ const testRunResultSchema = mongoose.Schema({
     ref: "release",
     required: true,
   },
-  status: {
+  currentStatus: {
     type: String,
     enum: ["Passed", "Failed", "Untested", "Blocked"],
     default: "Untested",
   },
-  comment: String,
+  results: [
+    {
+      status: {
+        type: String,
+        enum: ["Passed", "Failed", "Untested", "Blocked"],
+        default: "Untested",
+      },
+      comment: String,
+      executedAt: {
+        type: Date,
+        default: new Date(),
+      },
+    },
+  ],
   assignedTo: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
     required: false,
   },
-  updatedBy: {
+  createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
     required: false,
   },
-  updatedAt: {
+  createdAt: {
     type: Date,
     default: new Date(),
   },

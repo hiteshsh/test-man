@@ -25,16 +25,16 @@ const testcaseSchema = mongoose.Schema({
       expectedResult: String,
     },
   ],
-  projectId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "project",
-    required: true,
-  },
-  testsuiteId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "testSuite",
-    required: true,
-  },
+  // projectId: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: "project",
+  //   required: true,
+  // },
+  // testsuiteId: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: "testSuite",
+  //   required: true,
+  // },
   sectionId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "section",

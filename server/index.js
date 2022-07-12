@@ -7,6 +7,7 @@ import projectRoutes from "./routes/projects.js";
 import userRoutes from "./routes/users.js";
 import roleRoutes from "./routes/roles.js";
 import testsuites from "./routes/testsuites.js";
+import sections from "./routes/sections.js";
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use("/", projectRoutes);
 app.use("/users", userRoutes);
 app.use("/roles", roleRoutes);
 app.use("/", testsuites);
+app.use("/", sections);
 
 const PORT = process.env.PORT || 5002;
 mongoose

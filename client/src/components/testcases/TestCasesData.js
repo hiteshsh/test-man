@@ -17,7 +17,14 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
-import { Delete, Edit } from "@mui/icons-material";
+import { Add, AddCircle, Delete, Edit } from "@mui/icons-material";
+import { Link } from "react-router-dom";
+import { Button } from "@mui/material";
+
+const linkStyle = {
+  textDecoration: "none",
+  color: "inherit",
+};
 
 function createData(name, key) {
   return {
@@ -129,7 +136,7 @@ const EnhancedTableToolbar = (props) => {
         </Typography>
       ) : (
         <Typography
-          sx={{ flex: "1 1 100%" }}
+          sx={{ flex: "1 1 70%" }}
           variant="h6"
           id="tableTitle"
           component="div"
@@ -145,11 +152,24 @@ const EnhancedTableToolbar = (props) => {
           </IconButton>
         </Tooltip>
       ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
+        <>
+          <Button
+            component={Link}
+            to="/testcase/new"
+            variant="contained"
+            size="small"
+            startIcon={<Add />}
+            sx={{ textTransform: "none", mt: 1, mb: 1 }}
+          >
+            Add test
+          </Button>
+
+          <Tooltip title="Filter list">
+            <IconButton>
+              <FilterListIcon />
+            </IconButton>
+          </Tooltip>
+        </>
       )}
     </Toolbar>
   );

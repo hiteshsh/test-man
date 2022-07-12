@@ -3,6 +3,7 @@ import { body, validationResult } from "express-validator";
 
 export const getProjects = async (req, res) => {
   try {
+    
     let limit =
       req.query.limit && req.query.limit <= 25 ? parseInt(req.query.limit) : 10;
     let page = 0;
@@ -15,6 +16,7 @@ export const getProjects = async (req, res) => {
     const projects = await Project.find()
       .limit(limit)
       .skip(limit * page);
+
     res.status(200).json(projects);
   } catch (error) {
     res.status(404).json({ message: error.message });
@@ -51,6 +53,24 @@ export const deleteProjectById = async (req, res) => {
     });
 
     res.status(200).json(removedProject);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+export const updateProjectById = async (req, res) => {
+  try {
+    const updatedProject = await Project.updateOne({
+      _id: req.params.id,
+      $set: {
+        name: req.body.name,
+        description: req.body.description,
+        creator: req.body.creator,
+        prefix: req.body.prefix,
+      },
+    });
+
+    res.status(200).json(updatedUser);
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
