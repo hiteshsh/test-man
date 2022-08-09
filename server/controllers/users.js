@@ -32,9 +32,10 @@ export const addUser = async (req, res) => {
   const newUser = new User({
     name: req.body.name,
     emailId: req.body.emailId,
+    password: req.body.password,
     creator: req.body.creator,
-    roleId: req.body.roleId,
     status: req.body.status,
+    roles: req.body.roles,
   });
   try {
     await newUser.save();

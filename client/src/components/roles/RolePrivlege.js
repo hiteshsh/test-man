@@ -1,7 +1,6 @@
 import {
   Button,
   Checkbox,
-  Divider,
   Paper,
   Stack,
   Table,
@@ -39,11 +38,10 @@ function RolePrivlege(props) {
               </TableCell>
               {row.ptype.map((type) => (
                 <TableCell align="center" key={type.name + "_" + row.name}>
-                  {type.show ? (
+                  {type.show && (
                     <Checkbox
                       key={role.name + "_" + type.name + "_" + row.name}
                       checked={type.allowed}
-                      disabled={type.disabled}
                       onChange={(e) => {
                         props.onChangeCheckbox(
                           e,
@@ -51,8 +49,6 @@ function RolePrivlege(props) {
                         );
                       }}
                     />
-                  ) : (
-                    <></>
                   )}
                 </TableCell>
               ))}
@@ -70,11 +66,20 @@ function RolePrivlege(props) {
                   float: "right",
                 }}
               >
-                <Button variant="outlined" onClick={(e) => {props.onResetRole(e)}}>Reset</Button>
+                <Button
+                  variant="outlined"
+                  onClick={(e) => {
+                    props.onResetRole(e);
+                  }}
+                >
+                  Reset
+                </Button>
                 <Button
                   variant="contained"
                   type="submit"
-                  onClick={(e) => {props.onSaveRole(e)}}
+                  onClick={(e) => {
+                    props.onSaveRole(e);
+                  }}
                 >
                   Save
                 </Button>

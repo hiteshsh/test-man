@@ -10,8 +10,8 @@ const RoleSchema = mongoose.Schema({
         {
           name: { type: String },
           allowed: { type: Boolean },
-          show: { type: Boolean },
-          disabled: { type: Boolean },
+          show: { type: Boolean }
+          
         },
       ],
     },

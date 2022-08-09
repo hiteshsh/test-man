@@ -2,7 +2,7 @@ import TestSuite from "../models/testSuite.js";
 
 export const getTestSuites = async (req, res) => {
   try {
-    let projectId = req.params.projectId;
+    let projectId = req.query.projectId;
     const query = { projectId: projectId };
     //console.log("projectId", req.query.projectId);
 

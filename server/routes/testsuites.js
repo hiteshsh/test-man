@@ -8,7 +8,7 @@ import {
 
 const router = express.Router();
 
-router.get("/project/:projectId/testsuites", getTestSuites);
+router.get("/testsuites", getTestSuites);
 router.post("/testsuite", createTestSuite);
 router.delete("/testsuite/:testsuiteId", deleteTestSuiteById);
 //router.put("/testsuite/:testsuiteId", updateTestCaseById);

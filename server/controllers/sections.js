@@ -2,6 +2,8 @@ import Section from "../models/section.js";
 
 export const getSections = async (req, res) => {
   try {
+    let testSuiteId = req.query.testSuiteId;
+    const query = { testSuiteId: testSuiteId };
     let limit =
       req.query.limit && req.query.limit <= 100
         ? parseInt(req.query.limit)
@@ -13,7 +15,7 @@ export const getSections = async (req, res) => {
         page = Number.isInteger(req.query.page) ? req.query.page : 0;
       }
     }
-    const sections = await Section.find()
+    const sections = await Section.find(query)
       .limit(limit)
       .skip(limit * page);
     res.status(200).json(sections);
@@ -23,12 +25,6 @@ export const getSections = async (req, res) => {
 };
 
 export const createSection = async (req, res) => {
-  // const errors = validationResult(req);
-  // if (!errors.isEmpty()) {
-  //   res.status(400).json({ errors: errors.array() });
-  //   return;
-  // }
-
   const newSection = new Section({
     name: req.body.name,
     description: req.body.description,
@@ -36,7 +32,6 @@ export const createSection = async (req, res) => {
     status: req.body.status,
     projectId: req.body.projectId,
     testSuiteId: req.body.testSuiteId,
-    status: req.body.status,
   });
   try {
     await newSection.save();

@@ -9,16 +9,24 @@ const UserSchema = mongoose.Schema({
     trim: true,
     lowercase: true,
   },
-  creator: String,
+  password:{type: String},
   status: {
     type: String,
     enum: ["active", "inactive"],
     default: "active",
   },
-  roleId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "role",
-  },
+  roles:[{
+    roleId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "role",
+    },
+    projectId:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "project",
+    }
+  }
+  ]
+  
 });
 
 const User = mongoose.model("user", UserSchema);

@@ -3,7 +3,7 @@ import { createSection, getSections } from "../controllers/sections.js";
 
 const router = express.Router();
 
-router.get("/testsuites/:testsuiteId/sections", getSections);
+router.get("/sections", getSections);
 router.post("/section", createSection);
 // router.delete("/section/:sectionId", deleteSectionById);
 // router.put("/section/:sectionId", updateSectionById);
