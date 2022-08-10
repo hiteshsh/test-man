@@ -11,6 +11,7 @@ const TestSuiteListAPI = () => {
     function getTestSuitesForProject() {
       Axios.get("/testsuites?projectId=62e02165cc1c8782f8b4188b")
         .then((response) => {
+          console.log("response:", response);
           if (!response.status === 200) {
             console.log("error", response);
             throw Error("Couldn't load data");

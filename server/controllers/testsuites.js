@@ -1,10 +1,10 @@
 import TestSuite from "../models/testSuite.js";
+import Section from "../models/section.js";
 
 export const getTestSuites = async (req, res) => {
   try {
     let projectId = req.query.projectId;
     const query = { projectId: projectId };
-    //console.log("projectId", req.query.projectId);
 
     let limit =
       req.query.limit && req.query.limit <= 100
@@ -19,12 +19,29 @@ export const getTestSuites = async (req, res) => {
     }
     const testSuites = await TestSuite.find(query)
       .limit(limit)
-      .skip(limit * page);
-    res.status(200).json(testSuites);
+      .skip(limit * page)
+      .lean()
+      .exec();
+
+    let newSuites = [];
+
+    for (const suite of testSuites) {
+      const query1 = { testSuiteId: suite._id };
+      const sections = await getSections(query1);
+      suite["sections"] = sections;
+      newSuites.push(suite);
+    }
+
+    res.status(200).json(newSuites);
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
 };
+
+async function getSections(query1) {
+  const sections = await Section.find(query1);
+  return sections;
+}
 
 export const createTestSuite = async (req, res) => {
   // const errors = validationResult(req);

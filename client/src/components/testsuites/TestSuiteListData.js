@@ -29,75 +29,21 @@ const style = {
   p: 4,
 };
 
-const testSuiteList = [
-  {
-    _id: "1234",
-    name: "test suite 1",
-    sections: [
-      { _id: "sec1", name: "listing1" },
-      { _id: "sec2", name: "finding1" },
-    ],
-    key: false,
-  },
-  {
-    _id: "1235",
-    name: "test suite 2",
-    sections: [
-      { _id: "sec3", name: "listing2" },
-      { _id: "sec4", name: "finding2" },
-    ],
-    key: false,
-  },
-];
-
 function TestSuiteListData() {
-  const [open, setOpen] = React.useState(false);
-  //const { testSuiteList, error, isLoading } = TestSuiteListAPI();
+  //const [open, setOpen] = React.useState(false);
+  const [selectedIndex, setSelectedIndex] = React.useState("")
+  const { testsuites, error, isLoading } = TestSuiteListAPI();
+  console.log("testSuiteList", testsuites);
 
-  const handleClick = () => {
-    setOpen(!open);
+  const handleClick = index => {
+    //setOpen(!open);
+    if (selectedIndex === index) {
+      setSelectedIndex("")
+    } else {
+      setSelectedIndex(index)
+    }
   };
 
-  function SectionListUI(suite) {
-    return suite.sections.map((section) => (
-      <ListItemButton key={section._id} sx={{ pl: 8 }}>
-        <ListItemText primary={section.name} />
-      </ListItemButton>
-    ));
-  }
-
-  var testSuiteListEl = testSuiteList.map((suite) =>
-    suite.sections.length < 0 ? (
-      <ListItemButton key="new_project">
-        <ListItemIcon>
-          <FolderOutlined />
-        </ListItemIcon>
-        <ListItemText inset primary={suite.name} />
-      </ListItemButton>
-    ) : (
-      <div key={suite._id}>
-        <ListItemButton onClick={handleClick} key={suite._id}>
-          <ListItemIcon>
-            <FolderOutlined />
-          </ListItemIcon>
-          <ListItemText primary={suite.name} />
-          {open ? <ExpandLess /> : <ExpandMore />}
-        </ListItemButton>
-        <Collapse
-          key={suite.sections._id}
-          in={open}
-          timeout="auto"
-          unmountOnExit
-        >
-          <List component="div" disablePadding>
-            {SectionListUI(suite)}
-          </List>
-        </Collapse>
-      </div>
-    )
-  );
-
-  //console.log("Testsuites ", testsuites);
 
   return (
     <Paper elevation={0}>
@@ -108,8 +54,36 @@ function TestSuiteListData() {
       >
         <TestSuiteListDataHeader />
         <Divider />
-        {testSuiteList.length > 0 ? (
-          testSuiteListEl
+        {testsuites && testsuites.length > 0 ? (
+          testsuites.map((suite,index) => (
+            <>
+              <ListItemButton key={index} onClick={() => {
+                handleClick(index)
+              }}>
+                <ListItemIcon>
+                  <FolderOutlined />
+                </ListItemIcon>
+                <ListItemText inset primary={suite.name} sx={{ pl: 0 }} />
+                {index === selectedIndex ? <ExpandLess /> : <ExpandMore />}
+              </ListItemButton>
+              {suite.sections && (
+                <Collapse
+                  
+                  in={index === selectedIndex}
+                  timeout="auto"
+                  unmountOnExit
+                >
+                  <List component="div" disablePadding>
+                    {suite.sections.map((section,index) => (
+                      <ListItemButton key={section._id}>
+                        <ListItemText primary={section.name} sx={{ pl: 8 }} />
+                      </ListItemButton>
+                    ))}
+                  </List>
+                </Collapse>
+              )}
+            </>
+          ))
         ) : (
           <Typography
             variant="body1"
