@@ -1,8 +1,9 @@
 import React from "react";
-import { FolderOutlined, Group } from "@mui/icons-material";
+import { Edit, FolderOutlined, Group } from "@mui/icons-material";
 import { Box } from "@mui/system";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 import {
   List,
@@ -13,6 +14,7 @@ import {
   ListItemText,
   ListItemIcon,
   Collapse,
+  Tooltip,
 } from "@mui/material";
 import TestSuiteListDataHeader from "./TestSuiteListDataHeader";
 import TestSuiteListAPI from "./TestSuiteListAPI";
@@ -31,19 +33,18 @@ const style = {
 
 function TestSuiteListData() {
   //const [open, setOpen] = React.useState(false);
-  const [selectedIndex, setSelectedIndex] = React.useState("")
+  const [selectedIndex, setSelectedIndex] = React.useState("");
   const { testsuites, error, isLoading } = TestSuiteListAPI();
   console.log("testSuiteList", testsuites);
 
-  const handleClick = index => {
+  const handleClick = (index) => {
     //setOpen(!open);
     if (selectedIndex === index) {
-      setSelectedIndex("")
+      setSelectedIndex("");
     } else {
-      setSelectedIndex(index)
+      setSelectedIndex(index);
     }
   };
-
 
   return (
     <Paper elevation={0}>
@@ -55,26 +56,31 @@ function TestSuiteListData() {
         <TestSuiteListDataHeader />
         <Divider />
         {testsuites && testsuites.length > 0 ? (
-          testsuites.map((suite,index) => (
+          testsuites.map((suite, index) => (
             <>
-              <ListItemButton key={index} onClick={() => {
-                handleClick(index)
-              }}>
-                <ListItemIcon>
-                  <FolderOutlined />
-                </ListItemIcon>
-                <ListItemText inset primary={suite.name} sx={{ pl: 0 }} />
-                {index === selectedIndex ? <ExpandLess /> : <ExpandMore />}
-              </ListItemButton>
+              
+                <ListItemButton
+                  key={suite._id}
+                  selected={selectedIndex === index}
+                  onClick={() => {
+                    handleClick(index);
+                  }}
+                >
+                  <ListItemIcon>
+                    <FolderOutlined />
+                  </ListItemIcon>
+                  <ListItemText inset primary={suite.name} sx={{ pl: 0 }} />
+                  {index === selectedIndex ? <ExpandLess /> : <ExpandMore />}
+                </ListItemButton>
+              
               {suite.sections && (
                 <Collapse
-                  
                   in={index === selectedIndex}
                   timeout="auto"
                   unmountOnExit
                 >
                   <List component="div" disablePadding>
-                    {suite.sections.map((section,index) => (
+                    {suite.sections.map((section, index) => (
                       <ListItemButton key={section._id}>
                         <ListItemText primary={section.name} sx={{ pl: 8 }} />
                       </ListItemButton>

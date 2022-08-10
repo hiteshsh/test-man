@@ -2,7 +2,26 @@ import TestCase from "../models/testcase.js";
 import { body, validationResult } from "express-validator";
 
 export const getTestCases = async (req, res) => {
+  // let sectionId = req.query.sectionId;
+  // let testsuiteId = req.query.testsuiteId;
+  // const query = { testsuiteId: testsuiteId, sectionId: sectionId };
+
   try {
+    const query = {};
+    let sectionId = req.query.sectionId;
+    let testsuiteId = req.query.testsuiteId;
+    let projectId = req.query.projectId;
+
+    if (sectionId) {
+      query.sectionId = sectionId;
+    }
+    if (testsuiteId) {
+      query.testsuiteId = testsuiteId;
+    }
+    if (projectId) {
+      query.projectId = projectId;
+    }
+
     let limit =
       req.query.limit && req.query.limit <= 100
         ? parseInt(req.query.limit)
@@ -14,7 +33,7 @@ export const getTestCases = async (req, res) => {
         page = Number.isInteger(req.query.page) ? req.query.page : 0;
       }
     }
-    const testcases = await TestCase.find()
+    const testcases = await TestCase.find(query)
       .limit(limit)
       .skip(limit * page);
     res.status(200).json(testcases);
@@ -34,7 +53,7 @@ export const createTestCase = async (req, res) => {
   const newTestCase = new TestCase({
     testCaseId: req.body.testCaseId,
     title: req.body.title,
-    description: req.body.description,
+    instruction: req.body.instruction,
     type: req.body.type,
     creator: req.body.creator,
     tags: req.body.tags,
@@ -43,7 +62,7 @@ export const createTestCase = async (req, res) => {
     prerequisite: req.body.prerequisite,
     automated: req.body.automated,
     projectId: req.body.projectId,
-    testSuiteId: req.body.testSuiteId,
+    testsuiteId: req.body.testsuiteId,
     sectionId: req.body.sectionId,
   });
   try {
@@ -81,17 +100,18 @@ export const updateTestCaseById = async (req, res) => {
     const updatedTestCase = await TestCase.updateOne({
       _id: req.params.testcaseId,
       $set: {
+        testCaseId: req.body.testCaseId,
         title: req.body.title,
-        description: req.body.description,
+        instruction: req.body.instruction,
+        type: req.body.type,
         creator: req.body.creator,
         tags: req.body.tags,
         priority: req.body.priority,
-        testCaseId: req.body.testCaseId,
         status: req.body.status,
         prerequisite: req.body.prerequisite,
         automated: req.body.automated,
         projectId: req.body.projectId,
-        testSuiteId: req.body.testSuiteId,
+        testsuiteId: req.body.testsuiteId,
         sectionId: req.body.sectionId,
       },
     });

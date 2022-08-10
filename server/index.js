@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(cors());
 
 //routes
-app.use("/testcases", testcaseRoutes);
+app.use("/", testcaseRoutes);
 app.use("/", projectRoutes);
 app.use("/users", userRoutes);
 app.use("/roles", roleRoutes);

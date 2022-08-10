@@ -1,10 +1,8 @@
 import mongoose from "mongoose";
 
 const testcaseSchema = mongoose.Schema({
-  testCaseId: { type: String, required: true },
   key: { type: String },
   title: { type: String, required: true },
-  description: { type: String, required: true },
   type: {
     type: String,
     enum: ["functional", "cross-functional"],
@@ -18,10 +16,10 @@ const testcaseSchema = mongoose.Schema({
     enum: ["active", "inactive"],
     default: "active",
   },
-  steps: [
+  instruction: [
     {
-      step: Number,
-      instruction: String,
+      stepNo: Number,
+      steps: String,
       expectedResult: String,
     },
   ],
