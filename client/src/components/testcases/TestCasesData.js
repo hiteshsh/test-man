@@ -33,21 +33,21 @@ function createData(name, key) {
   };
 }
 
-const rows = [
-  createData("test suite 1 > listing", "testcaseHeader"),
-  createData("Donut", 452),
-  createData("Eclair", 262),
-  createData("Frozen yoghurt", 159),
-  createData("Gingerbread", 356),
-  createData("Honeycomb", 408, 3.2),
-  createData("Ice cream sandwich", 237),
-  createData("Jelly Bean", 375),
-  createData("KitKat", 518, 26.0),
-  createData("Lollipop", 392, 0.2),
-  createData("Marshmallow", 318),
-  createData("Nougat", 360),
-  createData("Oreo", 437),
-];
+// const rows = [
+//   createData("test suite 1 > listing", "testcaseHeader"),
+//   createData("Donut", 452),
+//   createData("Eclair", 262),
+//   createData("Frozen yoghurt", 159),
+//   createData("Gingerbread", 356),
+//   createData("Honeycomb", 408, 3.2),
+//   createData("Ice cream sandwich", 237),
+//   createData("Jelly Bean", 375),
+//   createData("KitKat", 518, 26.0),
+//   createData("Lollipop", 392, 0.2),
+//   createData("Marshmallow", 318),
+//   createData("Nougat", 360),
+//   createData("Oreo", 437),
+// ];
 
 const headCells = [
   {
@@ -179,7 +179,16 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-export default function TestCasesData() {
+export default function TestCasesData({ testcases }) {
+  //console.log("rows", testcases);
+  const tests = testcases;
+  let rows = [];
+  tests.map((test) => {
+    //const rowData = createData(test.title, test._id);
+    rows.push(createData(test.title, test._id));
+  });
+  console.log("all tests", rows);
+
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);

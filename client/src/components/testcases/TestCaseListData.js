@@ -3,6 +3,7 @@ import { AddCircle } from "@mui/icons-material";
 import { IconButton, Paper, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import TestCasesData from "./TestCasesData";
+import TestCaseListAPI from "./TestCaseListAPI";
 
 const linkStyle = {
   textDecoration: "none",
@@ -42,10 +43,18 @@ const testCaseList = [
   },
 ];
 
-function TestCaseListData() {
+function TestCaseListData(projectId, testsuiteId, sectionId) {
+  const { testcases, error, isLoading } = TestCaseListAPI(
+    projectId,
+    testsuiteId,
+    sectionId
+  );
+
+  console.log("parameters", projectId, testsuiteId, sectionId);
+  //console.log("testcases", testcases);
   return (
     <Paper elevation={0}>
-      {testCaseList && testCaseList.length < 1 && (
+      {testcases && testcases.length < 1 && (
         <div
           style={{
             display: "flex",
@@ -64,9 +73,7 @@ function TestCaseListData() {
           <Typography>No Test case Found. Please add </Typography>
         </div>
       )}
-      {testCaseList && testCaseList.length > 0 && (
-        <TestCasesData rows={testCaseList} />
-      )}
+      {testcases && testcases.length > 0 && <TestCasesData testcases={testcases} />}
     </Paper>
   );
 }

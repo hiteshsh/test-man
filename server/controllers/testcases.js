@@ -2,10 +2,6 @@ import TestCase from "../models/testcase.js";
 import { body, validationResult } from "express-validator";
 
 export const getTestCases = async (req, res) => {
-  // let sectionId = req.query.sectionId;
-  // let testsuiteId = req.query.testsuiteId;
-  // const query = { testsuiteId: testsuiteId, sectionId: sectionId };
-
   try {
     const query = {};
     let sectionId = req.query.sectionId;

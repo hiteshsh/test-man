@@ -31,20 +31,13 @@ const style = {
   p: 4,
 };
 
-function TestSuiteListData() {
-  //const [open, setOpen] = React.useState(false);
-  const [selectedIndex, setSelectedIndex] = React.useState("");
-  const { testsuites, error, isLoading } = TestSuiteListAPI();
+function TestSuiteListData({
+  testsuites,
+  handleClick,
+  selectedIndex,
+  onSublistClick,
+}) {
   console.log("testSuiteList", testsuites);
-
-  const handleClick = (index) => {
-    //setOpen(!open);
-    if (selectedIndex === index) {
-      setSelectedIndex("");
-    } else {
-      setSelectedIndex(index);
-    }
-  };
 
   return (
     <Paper elevation={0}>
@@ -58,21 +51,21 @@ function TestSuiteListData() {
         {testsuites && testsuites.length > 0 ? (
           testsuites.map((suite, index) => (
             <>
-              
-                <ListItemButton
-                  key={suite._id}
-                  selected={selectedIndex === index}
-                  onClick={() => {
-                    handleClick(index);
-                  }}
-                >
-                  <ListItemIcon>
-                    <FolderOutlined />
-                  </ListItemIcon>
-                  <ListItemText inset primary={suite.name} sx={{ pl: 0 }} />
-                  {index === selectedIndex ? <ExpandLess /> : <ExpandMore />}
-                </ListItemButton>
-              
+              <ListItemButton
+                key={suite._id}
+                id={suite._id}
+                selected={selectedIndex === index}
+                onClick={(e) => {
+                  handleClick(e, index, suite._id);
+                }}
+              >
+                <ListItemIcon>
+                  <FolderOutlined />
+                </ListItemIcon>
+                <ListItemText inset primary={suite.name} sx={{ pl: 0 }} />
+                {index === selectedIndex ? <ExpandLess /> : <ExpandMore />}
+              </ListItemButton>
+
               {suite.sections && (
                 <Collapse
                   in={index === selectedIndex}
@@ -81,7 +74,13 @@ function TestSuiteListData() {
                 >
                   <List component="div" disablePadding>
                     {suite.sections.map((section, index) => (
-                      <ListItemButton key={section._id}>
+                      <ListItemButton
+                        key={section._id}
+                        id={suite._id + "_" + section._id}
+                        onClick={(e) => {
+                          onSublistClick(e);
+                        }}
+                      >
                         <ListItemText primary={section.name} sx={{ pl: 8 }} />
                       </ListItemButton>
                     ))}
