@@ -50,8 +50,6 @@ function TestCaseListData(projectId, testsuiteId, sectionId) {
     sectionId
   );
 
-  console.log("parameters", projectId, testsuiteId, sectionId);
-  //console.log("testcases", testcases);
   return (
     <Paper elevation={0}>
       {testcases && testcases.length < 1 && (
@@ -73,7 +71,9 @@ function TestCaseListData(projectId, testsuiteId, sectionId) {
           <Typography>No Test case Found. Please add </Typography>
         </div>
       )}
-      {testcases && testcases.length > 0 && <TestCasesData testcases={testcases} />}
+      {testcases && testcases.length > 0 && (
+        <TestCasesData testcases={testcases} />
+      )}
     </Paper>
   );
 }

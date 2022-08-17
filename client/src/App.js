@@ -15,6 +15,7 @@ import Users from "./components/users/Users";
 import TestCaseForm from "./components/testcases/testcase/TestCaseForm";
 import TestCaseNew from "./components/testcases/testcase/TestCaseNew";
 import Roles from "./components/roles/Roles";
+import TestCaseDetail from "./components/testcases/testcase/TestCaseDetail";
 
 const appMain = css`
   width: 100%;
@@ -56,6 +57,7 @@ const App = () => {
             <Route path="/testcase/new" element={<TestCaseNew />}></Route>
             <Route path="/users" element={<Users />}></Route>
             <Route path="/roles" element={<Roles />}></Route>
+            <Route path="/testcase/:id" element={<TestCases />}></Route>
           </Routes>
           <CssBaseline />
         </React.Fragment>

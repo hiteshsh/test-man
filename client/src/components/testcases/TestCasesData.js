@@ -17,13 +17,25 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
-import { Add, AddCircle, Delete, Edit } from "@mui/icons-material";
+
+import {
+  Add,
+  AddCircle,
+  Delete,
+  Edit,
+  NoEncryption,
+} from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
+import TestCaseDetail from "./testcase/TestCaseDetail";
 
 const linkStyle = {
-  textDecoration: "none",
+  textDecoration: "underline",
   color: "inherit",
+  "&:hover": {
+    textDecoration: "underline",
+    color: "red",
+  },
 };
 
 function createData(name, key) {
@@ -32,22 +44,6 @@ function createData(name, key) {
     key,
   };
 }
-
-// const rows = [
-//   createData("test suite 1 > listing", "testcaseHeader"),
-//   createData("Donut", 452),
-//   createData("Eclair", 262),
-//   createData("Frozen yoghurt", 159),
-//   createData("Gingerbread", 356),
-//   createData("Honeycomb", 408, 3.2),
-//   createData("Ice cream sandwich", 237),
-//   createData("Jelly Bean", 375),
-//   createData("KitKat", 518, 26.0),
-//   createData("Lollipop", 392, 0.2),
-//   createData("Marshmallow", 318),
-//   createData("Nougat", 360),
-//   createData("Oreo", 437),
-// ];
 
 const headCells = [
   {
@@ -189,6 +185,8 @@ export default function TestCasesData({ testcases }) {
   });
   console.log("all tests", rows);
 
+  const [open, setOpen] = React.useState(false);
+
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -282,25 +280,23 @@ export default function TestCasesData({ testcases }) {
                             />
                           </TableCell>
                           <TableCell colSpan={3} padding="none" align="left">
-                            <Typography
-                              variant="body2"
-                              sx={{ fontWeight: 500 }}
-                            >
+                            <Typography sx={{ fontWeight: 500 }}>
                               {row.name}
                             </Typography>
                           </TableCell>
                         </TableRow>
                       ) : (
                         <TableRow
-                          hover
-                          onClick={(event) => handleClick(event, row.name)}
                           role="checkbox"
                           aria-checked={isItemSelected}
                           tabIndex={-1}
                           key={row.key}
                           selected={isItemSelected}
                         >
-                          <TableCell padding="checkbox">
+                          <TableCell
+                            padding="checkbox"
+                            onClick={(event) => handleClick(event, row.name)}
+                          >
                             <Checkbox
                               color="primary"
                               checked={isItemSelected}
@@ -312,7 +308,19 @@ export default function TestCasesData({ testcases }) {
                           <TableCell id={labelId} scope="row" padding="none">
                             {row.key}
                           </TableCell>
-                          <TableCell align="left">{row.name}</TableCell>
+                          <TableCell align="left">
+                            <Link
+                              to={"/testcase/" + row.key}
+                              style={linkStyle}
+                              onClick={() => setOpen(true)}
+                            >
+                              <Typography fontWeight={500}>
+                                {row.name}
+                              </Typography>
+                            </Link>
+                            {open?<TestCaseDetail open={open} setOpen={setOpen}></TestCaseDetail>:<></>}
+                          </TableCell>
+
                           <TableCell align="right">
                             <IconButton>
                               <Edit fontSize="small" />
