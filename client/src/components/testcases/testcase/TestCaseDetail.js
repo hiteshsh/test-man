@@ -43,7 +43,7 @@ export default function TestCaseDetail({
   //const [open, setOpen] = React.useState(true);
   console.log("testDetail", testDetail);
   return (
-    <div sx={{ backgroundColor: "#000", color: "#fff", opacity: 0.5 }}>
+    <div sx={{ backgroundColor: "#000", color: "#fff"}}>
       <Drawer
         open={open}
         anchor={"right"}
@@ -56,7 +56,9 @@ export default function TestCaseDetail({
         >
           <Grid container alignItems="center">
             <Grid item xs={3}>
-              <Typography variant="h4">{testDetail.name}</Typography>
+              <Typography variant="h5" fontWeight={500}>
+                {testDetail.name}
+              </Typography>
             </Grid>
             <Grid item xs={3}></Grid>
             <Grid item xs={3}></Grid>

@@ -25,7 +25,7 @@ import {
   Edit,
   NoEncryption,
 } from "@mui/icons-material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import TestCaseDetail from "./testcase/TestCaseDetail";
 
@@ -236,19 +236,13 @@ export default function TestCasesData({ testcases }) {
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   const handleDrawerOpen = (e, key) => {
-    console.log("key", key);
-    console.log("open before", open);
-    // const newOpen = open.slice();
-    // newOpen.push(key);
-    // setOpen(newOpen);
     setOpen([...open, key]);
-    console.log("open after", open);
-    console.log("key present", open.indexOf(key) > -1);
   };
-
+  const navigate = useNavigate();
   const handleDrawerClose = (e, key) => {
     const newOpen = open.filter((t) => t !== key);
     setOpen(newOpen);
+    navigate("/testcases");
   };
 
   return (
