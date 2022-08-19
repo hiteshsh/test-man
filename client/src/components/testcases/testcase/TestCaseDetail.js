@@ -50,7 +50,10 @@ export default function TestCaseDetail({
         onClose={handleDrawerClose}
         variant="permanent"
       >
-        <Paper style={{ width: 750 }} onClick={handleDrawerClose}>
+        <Paper
+          style={{ width: 750 }}
+          onClick={(e) => handleDrawerClose(e, testDetail.key)}
+        >
           <Grid container alignItems="center">
             <Grid item xs={3}>
               <Typography variant="h4">{testDetail.name}</Typography>

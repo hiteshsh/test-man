@@ -185,7 +185,7 @@ export default function TestCasesData({ testcases }) {
   });
   console.log("all tests", rows);
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState([]);
 
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
@@ -235,12 +235,20 @@ export default function TestCasesData({ testcases }) {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
+  const handleDrawerOpen = (e, key) => {
+    console.log("key", key);
+    console.log("open before", open);
+    // const newOpen = open.slice();
+    // newOpen.push(key);
+    // setOpen(newOpen);
+    setOpen([...open, key]);
+    console.log("open after", open);
+    console.log("key present", open.indexOf(key) > -1);
   };
 
-  const handleDrawerClose = () => {
-    setOpen(false);
+  const handleDrawerClose = (e, key) => {
+    const newOpen = open.filter((t) => t !== key);
+    setOpen(newOpen);
   };
 
   return (
@@ -320,13 +328,13 @@ export default function TestCasesData({ testcases }) {
                             <Link
                               to={"/testcase/" + row.key}
                               style={linkStyle}
-                              onClick={handleDrawerOpen}
+                              onClick={(e) => handleDrawerOpen(e, row.key)}
                             >
                               <Typography fontWeight={500}>
                                 {row.name}
                               </Typography>
                             </Link>
-                            {open ? (
+                            {open.indexOf(row.key) > -1 ? (
                               <TestCaseDetail
                                 open={open}
                                 setOpen={setOpen}
