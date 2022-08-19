@@ -235,6 +235,14 @@ export default function TestCasesData({ testcases }) {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
@@ -312,7 +320,7 @@ export default function TestCasesData({ testcases }) {
                             <Link
                               to={"/testcase/" + row.key}
                               style={linkStyle}
-                              onClick={() => setOpen(true)}
+                              onClick={handleDrawerOpen}
                             >
                               <Typography fontWeight={500}>
                                 {row.name}
@@ -323,6 +331,7 @@ export default function TestCasesData({ testcases }) {
                                 open={open}
                                 setOpen={setOpen}
                                 testDetail={row}
+                                handleDrawerClose={handleDrawerClose}
                               ></TestCaseDetail>
                             ) : (
                               <></>

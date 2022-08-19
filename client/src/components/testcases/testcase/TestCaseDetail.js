@@ -34,7 +34,12 @@ const data = [
   { name: "Trash", icon: <ReceiptOutlined /> },
 ];
 
-export default function TestCaseDetail({ open, setOpen, testDetail }) {
+export default function TestCaseDetail({
+  open,
+  setOpen,
+  testDetail,
+  handleDrawerClose,
+}) {
   //const [open, setOpen] = React.useState(true);
   console.log("testDetail", testDetail);
   return (
@@ -42,10 +47,10 @@ export default function TestCaseDetail({ open, setOpen, testDetail }) {
       <Drawer
         open={open}
         anchor={"right"}
-        onClose={() => setOpen(false)}
+        onClose={handleDrawerClose}
         variant="permanent"
       >
-        <Paper style={{ width: 750 }} onClick={() => setOpen(false)}>
+        <Paper style={{ width: 750 }} onClick={handleDrawerClose}>
           <Grid container alignItems="center">
             <Grid item xs={3}>
               <Typography variant="h4">{testDetail.name}</Typography>
