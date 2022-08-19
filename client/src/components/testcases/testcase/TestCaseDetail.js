@@ -34,10 +34,11 @@ const data = [
   { name: "Trash", icon: <ReceiptOutlined /> },
 ];
 
-export default function TestCaseDetail({open,setOpen}) {
+export default function TestCaseDetail({ open, setOpen, testDetail }) {
   //const [open, setOpen] = React.useState(true);
+  console.log("testDetail", testDetail);
   return (
-    <div sx={{ backgroundColor: "#000", color: "#fff", opacity: 0.5,  }}>
+    <div sx={{ backgroundColor: "#000", color: "#fff", opacity: 0.5 }}>
       <Drawer
         open={open}
         anchor={"right"}
@@ -47,10 +48,10 @@ export default function TestCaseDetail({open,setOpen}) {
         <Paper style={{ width: 750 }} onClick={() => setOpen(false)}>
           <Grid container alignItems="center">
             <Grid item xs={3}>
-              <Typography variant="h4">Title</Typography>
+              <Typography variant="h4">{testDetail.name}</Typography>
             </Grid>
-            <Grid xs={3}></Grid>
-            <Grid xs={3}></Grid>
+            <Grid item xs={3}></Grid>
+            <Grid item xs={3}></Grid>
             <Grid item xs={3}>
               <IconButton aria-label="edit" disabled color="primary">
                 <Edit />

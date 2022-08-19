@@ -318,7 +318,15 @@ export default function TestCasesData({ testcases }) {
                                 {row.name}
                               </Typography>
                             </Link>
-                            {open?<TestCaseDetail open={open} setOpen={setOpen}></TestCaseDetail>:<></>}
+                            {open ? (
+                              <TestCaseDetail
+                                open={open}
+                                setOpen={setOpen}
+                                testDetail={row}
+                              ></TestCaseDetail>
+                            ) : (
+                              <></>
+                            )}
                           </TableCell>
 
                           <TableCell align="right">
