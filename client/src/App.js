@@ -54,7 +54,14 @@ const App = () => {
             <Route path="/releases" element={<Releases />}></Route>
             <Route path="/projects" element={<Projects />}></Route>
             <Route path="/projects" element={<Users />}></Route>
-            <Route path="/testcase/new" element={<TestCaseNew />}></Route>
+            <Route
+              path="/testcase/new"
+              element={
+                <TestCaseNew
+                   projectId= {"62e02165cc1c8782f8b4188b" }
+                />
+              }
+            ></Route>
             <Route path="/users" element={<Users />}></Route>
             <Route path="/roles" element={<Roles />}></Route>
             <Route path="/testcase/:id" element={<TestCases />}></Route>

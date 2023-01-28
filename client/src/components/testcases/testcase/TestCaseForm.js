@@ -8,7 +8,7 @@ import {
   Checkbox,
   FormControlLabel,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -28,9 +28,13 @@ const initialValues = {
 
 const label = { inputprops: { "aria-label": "Checkbox" } };
 
-function TestCaseForm() {
+function TestCaseForm(props) {
   const [values, setValues] = useState(initialValues);
   const [checked, setChecked] = React.useState(false);
+  console.log("test suite in form", props.testsuites);
+  const testsuites = props.testsuites;
+  const [suiteId, setSuiteId] = useState("");
+  const [section, setSection] = useState([]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -38,6 +42,18 @@ function TestCaseForm() {
       ...values,
       [name]: value,
     });
+    setSuiteId(value);
+    console.log("suiteId", suiteId);
+    const filteredSuites =
+      testsuites && testsuites.length > 0
+        ? testsuites.filter((ts) => ts._id === suiteId)
+        : [];
+    console.log("filteredSuites", filteredSuites);
+
+    if (filteredSuites.length > 0) {
+      console.log("section", filteredSuites[0].sections);
+      setSection(filteredSuites[0].sections);
+    }
   };
 
   const reset = (e) => {
@@ -124,9 +140,16 @@ function TestCaseForm() {
                 label="Suite"
                 onChange={handleInputChange}
               >
-                <MenuItem value={"Suite1"}>Suite1</MenuItem>
-                <MenuItem value={"Suite2"}>Suite2</MenuItem>
-                <MenuItem value={"Suite3"}>Suite3</MenuItem>
+                <MenuItem value="">
+                  <em>-- Select Suite --</em>
+                </MenuItem>
+                {testsuites &&
+                  testsuites.length > 0 &&
+                  testsuites.map((suite) => (
+                    <MenuItem key={suite._id} value={suite._id}>
+                      {suite.name}
+                    </MenuItem>
+                  ))}
               </Select>
             </FormControl>
           </Grid>
@@ -145,9 +168,16 @@ function TestCaseForm() {
                 label="Section"
                 onChange={handleInputChange}
               >
-                <MenuItem value={"Section1"}>Section1</MenuItem>
-                <MenuItem value={"Section2"}>Section2</MenuItem>
-                <MenuItem value={"Section3"}>Section3</MenuItem>
+                <MenuItem value="">
+                  <em>-- Select Section --</em>
+                </MenuItem>
+                {section &&
+                  section.length > 0 &&
+                  section.map((section) => (
+                    <MenuItem key={section._id} value={section._id}>
+                      {section.name}
+                    </MenuItem>
+                  ))}
               </Select>
             </FormControl>
           </Grid>
