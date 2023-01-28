@@ -42,6 +42,15 @@ function TestCaseForm(props) {
       ...values,
       [name]: value,
     });
+  
+  };
+
+  const handleDropDownChange =(e)  => {
+    const { name, value } = e.target;
+    setValues({
+      ...values,
+      [name]: value,
+    });
     setSuiteId(value);
     console.log("suiteId", suiteId);
     const filteredSuites =
@@ -138,7 +147,7 @@ function TestCaseForm(props) {
                 variant="outlined"
                 value={values.suiteId}
                 label="Suite"
-                onChange={handleInputChange}
+                onChange={handleDropDownChange}
               >
                 <MenuItem value="">
                   <em>-- Select Suite --</em>
@@ -167,6 +176,7 @@ function TestCaseForm(props) {
                 value={values.sectionId}
                 label="Section"
                 onChange={handleInputChange}
+                defaultValue=""
               >
                 <MenuItem value="">
                   <em>-- Select Section --</em>
@@ -194,6 +204,7 @@ function TestCaseForm(props) {
                 value={values.type}
                 label="Type"
                 onChange={handleInputChange}
+                defaultValue=""
               >
                 <MenuItem value={"functional"}>Functional</MenuItem>
                 <MenuItem value={"performance"}>Performance</MenuItem>
@@ -215,9 +226,9 @@ function TestCaseForm(props) {
                 label="Priority"
                 onChange={handleInputChange}
               >
-                <MenuItem value={"functional"}>High</MenuItem>
-                <MenuItem value={"performance"}>Medium</MenuItem>
-                <MenuItem value={"security"}>Low</MenuItem>
+                <MenuItem value={"high"}>High</MenuItem>
+                <MenuItem value={"medium"}>Medium</MenuItem>
+                <MenuItem value={"low"}>Low</MenuItem>
               </Select>
             </FormControl>
           </Grid>
