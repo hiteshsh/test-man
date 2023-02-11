@@ -14,6 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import React from "react";
+import { Axios } from "axios";
 
 const initialValues = {
   name: "",
@@ -42,10 +43,9 @@ function TestCaseForm(props) {
       ...values,
       [name]: value,
     });
-  
   };
 
-  const handleDropDownChange =(e)  => {
+  const handleDropDownChange = (e) => {
     const { name, value } = e.target;
     setValues({
       ...values,
@@ -76,6 +76,28 @@ function TestCaseForm(props) {
 
   const handleChange = () => {
     setChecked(!checked);
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    const testcase = {
+      description: values.description,
+      name: values.name,
+      automated: checked,
+      testsuiteId: values.suiteId,
+      sectionId: values.sectionId,
+      prjectId: "62e02165cc1c8782f8b4188b",
+      type: values.type,
+      priority: values.priority,
+      status: "active",
+      title: values.name,
+      instructions: [],
+    };
+    console.log("submit", testcase);
+    Axios.post("/testcase", testcase).then((res) => {
+      window.location = "/testcases";
+    });
   };
 
   return (

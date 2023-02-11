@@ -4,11 +4,15 @@ const releaseSchema = mongoose.Schema({
   key: "String",
   name: { type: String, required: true },
   description: String,
-  assignedTo: String,
+  assignedTo: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "user",
+    required: false,
+  },
   endDate: Date,
   status: {
     type: String,
-    enum: ["created", "inprogress", "completed"],
+    enum: ["active", "completed"],
     default: "created",
     required: true,
   },

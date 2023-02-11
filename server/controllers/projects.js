@@ -3,7 +3,6 @@ import { body, validationResult } from "express-validator";
 
 export const getProjects = async (req, res) => {
   try {
-    
     let limit =
       req.query.limit && req.query.limit <= 25 ? parseInt(req.query.limit) : 10;
     let page = 0;
@@ -70,7 +69,7 @@ export const updateProjectById = async (req, res) => {
       },
     });
 
-    res.status(200).json(updatedUser);
+    res.status(200).json(updatedProject);
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
