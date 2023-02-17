@@ -61,6 +61,7 @@ export const createTestCase = async (req, res) => {
     testsuiteId: req.body.testsuiteId,
     sectionId: req.body.sectionId,
   });
+
   try {
     await newTestCase.save();
     res.status(200).json(newTestCase);

@@ -6,17 +6,24 @@ import testcaseRoutes from "./routes/testcases.js";
 import projectRoutes from "./routes/projects.js";
 import userRoutes from "./routes/users.js";
 import roleRoutes from "./routes/roles.js";
+import authRoutes from "./routes/auth.js";
 import testsuites from "./routes/testsuites.js";
 import sections from "./routes/sections.js";
 import releases from "./routes/releases.js";
+import corsOptions from "./config/corsOptions.js";
+import verifyJWT from "./middleware/verifyJWT.js";
+import cookieParser from "cookie-parser";
 
 const app = express();
+app.use(cors(corsOptions));
 
-// Middleware
 app.use(express.json());
-app.use(cors());
+// Middleware
+app.use(cookieParser());
 
 //routes
+app.use("/", authRoutes);
+//app.use(verifyJWT);
 app.use("/", testcaseRoutes);
 app.use("/", projectRoutes);
 app.use("/users", userRoutes);
@@ -24,6 +31,7 @@ app.use("/roles", roleRoutes);
 app.use("/", testsuites);
 app.use("/", sections);
 app.use("/", releases);
+app.use("/", userRoutes);
 
 const PORT = process.env.PORT || 5002;
 mongoose

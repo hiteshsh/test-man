@@ -1,5 +1,6 @@
 import User from "../models/user.js";
 import { body, validationResult } from "express-validator";
+import bcrypt from "bcrypt";
 
 export const getUsers = async (req, res) => {
   try {
@@ -37,11 +38,22 @@ export const addUser = async (req, res) => {
     status: req.body.status,
     roles: req.body.roles,
   });
+
   try {
+    //not working need to check
+    const duplicateUser = await User.findOne({ emailId: req.body.emailId });
+    console.log("find by email id", duplicateUser);
+    if (duplicateUser)
+      return res.status(409).json({ message: "Duplicate User" });
+    console.log("No duplciate user found");
+    const hashedPwd = await bcrypt.hash(newUser.password, 10);
+    newUser.password = hashedPwd;
     await newUser.save();
-    res.status(200).json(newUser);
+    res
+      .status(200)
+      .json({ success: `New User ${newUser.emailId} is created!` });
   } catch (error) {
-    res.status(409).json(error.message);
+    res.status(500).json(error.message);
   }
 };
 
@@ -79,7 +91,11 @@ export const updateUserById = async (req, res) => {
 export const validate = (method) => {
   switch (method) {
     case "addUser": {
-      return [body("emailId", "EmailId cannot be empty").notEmpty()];
+      return [
+        body("emailId", "EmailId cannot be empty").notEmpty(),
+        body("password", "Password cannot be empty").notEmpty(),
+        body("name", "Name cannot be empty").notEmpty(),
+      ];
     }
   }
 };

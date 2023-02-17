@@ -9,24 +9,30 @@ const UserSchema = mongoose.Schema({
     trim: true,
     lowercase: true,
   },
-  password:{type: String},
+  password: { type: String },
   status: {
     type: String,
     enum: ["active", "inactive"],
     default: "active",
   },
-  roles:[{
-    roleId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "role",
+  roles: [
+    {
+      //   roleId: {
+      //     type: mongoose.Schema.Types.ObjectId,
+      //     ref: "role",
+      //   },
+      //   projectId: {
+      //     type: mongoose.Schema.Types.ObjectId,
+      //     ref: "project",
+      //   },
+      //
+      type: String,
+      default: ["tester"],
     },
-    projectId:{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "project",
-    }
-  }
-  ]
-  
+  ],
+  refreshToken: {
+    type: String,
+  },
 });
 
 const User = mongoose.model("user", UserSchema);
