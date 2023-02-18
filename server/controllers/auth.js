@@ -34,7 +34,7 @@ export const loginUser = async (req, res) => {
     );
     res.cookie("jwt", refreshToken, {
       httpOnly: true,
-      secure: true,
+      secure: false,
       sameSite: "None",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
@@ -46,7 +46,7 @@ export const loginUser = async (req, res) => {
 
 export const refreshToken = async (req, res) => {
   const cookies = req.cookies;
-  console.log("cookie", cookies?.jwt);
+
   if (!cookies?.jwt) return res.status(401).json({ message: "Unauthorised" });
   console.log(cookies.jwt);
   const refreshToken = cookies.jwt;
@@ -54,8 +54,8 @@ export const refreshToken = async (req, res) => {
   jwt.verify(
     refreshToken,
     process.env.REFRESH_TOKEN_SECRET,
-    asyncHandler(async (err, decoded) => {
-      if (err || foundUser.emailId !== decoded.emailId) return res.status(403);
+     async (err, decoded) => {
+      if (err) return res.status(403).status({ message: "Forbidden" });
 
       const foundUser = await User.findOne({ emailId: decoded.emailId });
       if (!foundUser) return res.status(401).json({ message: "Unauthorized" });
@@ -72,10 +72,10 @@ export const refreshToken = async (req, res) => {
       );
       res.status(200).json({ token: accessToken });
     })
-  );
+  ;
 };
 
-export const logout = async (req, res) => {
+export const logoutUser = async (req, res) => {
   const cookies = req.cookies;
   if (!cookies?.jwt) return res.status(204).json({ message: "No content" });
   res.clearCookie("jwt", { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
