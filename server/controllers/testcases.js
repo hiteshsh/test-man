@@ -47,15 +47,14 @@ export const createTestCase = async (req, res) => {
   const testcase = req.body;
   console.log(testcase);
   const newTestCase = new TestCase({
-    testCaseId: req.body.testCaseId,
+    key: req.body.key,
     title: req.body.title,
-    instruction: req.body.instruction,
     type: req.body.type,
-    creator: req.body.creator,
     tags: req.body.tags,
     priority: req.body.priority,
     status: req.body.status,
     prerequisite: req.body.prerequisite,
+    instructions: req.body.instructions,
     automated: req.body.automated,
     projectId: req.body.projectId,
     testsuiteId: req.body.testsuiteId,
@@ -97,11 +96,10 @@ export const updateTestCaseById = async (req, res) => {
     const updatedTestCase = await TestCase.updateOne({
       _id: req.params.testcaseId,
       $set: {
-        testCaseId: req.body.testCaseId,
+        key: req.body.key,
         title: req.body.title,
-        instruction: req.body.instruction,
+        instructions: req.body.instructions,
         type: req.body.type,
-        creator: req.body.creator,
         tags: req.body.tags,
         priority: req.body.priority,
         status: req.body.status,

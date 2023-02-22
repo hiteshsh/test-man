@@ -16,6 +16,12 @@ import TestCaseForm from "./components/testcases/testcase/TestCaseForm";
 import TestCaseNew from "./components/testcases/testcase/TestCaseNew";
 import Roles from "./components/roles/Roles";
 import TestCaseDetail from "./components/testcases/testcase/TestCaseDetail";
+import { Login } from "@mui/icons-material";
+import SignIn from "./components/auth/SignIn";
+import { AuthProvider } from "./context/AuthProvider";
+import RequireAuth from "./components/auth/RequireAuth";
+import Layout from "./components/Layout";
+// import { SignIn } from "./components/auth/SignIn";
 
 const appMain = css`
   width: 100%;
@@ -38,34 +44,34 @@ const theme = createTheme({
 });
 
 const App = () => {
+  let user = localStorage.getItem("user");
+  const user1 = JSON.stringify(user);
   return (
     <Router>
       <ThemeProvider theme={theme}>
         <React.Fragment>
           <CssBaseline />
+          <AuthProvider>
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route path="/" element={<SignIn />}></Route>
 
-          <div css={appMain}>
-            <Header />
-          </div>
-          <SideMenu />
-          <Routes>
-            <Route path="/testcases" element={<TestCases />}></Route>
-            <Route path="/dashboard" element={<Dashboard />}></Route>
-            <Route path="/releases" element={<Releases />}></Route>
-            <Route path="/projects" element={<Projects />}></Route>
-            <Route path="/projects" element={<Users />}></Route>
-            <Route
-              path="/testcase/new"
-              element={
-                <TestCaseNew
-                   projectId= {"62e02165cc1c8782f8b4188b" }
-                />
-              }
-            ></Route>
-            <Route path="/users" element={<Users />}></Route>
-            <Route path="/roles" element={<Roles />}></Route>
-            <Route path="/testcase/:id" element={<TestCases />}></Route>
-          </Routes>
+                <Route path="/testcases" element={<TestCases />}></Route>
+                <Route path="/dashboard" element={<Dashboard />}></Route>
+                <Route path="/releases" element={<Releases />}></Route>
+                <Route path="/projects" element={<Projects />}></Route>
+                <Route
+                  path="/testcase/new"
+                  element={
+                    <TestCaseNew projectId={"62e02165cc1c8782f8b4188b"} />
+                  }
+                ></Route>
+                <Route path="/users" element={<Users />}></Route>
+                <Route path="/roles" element={<Roles />}></Route>
+                <Route path="/testcase/:id" element={<TestCases />}></Route>
+              </Route>
+            </Routes>
+          </AuthProvider>
           <CssBaseline />
         </React.Fragment>
       </ThemeProvider>

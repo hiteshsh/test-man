@@ -8,21 +8,24 @@ const testcaseSchema = mongoose.Schema({
     enum: ["functional", "cross-functional"],
     default: "functional",
   },
+  externalId: {
+    type: String,
+  },
   prerequisite: String,
-  creator: String,
   tags: [String],
   status: {
     type: String,
     enum: ["active", "inactive"],
     default: "active",
   },
-  instruction: [
+  instructions: [
     {
-      stepNo: Number,
       steps: String,
       expectedResult: String,
     },
   ],
+  // steps:[],
+  // expectedResult:[],
   projectId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "project",

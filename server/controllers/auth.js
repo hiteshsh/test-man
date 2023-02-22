@@ -17,11 +17,12 @@ export const loginUser = async (req, res) => {
     return res.status(401).json({ message: "unauthorised" });
   const match = await bcrypt.compare(password, foundUser.password);
   if (match) {
+    const roles = Object.values(foundUser.roles).filter(Boolean);
     const accessToken = jwt.sign(
       {
         UserInfo: {
           emailId: foundUser.emailId,
-          roles: foundUser.roles,
+          roles: roles,
         },
       },
       process.env.ACCESS_TOKEN_SECRET,
@@ -32,13 +33,19 @@ export const loginUser = async (req, res) => {
       process.env.REFRESH_TOKEN_SECRET,
       { expiresIn: "1d" }
     );
+
+    foundUser.refreshToken = refreshToken;
+
+    const result = await foundUser.save();
+    console.log(result);
+
     res.cookie("jwt", refreshToken, {
       httpOnly: true,
       secure: false,
       sameSite: "None",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
-    res.status(200).json({ token: accessToken });
+    res.status(200).json({ roles: roles, token: accessToken });
   } else {
     res.status(401).json({ message: "unauthorised" });
   }
@@ -54,30 +61,40 @@ export const refreshToken = async (req, res) => {
   jwt.verify(
     refreshToken,
     process.env.REFRESH_TOKEN_SECRET,
-     async (err, decoded) => {
+    async (err, decoded) => {
       if (err) return res.status(403).status({ message: "Forbidden" });
 
       const foundUser = await User.findOne({ emailId: decoded.emailId });
       if (!foundUser) return res.status(401).json({ message: "Unauthorized" });
-
+      const roles = Object.values(foundUser.roles);
       const accessToken = jwt.sign(
         {
           UserInfo: {
             emailId: foundUser.emailId,
-            roles: foundUser.roles,
+            roles: roles,
           },
         },
         process.env.ACCESS_TOKEN_SECRET,
         { expiresIn: "30s" }
       );
-      res.status(200).json({ token: accessToken });
-    })
-  ;
+      res.status(200).json({ roles: roles, token: accessToken });
+    }
+  );
 };
 
 export const logoutUser = async (req, res) => {
   const cookies = req.cookies;
+  console.log("cookie", cookies?.jwt);
   if (!cookies?.jwt) return res.status(204).json({ message: "No content" });
+  const refreshToken = cookies.jwt;
+  const foundUser = await User.findOne({ refreshToken }).exec();
+  if (!foundUser) {
+    res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: false });
+    return res.sendStatus(204);
+  }
+  foundUser.refreshToken = "";
+  const result = await foundUser.save();
+  console.log(result);
   res.clearCookie("jwt", { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
   res.status(200).json({ message: "Logout successful" });
 };

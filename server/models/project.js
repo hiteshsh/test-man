@@ -4,7 +4,6 @@ const projectSchema = mongoose.Schema({
   key: String,
   name: { type: String, required: true },
   description: String,
-  prefix: { type: String, default: "PROJ" },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
