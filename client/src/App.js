@@ -44,31 +44,33 @@ const theme = createTheme({
 });
 
 const App = () => {
-  let user = localStorage.getItem("user");
-  const user1 = JSON.stringify(user);
+  // let user = localStorage.getItem("user");
+  // user = JSON.stringify(user);
+  // console.log("token in app", user?.accesstoken);
   return (
     <Router>
       <ThemeProvider theme={theme}>
         <React.Fragment>
           <CssBaseline />
-          <AuthProvider>
+          <AuthProvider >
             <Routes>
               <Route path="/" element={<Layout />}>
                 <Route path="/" element={<SignIn />}></Route>
-
-                <Route path="/testcases" element={<TestCases />}></Route>
-                <Route path="/dashboard" element={<Dashboard />}></Route>
-                <Route path="/releases" element={<Releases />}></Route>
-                <Route path="/projects" element={<Projects />}></Route>
-                <Route
-                  path="/testcase/new"
-                  element={
-                    <TestCaseNew projectId={"62e02165cc1c8782f8b4188b"} />
-                  }
-                ></Route>
-                <Route path="/users" element={<Users />}></Route>
-                <Route path="/roles" element={<Roles />}></Route>
-                <Route path="/testcase/:id" element={<TestCases />}></Route>
+                <Route element={<RequireAuth />}>
+                  <Route path="/testcases" element={<TestCases />}></Route>
+                  <Route path="/dashboard" element={<Dashboard />}></Route>
+                  <Route path="/releases" element={<Releases />}></Route>
+                  <Route path="/projects" element={<Projects />}></Route>
+                  <Route
+                    path="/testcase/new"
+                    element={
+                      <TestCaseNew projectId={"62e02165cc1c8782f8b4188b"} />
+                    }
+                  ></Route>
+                  <Route path="/users" element={<Users />}></Route>
+                  <Route path="/roles" element={<Roles />}></Route>
+                  <Route path="/testcase/:id" element={<TestCases />}></Route>
+                </Route>
               </Route>
             </Routes>
           </AuthProvider>

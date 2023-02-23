@@ -24,7 +24,7 @@ const initialValues = {
 };
 
 const SignIn = () => {
-  const { setAuth } = useAuth();
+  //const { setAuth } = useAuth();
   const [values, setValues] = React.useState(initialValues);
   const [error, setError] = React.useState(null);
 
@@ -57,9 +57,11 @@ const SignIn = () => {
         const accesstoken = res?.data?.token;
         const roles = res?.data?.roles;
         const user = { emailId, roles, accesstoken };
-        setAuth(user);
-        localStorage.setItem("user", user);
-        console.log("before login", emailId);
+        //setAuth(user);
+        localStorage.setItem("user", JSON.stringify(user));
+        //const user1 = localStorage.getItem("user");
+        //console.log("get item", user1);
+        //console.log("before login", emailId);
         setError(null);
         window.location = "/projects";
       })

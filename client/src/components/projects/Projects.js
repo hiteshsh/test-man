@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import React from "react";
+import useAuth from "../../hooks/useAuth";
 import Header from "../Header";
 import SideMenu from "../SideMenu";
 import ProjectsList from "./ProjectList";
