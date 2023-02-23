@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import Axios from "axios";
+import axios, { axiosPrivate } from "../../utils/axios";
 
 const ProjectListAPI = () => {
   const [projects, setProjects] = React.useState(null);
@@ -9,7 +10,8 @@ const ProjectListAPI = () => {
   useEffect(() => {
     // invalid url will trigger an 404 error
     function getAllProjects() {
-      Axios.get("/projects")
+      axiosPrivate
+        .get("/projects")
         .then((response) => {
           console.log(response);
           if (!response.status === 200) {

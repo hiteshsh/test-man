@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import Axios from "axios";
+import { axiosPrivate } from "../../utils/axios";
 
 const RoleListAPI = () => {
   const [roles, setRoles] = React.useState(null);
@@ -10,7 +11,8 @@ const RoleListAPI = () => {
   useEffect(() => {
     // invalid url will trigger an 404 error
     function getAllRoles() {
-      Axios.get("/roles")
+      axiosPrivate
+        .get("/roles")
         .then((response) => {
           console.log("roles", response);
           if (!response.status === 200) {

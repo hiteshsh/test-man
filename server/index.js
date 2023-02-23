@@ -23,7 +23,7 @@ app.use(cookieParser());
 
 //routes
 app.use("/", authRoutes);
-//app.use(verifyJWT);
+app.use(verifyJWT);
 app.use("/", testcaseRoutes);
 app.use("/", projectRoutes);
 app.use("/users", userRoutes);

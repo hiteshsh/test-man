@@ -6,9 +6,9 @@ const RequireAuth = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   //user = JSON.stringify(user);
   const location = useLocation();
-  //console.log("required auth", user);
+  console.log("required auth", user);
   //console.log("emailid auth", user?.emailId);
-  //console.log("token auth", user?.accesstoken);
+  console.log("token auth", user?.accesstoken);
   return user?.accesstoken ? (
     <Outlet />
   ) : (

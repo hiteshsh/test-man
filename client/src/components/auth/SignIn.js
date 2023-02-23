@@ -15,6 +15,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useEffect, useState } from "react";
 import Axios from "axios";
 import useAuth from "../../hooks/useAuth";
+import axios from "../../utils/axios";
 
 const theme = createTheme();
 
@@ -43,10 +44,11 @@ const SignIn = () => {
       password: values.password,
     };
     console.log("submit", login);
-    Axios.post("/login", login, {
-      headers: { "Content-Type": "application/json" },
-      withCredentials: true,
-    })
+    axios
+      .post("/login", login, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      })
       .then((res) => {
         const emailId = login.emailId;
         console.log(res);

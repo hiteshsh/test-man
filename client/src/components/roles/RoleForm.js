@@ -1,6 +1,7 @@
 import { Box, Button, Stack, TextField } from "@mui/material";
 import { Axios } from "axios";
 import React, { useState } from "react";
+import { axiosPrivate } from "../../utils/axios";
 
 const initialValues = {
   name: "",
@@ -32,7 +33,7 @@ export default function RoleForm() {
       name: values.name,
     };
     console.log("submit", role);
-    Axios.post("/role", role).then((res) => {
+    axiosPrivate.post("/role", role).then((res) => {
       console.log(res);
       console.log(res.data);
       window.location = "/roles";

@@ -15,6 +15,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import React from "react";
 import { Axios } from "axios";
+import { axiosPrivate } from "../../../utils/axios";
 
 const initialValues = {
   name: "",
@@ -95,7 +96,7 @@ function TestCaseForm(props) {
       instructions: [],
     };
     console.log("submit", testcase);
-    Axios.post("/testcase", testcase).then((res) => {
+    axiosPrivate.post("/testcase", testcase).then((res) => {
       window.location = "/testcases";
     });
   };

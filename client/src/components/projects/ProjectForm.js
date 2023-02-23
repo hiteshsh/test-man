@@ -3,6 +3,7 @@ import { css } from "@emotion/react";
 import { Box, TextField, Button, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
+import { axiosPrivate } from "../../utils/axios";
 
 const mainForm = css`
   root: {
@@ -47,7 +48,7 @@ function ProjectForm({ project, editForm }) {
         name: values.name,
       };
       console.log("submit", project);
-      Axios.put("/project", project).then((res) => {
+      axiosPrivate.put("/project", project).then((res) => {
         window.location = "/projects";
       });
     } else {
@@ -56,7 +57,7 @@ function ProjectForm({ project, editForm }) {
         name: values.name,
       };
       console.log("submit", project);
-      Axios.post("/project", project).then((res) => {
+      axiosPrivate.post("/project", project).then((res) => {
         window.location = "/projects";
       });
     }

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import Axios from "axios";
+import { axiosPrivate } from "../../utils/axios";
 
 const TestCaseListAPI = ({ projectId, testsuiteId, sectionId }) => {
   const [testcases, setTestCases] = React.useState(null);
@@ -17,9 +18,10 @@ const TestCaseListAPI = ({ projectId, testsuiteId, sectionId }) => {
   useEffect(() => {
     function getTestCases() {
       console.log("params inside useeffect", params);
-      Axios.get("/testcases", {
-        params,
-      })
+      axiosPrivate
+        .get("/testcases", {
+          params,
+        })
         .then((response) => {
           console.log("response:", response);
           if (!response.status === 200) {

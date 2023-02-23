@@ -30,6 +30,7 @@ import React, { useEffect } from "react";
 import Axios from "axios";
 import ProjectForm from "./ProjectForm";
 import Handlepopup from "../common/Handlepopup";
+import { axiosPrivate } from "../../utils/axios";
 
 function Project({ project }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -58,7 +59,7 @@ function Project({ project }) {
 
   const handleDeleteSubmit = (event) => {
     const projectId = event.currentTarget.id;
-    Axios.delete("/project/" + projectId)
+    axiosPrivate.delete("/project/" + projectId)
       .then((response) => {
         console.log(response);
 
