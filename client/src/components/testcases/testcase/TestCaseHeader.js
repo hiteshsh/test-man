@@ -24,7 +24,7 @@ const TestCaseHeader = () => {
       underline="hover"
       key="2"
       color="inherit"
-      href="/material-ui/getting-started/installation/"
+      href="/"
       onClick={handleClick}
       variant="body2"
     >
@@ -34,15 +34,13 @@ const TestCaseHeader = () => {
       underline="hover"
       key="2"
       color="inherit"
-      href="/material-ui/getting-started/installation/"
+      href="/"
       onClick={handleClick}
       variant="body2"
     >
       Test Cases
     </Link>,
-    <Typography key="3" color="text.primary" variant="body2">
-      Add Test cases
-    </Typography>,
+   
   ];
   return (
     <Paper
@@ -64,17 +62,18 @@ const TestCaseHeader = () => {
         border={"0px solid"}
         padding={2}
       >
-        <Grid item md={4}>
+        <Grid item md={8}>
           <Typography variant="h5">Add Test Case</Typography>
           <Breadcrumbs
             separator={<NavigateNext fontSize="small" />}
             aria-label="breadcrumb"
           >
             {breadcrumbs}
+            <Typography>New test Case</Typography>
           </Breadcrumbs>
         </Grid>
-        <Grid item md={4}></Grid>
-        <Grid item md={4}></Grid>
+        <Grid item md={2}></Grid>
+        <Grid item md={2}></Grid>
       </Grid>
     </Paper>
   );

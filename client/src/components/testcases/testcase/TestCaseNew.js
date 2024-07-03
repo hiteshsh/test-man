@@ -3,6 +3,8 @@ import React from "react";
 import TestSuiteListAPI from "../../testsuites/TestSuiteListAPI";
 import TestCaseForm from "./TestCaseForm";
 import TestCaseHeader from "./TestCaseHeader";
+import Header from "../../Header";
+import SideMenu from "../../SideMenu";
 
 function TestCaseNew(props) {
   console.log("selected project", props.projectId);
@@ -10,10 +12,14 @@ function TestCaseNew(props) {
   console.log("test suites", testsuites);
 
   return (
-    <Box sx={{ marginLeft: "250px" }}>
-      <TestCaseHeader />
-      <TestCaseForm testsuites={testsuites} />
-    </Box>
+    <>
+      <Header />
+      <SideMenu />
+      <Box sx={{ marginLeft: "250px" }}>
+        <TestCaseHeader />
+        <TestCaseForm testsuites={testsuites} />
+      </Box>
+    </>
   );
 }
 
