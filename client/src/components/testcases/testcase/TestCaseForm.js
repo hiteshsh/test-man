@@ -88,7 +88,7 @@ function TestCaseForm(props) {
       automated: checked,
       testsuiteId: values.suiteId,
       sectionId: values.sectionId,
-      prjectId: "62e02165cc1c8782f8b4188b",
+      projectId: "62e02165cc1c8782f8b4188b",
       type: values.type,
       priority: values.priority,
       status: "active",
@@ -96,9 +96,11 @@ function TestCaseForm(props) {
       instructions: [],
     };
     console.log("submit", testcase);
+    console.log("submitting");
     axiosPrivate.post("/testcase", testcase).then((res) => {
       window.location = "/testcases";
     });
+    console.log("submited success");
   };
 
   return (
@@ -281,7 +283,7 @@ function TestCaseForm(props) {
                 <Button variant="outlined" type="submit">
                   Save & Add more
                 </Button>
-                <Button variant="contained" type="submit">
+                <Button variant="contained" type="submit" onClick={onSubmit}>
                   Save
                 </Button>
               </Stack>

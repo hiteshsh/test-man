@@ -5,7 +5,7 @@ const testcaseSchema = mongoose.Schema({
   title: { type: String, required: true },
   type: {
     type: String,
-    enum: ["functional", "cross-functional"],
+    enum: ["functional", "performance", "security"],
     default: "functional",
   },
   externalId: {
@@ -43,8 +43,8 @@ const testcaseSchema = mongoose.Schema({
   },
   priority: {
     type: String,
-    enum: ["High", "Medium", "Low"],
-    default: "High",
+    enum: ["high", "medium", "low"],
+    default: "high",
   },
   automated: {
     type: Boolean,
