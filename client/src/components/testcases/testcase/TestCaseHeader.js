@@ -14,8 +14,7 @@ const TestCaseHeader = () => {
       underline="hover"
       key="1"
       color="inherit"
-      href="/"
-      onClick={handleClick}
+      href="/projects"
       variant="body2"
     >
       Projects

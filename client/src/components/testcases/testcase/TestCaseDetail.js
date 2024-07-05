@@ -11,6 +11,7 @@ import {
 } from "@mui/icons-material";
 import {
   Box,
+  Divider,
   Drawer,
   Grid,
   IconButton,
@@ -18,9 +19,11 @@ import {
   ListItemIcon,
   ListItemText,
   Paper,
+  Table,
   Typography,
 } from "@mui/material";
 import React from "react";
+import StepsTable from "./TestCaseSteps";
 
 const data = [
   {
@@ -43,7 +46,7 @@ export default function TestCaseDetail({
   //const [open, setOpen] = React.useState(true);
   console.log("testDetail", testDetail);
   return (
-    <div sx={{ backgroundColor: "#000", color: "#fff" }}>
+    <div sx={{ color: "#fff" }}>
       <Drawer
         open={open}
         anchor={"right"}
@@ -51,7 +54,12 @@ export default function TestCaseDetail({
         variant="permanent"
       >
         <Paper
-          style={{ width: 800 }}
+          style={{
+            width: "670px",
+            padding: "16px",
+            backgroundColor: "#f6f8fa",
+            height: "100%",
+          }}
           onClick={(e) => handleDrawerClose(e, testDetail.key)}
         >
           <Grid container alignItems="center" padding={2}>
@@ -85,34 +93,71 @@ export default function TestCaseDetail({
                 </Grid>
                 <Grid item xs={3}>
                   <Box>
-                    <Typography h6>Created By</Typography>
-                    <div>Functional</div>
+                    <Typography h6>Priority</Typography>
+                    <div>High</div>
                   </Box>
                 </Grid>
                 <Grid item xs={3}>
                   <Box>
-                    <Typography h6>Updated By</Typography>
-                    <div>Functional</div>
+                    <Typography h6>Automated</Typography>
+                    <div>yes</div>
                   </Box>
                 </Grid>
                 <Grid item xs={3}>
                   <Box>
-                    <Typography h6>Estimated time</Typography>
-                    <div>Functional</div>
+                    <Typography h6>Estimated</Typography>
+                    <div>15 min</div>
+                  </Box>
+                </Grid>
+              </Grid>
+              <Grid container padding={2}>
+                <Grid item xs={12}>
+                  <Box>
+                    <Divider flex></Divider>
                   </Box>
                 </Grid>
               </Grid>
               <Grid container padding={2}>
                 <Grid item xs={6}>
                   <Box>
-                    <Typography h6>Estimated time</Typography>
-                    <div>Functional</div>
+                    <Typography h6>Created By</Typography>
+                    <div>Hitesh Sharma</div>
                   </Box>
                 </Grid>
                 <Grid item xs={6}>
                   <Box>
-                    <Typography h6>Estimated time</Typography>
-                    <div>Functional</div>
+                    <Typography h6>Last Updated By</Typography>
+                    <div>Hitesh Sharma</div>
+                  </Box>
+                </Grid>
+              </Grid>
+              <Grid container padding={2}>
+                <Grid item xs={12}>
+                  <Box>
+                    <Divider flex></Divider>
+                  </Box>
+                </Grid>
+              </Grid>
+              <Grid container padding={2}>
+                <Grid item xs={12}>
+                  <Box>
+                    <Typography h6>Pre-requisite</Typography>
+                    <div>Steps for the pre conditions</div>
+                  </Box>
+                </Grid>
+              </Grid>
+              <Grid container padding={2}>
+                <Grid item xs={12}>
+                  <Box>
+                    <Divider flex></Divider>
+                  </Box>
+                </Grid>
+              </Grid>
+              <Grid container padding={2}>
+                <Grid item xs={12}>
+                  <Box sx={{ padding: "16px" }}>
+                    <Typography h6>Steps</Typography>
+                    <StepsTable />
                   </Box>
                 </Grid>
               </Grid>
