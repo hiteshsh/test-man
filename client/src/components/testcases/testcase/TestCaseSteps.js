@@ -31,10 +31,14 @@ const StepsTable = () => {
     <TableContainer component={Paper}>
       <Table aria-label="steps table">
         <TableHead>
-          <TableRow sx={{ backgroundColor: "#E6E8F0" }}>
+          <TableRow sx={{ backgroundColor: "#F9FAFC" }}>
             <TableCell></TableCell>
             <TableCell sx={{ fontWeight: "400" }}>Instructions</TableCell>
-            <TableCell sx={{ fontWeight: "400" }}>Expected Result</TableCell>
+            <TableCell
+              sx={{ fontWeight: "400", borderLeft: "1px solid #E6E8F0" }}
+            >
+              Expected Result
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -50,7 +54,10 @@ const StepsTable = () => {
                   ></Chip>
                 </Box>
               </TableCell>
-              <TableCell scope="row" sx={{ whiteSpace: "pre-line" , width:"40%" }}>
+              <TableCell
+                scope="row"
+                sx={{ whiteSpace: "pre-line", width: "40%" }}
+              >
                 {step.instructions}
               </TableCell>
               <TableCell scope="row" sx={{ borderLeft: "1px solid #E6E8F0" }}>

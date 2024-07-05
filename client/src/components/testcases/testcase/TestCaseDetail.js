@@ -70,14 +70,14 @@ export default function TestCaseDetail({
             </Grid>
 
             <Grid item xs={3} container justifyContent="flex-end">
-              <IconButton aria-label="edit" disabled color="primary">
+              <IconButton aria-label="edit" color="primary">
                 <Edit />
               </IconButton>
 
-              <IconButton aria-label="delete" disabled color="primary">
+              <IconButton aria-label="delete" color="primary">
                 <Delete />
               </IconButton>
-              <IconButton aria-label="close" disabled color="primary">
+              <IconButton aria-label="close" color="primary">
                 <Close />
               </IconButton>
             </Grid>
