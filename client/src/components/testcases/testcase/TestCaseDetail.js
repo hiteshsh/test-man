@@ -155,7 +155,7 @@ export default function TestCaseDetail({
               </Grid>
               <Grid container padding={2}>
                 <Grid item xs={12}>
-                  <Box sx={{ padding: "16px" }}>
+                  <Box>
                     <Typography h6>Steps</Typography>
                     <StepsTable />
                   </Box>

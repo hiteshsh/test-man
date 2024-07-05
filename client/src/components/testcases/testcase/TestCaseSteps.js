@@ -50,7 +50,7 @@ const StepsTable = () => {
                   ></Chip>
                 </Box>
               </TableCell>
-              <TableCell scope="row" sx={{ whiteSpace: "pre-line" }}>
+              <TableCell scope="row" sx={{ whiteSpace: "pre-line" , width:"40%" }}>
                 {step.instructions}
               </TableCell>
               <TableCell scope="row" sx={{ borderLeft: "1px solid #E6E8F0" }}>
