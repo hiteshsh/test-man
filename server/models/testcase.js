@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const testcaseSchema = mongoose.Schema({
-  key: { type: String },
+  key: { type: String, unique: true },
   title: { type: String, required: true },
   type: {
     type: String,
@@ -68,6 +68,19 @@ const testcaseSchema = mongoose.Schema({
     type: Date,
     default: new Date(),
   },
+});
+
+testcaseSchema.pre("save", async function (next) {
+  if (this.isNew) {
+    const lastTestCase = await this.constructor.findOne().sort({ _id: -1 });
+    console.log("lastTestCase ", lastTestCase);
+    const lastKey = lastTestCase ? lastTestCase.key : "TC-00";
+    console.log("lastKey ", lastKey);
+    const lastKeyNumber = parseInt(lastKey.split("-")[1], 10);
+    const newKeyNumber = lastKeyNumber + 1;
+    this.key = `TC-${newKeyNumber.toString().padStart(2, "0")}`;
+  }
+  next();
 });
 
 const TestCase = mongoose.model("testcase", testcaseSchema);
