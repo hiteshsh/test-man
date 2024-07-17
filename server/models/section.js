@@ -2,8 +2,6 @@ import mongoose from "mongoose";
 
 const sectionSchema = mongoose.Schema({
   name: { type: String, required: true },
-  description: { type: String, required: true },
-  creator: String,
   testSuiteId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "testSuite",
@@ -14,11 +12,20 @@ const sectionSchema = mongoose.Schema({
     ref: "project",
     required: true,
   },
-  status: {
-    type: String,
-    enum: ["active", "inactive"],
-    default: "active",
+  createdAt: {
+    type: Date,
+    default: new Date(),
+    immutable: true,
   },
+  updatedAt: {
+    type: Date,
+    default: new Date(),
+  },
+});
+
+sectionSchema.pre("findOneAndUpdate", function (next) {
+  this._update.updatedAt = Date.now();
+  next();
 });
 
 const Section = mongoose.model("section", sectionSchema);

@@ -60,7 +60,7 @@ export const createTestSuite = async (req, res) => {
 export const updateTestSuiteById = async (req, res) => {
   const { testsuiteId } = req.params;
   const { name, description } = req.body;
- 
+
   try {
     const updatedTestSuite = await TestSuite.findByIdAndUpdate(
       testsuiteId,
@@ -78,13 +78,16 @@ export const updateTestSuiteById = async (req, res) => {
 };
 
 export const deleteTestSuiteById = async (req, res) => {
-  try {
-    const removedtestSuite = await TestSuite.deleteOne({
-      _id: req.params.testsuiteId,
-    });
+  const { testsuiteId } = req.params;
 
-    res.status(200).json(removedtestSuite);
+  try {
+    const deleteTestSuite = await TestSuite.findByIdAndDelete(testsuiteId);
+
+    if (!deleteTestSuite) {
+      return res.status(404).json({ message: "Test suite not found" });
+    }
+    res.status(200).json(deleteTestSuite);
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };

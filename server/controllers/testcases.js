@@ -80,14 +80,17 @@ export const getTestCaseById = async (req, res) => {
 };
 
 export const deleteTestCaseById = async (req, res) => {
-  try {
-    const removedTestCase = await TestCase.remove({
-      _id: req.params.testcaseId,
-    });
+  const { testcaseId } = req.params;
 
-    res.status(200).json(removedTestCase);
+  try {
+    const deleteTestCase = await TestCase.findByIdAndDelete(testcaseId);
+
+    if (!deleteTestCase) {
+      return res.status(404).json({ message: "Test case not found" });
+    }
+    res.status(200).json(deleteTestCase);
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 

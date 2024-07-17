@@ -88,15 +88,17 @@ export const createRelease = async (req, res) => {
 };
 
 export const deleteReleaseById = async (req, res) => {
-  try {
-    console.log("deleting project", req.params.releaseId);
-    const removedRelease = await Release.deleteOne({
-      _id: req.params.releaseId,
-    });
+  const { releaseId } = req.params;
 
-    res.status(200).json(removedRelease);
+  try {
+    const deleteRelease = await Release.findByIdAndDelete(releaseId);
+
+    if (!deleteRelease) {
+      return res.status(404).json({ message: "Section not found" });
+    }
+    res.status(200).json(deleteRelease);
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
