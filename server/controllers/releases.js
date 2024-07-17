@@ -101,10 +101,15 @@ export const deleteReleaseById = async (req, res) => {
 };
 
 export const updateReleaseById = async (req, res) => {
-  console.log("inside controller");
   const { releaseId } = req.params;
-  const { name, description, status,projectId, testCaseInclusionType, testCases } =
-    req.body;
+  const {
+    name,
+    description,
+    status,
+    projectId,
+    testCaseInclusionType,
+    testCases,
+  } = req.body;
 
   const query = {};
 
@@ -148,7 +153,29 @@ export const updateReleaseById = async (req, res) => {
 
     res.status(200).json(updatedRelease);
   } catch (error) {
-    console.log("req", req.body);
     res.status(500).json({ message: error.message });
   }
+};
+
+export const updateTestCaseResult = async (req, res) => {
+  const { releaseId, testCaseId } = req.params;
+  const { result } = req.body;
+  try {
+    const release = await Release.findById(releaseId);
+    if (!release) {
+      return res.status(404).json({error:'Release not found'});
+    }
+
+    const testExecution = release.testExecutions.find(te => te.testCase.toString() === testCaseId);
+    if (!testExecution) {
+      return res.status(404).json({error:'Test case not found in release'});
+    }
+    testExecution.results.push({ result });
+    await release.save();
+
+    res.status(200).json(release);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+
 };
