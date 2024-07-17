@@ -28,8 +28,7 @@ export const createProject = async (req, res) => {
     res.status(400).json({ errors: errors.array() });
     return;
   }
-  const project = req.body;
-  console.log(project);
+
   const newProject = new Project({
     name: req.body.name,
     description: req.body.description,

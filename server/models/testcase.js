@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import generateUniqueKey from "../util/keygenerator.js";
 
 const stepsSchema = new mongoose.Schema({
   instruction: String,
@@ -71,13 +72,7 @@ const testcaseSchema = mongoose.Schema({
 
 testcaseSchema.pre("save", async function (next) {
   if (this.isNew) {
-    const lastTestCase = await this.constructor.findOne().sort({ _id: -1 });
-    console.log("lastTestCase ", lastTestCase);
-    const lastKey = lastTestCase ? lastTestCase.key : "TC-00";
-    console.log("lastKey ", lastKey);
-    const lastKeyNumber = parseInt(lastKey.split("-")[1], 10);
-    const newKeyNumber = lastKeyNumber + 1;
-    this.key = `TC-${newKeyNumber.toString().padStart(2, "0")}`;
+    this.key = await generateUniqueKey(TestCase, "TC");
   }
   next();
 });

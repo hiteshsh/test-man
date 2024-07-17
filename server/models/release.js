@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import generateUniqueKey from "../util/keygenerator.js";
 
 const testResultSchema = new mongoose.Schema({
   result: {
@@ -74,13 +75,7 @@ const releaseSchema = mongoose.Schema({
 
 releaseSchema.pre("save", async function (next) {
   if (this.isNew) {
-    const lastRelease = await Release.findOne().sort({ _id: -1 });
-    console.log("lastRelease", lastRelease);
-    const lastKey = lastRelease ? lastRelease.key : "R-00";
-      const lastKeyNumber = parseInt(lastKey.split("-")[1], 10);
-      const newKeyNumber = lastKeyNumber + 1;
-      this.key = `R-${newKeyNumber.toString().padStart(2, "0")}`;
-    
+    this.key = await generateUniqueKey(Release, "R");
   }
   next();
 });
