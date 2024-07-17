@@ -32,8 +32,6 @@ export const createProject = async (req, res) => {
   const newProject = new Project({
     name: req.body.name,
     description: req.body.description,
-    creator: req.body.creator,
-    prefix: req.body.prefix,
   });
   try {
     await newProject.save();
@@ -57,20 +55,25 @@ export const deleteProjectById = async (req, res) => {
 };
 
 export const updateProjectById = async (req, res) => {
+  const { projectId } = req.params;
+  const { name, description } = req.body;
+  console.log("projectId", projectId);
   try {
-    const updatedProject = await Project.updateOne({
-      _id: req.params.id,
-      $set: {
-        name: req.body.name,
-        description: req.body.description,
-        creator: req.body.creator,
-        prefix: req.body.prefix,
+    const updatedProject = await Project.findByIdAndUpdate(
+      projectId,
+      {
+        name,
+        description,
       },
-    });
+      { new: true, runValidators: true }
+    );
 
+    if (!updatedProject) {
+      return res.status(404).json({ message: "Project not found" });
+    }
     res.status(200).json(updatedProject);
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 

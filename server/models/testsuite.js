@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const testSuiteSchema = mongoose.Schema({
   name: { type: String, required: true },
-  description: { type: String, required: true },
+  description: { type: String },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
@@ -16,6 +16,7 @@ const testSuiteSchema = mongoose.Schema({
   createdAt: {
     type: Date,
     default: new Date(),
+    immutable: true,
   },
   updatedAt: {
     type: Date,
@@ -26,11 +27,11 @@ const testSuiteSchema = mongoose.Schema({
     ref: "project",
     required: true,
   },
-  status: {
-    type: String,
-    enum: ["active", "inactive"],
-    default: "active",
-  },
+});
+
+testSuiteSchema.pre('findOneAndUpdate', function (next) {
+  this._update.updatedAt = Date.now();
+  next();
 });
 
 const TestSuite = mongoose.model("testSuite", testSuiteSchema);

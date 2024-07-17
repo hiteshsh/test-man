@@ -66,6 +66,7 @@ const releaseSchema = mongoose.Schema({
   createdAt: {
     type: Date,
     default: new Date(),
+    immutable: true,
   },
   updatedAt: {
     type: Date,
@@ -77,6 +78,11 @@ releaseSchema.pre("save", async function (next) {
   if (this.isNew) {
     this.key = await generateUniqueKey(Release, "R");
   }
+  next();
+});
+
+releaseSchema.pre("findOneAndUpdate", function (next) {
+  this._update.updatedAt = Date.now();
   next();
 });
 

@@ -1,4 +1,4 @@
-import TestSuite from "../models/testSuite.js";
+import TestSuite from "../models/testsuite.js";
 import Section from "../models/section.js";
 
 export const getTestSuites = async (req, res) => {
@@ -44,17 +44,9 @@ async function getSections(query1) {
 }
 
 export const createTestSuite = async (req, res) => {
-  // const errors = validationResult(req);
-  // if (!errors.isEmpty()) {
-  //   res.status(400).json({ errors: errors.array() });
-  //   return;
-  // }
-
   const newTestSuite = new TestSuite({
     name: req.body.name,
     description: req.body.description,
-    creator: req.body.creator,
-    status: req.body.status,
     projectId: req.body.projectId,
   });
   try {
@@ -62,6 +54,26 @@ export const createTestSuite = async (req, res) => {
     res.status(200).json(newTestSuite);
   } catch (error) {
     res.status(409).json(error.message);
+  }
+};
+
+export const updateTestSuiteById = async (req, res) => {
+  const { testsuiteId } = req.params;
+  const { name, description } = req.body;
+ 
+  try {
+    const updatedTestSuite = await TestSuite.findByIdAndUpdate(
+      testsuiteId,
+      { name, description },
+      { new: true, runValidators: true }
+    );
+    if (!updatedTestSuite) {
+      return res.status(404).json({ message: "Test Suite not found" });
+    }
+
+    res.status(200).json(updatedTestSuite);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
 

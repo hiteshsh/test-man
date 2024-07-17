@@ -18,6 +18,7 @@ const projectSchema = mongoose.Schema({
   createdAt: {
     type: Date,
     default: new Date(),
+    immutable: true,
   },
   updatedAt: {
     type: Date,
@@ -34,6 +35,11 @@ projectSchema.pre("save", async function (next) {
   if (this.isNew) {
     this.key = await generateUniqueKey(Project, "PR");
   }
+  next();
+});
+
+projectSchema.pre("findOneAndUpdate", function (next) {
+  this._update.updatedAt = Date.now();
   next();
 });
 
