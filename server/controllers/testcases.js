@@ -96,7 +96,6 @@ export const updateTestCaseById = async (req, res) => {
     const updatedTestCase = await TestCase.updateOne({
       _id: req.params.testcaseId,
       $set: {
-        key: req.body.key,
         title: req.body.title,
         instructions: req.body.instructions,
         type: req.body.type,
