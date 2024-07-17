@@ -1,7 +1,31 @@
 import mongoose from "mongoose";
 
+const testResultSchema = new mongoose.Schema({
+  result: {
+    type: String,
+    enum: ["untested", "passed", "failed", "blocked"],
+    default: "untested",
+  },
+  addedOn: { type: Date, default: Date.now },
+  addedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "user",
+    required: false,
+  },
+  assignedTo: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "user",
+    required: false,
+  },
+});
+
+const testExecutionSchema = new mongoose.Schema({
+  testCase: { type: mongoose.Schema.Types.ObjectId, ref: "TestCase" },
+  results: [testResultSchema],
+});
+
 const releaseSchema = mongoose.Schema({
-  key: "String",
+  //key: { type: String, unique: true },
   name: { type: String, required: true },
   description: String,
   assignedTo: {
@@ -12,8 +36,14 @@ const releaseSchema = mongoose.Schema({
   endDate: Date,
   status: {
     type: String,
-    enum: ["active", "completed"],
-    default: "created",
+    enum: ["active", "completed", "archived"],
+    default: "active",
+    required: true,
+  },
+  testCaseInclusionType: {
+    type: String,
+    enum: ["all", "specific", "filter"],
+    default: "all",
     required: true,
   },
   projectId: {
@@ -21,6 +51,7 @@ const releaseSchema = mongoose.Schema({
     ref: "project",
     required: true,
   },
+  testExecutions: [testExecutionSchema],
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
