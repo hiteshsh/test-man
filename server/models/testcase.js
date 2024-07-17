@@ -39,7 +39,6 @@ const testcaseSchema = mongoose.Schema({
   sectionId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "section",
-    required: true,
   },
   priority: {
     type: String,
