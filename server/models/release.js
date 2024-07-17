@@ -25,7 +25,7 @@ const testExecutionSchema = new mongoose.Schema({
 });
 
 const releaseSchema = mongoose.Schema({
-  //key: { type: String, unique: true },
+  key: { type: String, unique: true },
   name: { type: String, required: true },
   description: String,
   assignedTo: {
@@ -70,6 +70,19 @@ const releaseSchema = mongoose.Schema({
     type: Date,
     default: new Date(),
   },
+});
+
+releaseSchema.pre("save", async function (next) {
+  if (this.isNew) {
+    const lastRelease = await Release.findOne().sort({ _id: -1 });
+    console.log("lastRelease", lastRelease);
+    const lastKey = lastRelease ? lastRelease.key : "R-00";
+      const lastKeyNumber = parseInt(lastKey.split("-")[1], 10);
+      const newKeyNumber = lastKeyNumber + 1;
+      this.key = `R-${newKeyNumber.toString().padStart(2, "0")}`;
+    
+  }
+  next();
 });
 
 const Release = mongoose.model("release", releaseSchema);

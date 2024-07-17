@@ -79,7 +79,7 @@ export const createRelease = async (req, res) => {
   });
 
   try {
-    console.log("before save", newRelease);
+    //console.log("before save", newRelease);
     await newRelease.save();
     res.status(200).json(newRelease);
   } catch (error) {
