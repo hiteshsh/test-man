@@ -101,20 +101,54 @@ export const deleteReleaseById = async (req, res) => {
 };
 
 export const updateReleaseById = async (req, res) => {
+  console.log("inside controller");
+  const { releaseId } = req.params;
+  const { name, description, status,projectId, testCaseInclusionType, testCases } =
+    req.body;
+
+  const query = {};
+
+  let testExecutions = [];
+
+  if (testCaseInclusionType === "all") {
+    try {
+      if (projectId) {
+        query.projectId = projectId;
+      }
+      const allTestCases = await TestCase.find(query);
+      testExecutions = allTestCases.map((testCase) => ({
+        testCase: testCase._id,
+        results: [{ result: "untested" }],
+      }));
+    } catch (error) {
+      return res.status(500).send(error);
+    }
+  } else if (testCaseInclusionType === "specific" && Array.isArray(testCases)) {
+    testExecutions = testCases.map((testCaseId) => ({
+      testCase: testCaseId,
+      results: [{ result: "untested" }],
+    }));
+  }
+
   try {
-    const updatedRelease = await Release.updateOne({
-      _id: req.params.releaseId,
-      $set: {
-        name: req.body.name,
-        description: req.body.description,
-        projectId: req.body.projectId,
-        status: req.body.status,
+    const updatedRelease = await Release.findByIdAndUpdate(
+      releaseId,
+      {
+        name,
+        description,
+        status,
+        testCaseInclusionType,
+        testExecutions,
       },
-    });
+      { new: true, runValidators: true }
+    );
+    if (!updatedRelease) {
+      return res.status(404).json({ message: "Test Release not found" });
+    }
 
     res.status(200).json(updatedRelease);
   } catch (error) {
     console.log("req", req.body);
-    res.status(404).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
