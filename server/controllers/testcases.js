@@ -92,27 +92,46 @@ export const deleteTestCaseById = async (req, res) => {
 };
 
 export const updateTestCaseById = async (req, res) => {
+  const { testcaseId } = req.params;
+  const {
+    title,
+    steps,
+    type,
+    tags,
+    priority,
+    status,
+    prerequisite,
+    automated,
+    projectId,
+    testsuiteId,
+    sectionId,
+  } = req.body;
+
   try {
-    const updatedTestCase = await TestCase.updateOne({
-      _id: req.params.testcaseId,
-      $set: {
-        title: req.body.title,
-        steps: req.body.steps,
-        type: req.body.type,
-        tags: req.body.tags,
-        priority: req.body.priority,
-        status: req.body.status,
-        prerequisite: req.body.prerequisite,
-        automated: req.body.automated,
-        projectId: req.body.projectId,
-        testsuiteId: req.body.testsuiteId,
-        sectionId: req.body.sectionId,
+    const updatedTestCase = await TestCase.findByIdAndUpdate(
+      testcaseId,
+      {
+        title,
+        steps,
+        type,
+        tags,
+        priority,
+        status,
+        prerequisite,
+        automated,
+        projectId,
+        testsuiteId,
+        sectionId,
       },
-    });
+      { new: true, runValidators: true }
+    );
+    if (!updatedTestCase) {
+      return res.status(404).json({ message: "Test Case not found" });
+    }
 
     res.status(200).json(updatedTestCase);
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
