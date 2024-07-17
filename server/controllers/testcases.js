@@ -54,7 +54,7 @@ export const createTestCase = async (req, res) => {
     priority: req.body.priority,
     status: req.body.status,
     prerequisite: req.body.prerequisite,
-    instructions: req.body.instructions,
+    steps: req.body.steps,
     automated: req.body.automated,
     projectId: req.body.projectId,
     testsuiteId: req.body.testsuiteId,
@@ -97,7 +97,7 @@ export const updateTestCaseById = async (req, res) => {
       _id: req.params.testcaseId,
       $set: {
         title: req.body.title,
-        instructions: req.body.instructions,
+        steps: req.body.steps,
         type: req.body.type,
         tags: req.body.tags,
         priority: req.body.priority,

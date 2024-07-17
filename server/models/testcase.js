@@ -1,5 +1,10 @@
 import mongoose from "mongoose";
 
+const stepsSchema = new mongoose.Schema({
+  instruction: String,
+  expectedResult: String,
+});
+
 const testcaseSchema = mongoose.Schema({
   key: { type: String, unique: true },
   title: { type: String, required: true },
@@ -18,12 +23,7 @@ const testcaseSchema = mongoose.Schema({
     enum: ["active", "inactive"],
     default: "active",
   },
-  instructions: [
-    {
-      steps: String,
-      expectedResult: String,
-    },
-  ],
+  steps: [stepsSchema],
   // steps:[],
   // expectedResult:[],
   projectId: {
