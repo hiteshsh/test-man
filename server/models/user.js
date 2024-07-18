@@ -9,7 +9,7 @@ const UserSchema = mongoose.Schema({
     trim: true,
     lowercase: true,
   },
-  password: { type: String },
+  password: { type: String, required: true },
   status: {
     type: String,
     enum: ["active", "inactive"],
@@ -17,23 +17,35 @@ const UserSchema = mongoose.Schema({
   },
   roles: [
     {
-      //   roleId: {
-      //     type: mongoose.Schema.Types.ObjectId,
-      //     ref: "role",
-      //   },
-      //   projectId: {
-      //     type: mongoose.Schema.Types.ObjectId,
-      //     ref: "project",
-      //   },
-      //
       type: String,
-      default: ["tester"],
+      enum: ["tester", "lead"],
+      required: true,
     },
   ],
   refreshToken: {
     type: String,
   },
+  createdAt: {
+    type: Date,
+    default: new Date(),
+    immutable: true,
+  },
+  updatedAt: {
+    type: Date,
+    default: new Date(),
+  },
 });
+
+UserSchema.pre("findOneAndUpdate", function (next) {
+  this._update.updatedAt = Date.now();
+  next();
+});
+
+UserSchema.methods.toJSON = function () {
+  const userObject = this.toObject();
+  delete userObject.password;
+  return userObject;
+};
 
 const User = mongoose.model("user", UserSchema);
 

@@ -23,6 +23,7 @@ export const getUsers = async (req, res) => {
 };
 
 export const addUser = async (req, res) => {
+  const { name, emailId, password, status, roles } = req.body;
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     res.status(400).json({ errors: errors.array() });
@@ -31,24 +32,23 @@ export const addUser = async (req, res) => {
   const user = req.body;
   console.log(user);
   const newUser = new User({
-    name: req.body.name,
-    emailId: req.body.emailId,
-    password: req.body.password,
-    creator: req.body.creator,
-    status: req.body.status,
-    roles: req.body.roles,
+    name,
+    emailId,
+    password,
+    status,
+    roles: roles && roles.length ? roles : ["tester"],
   });
 
   try {
     //not working need to check
-    const duplicateUser = await User.findOne({ emailId: req.body.emailId });
-    console.log("find by email id", duplicateUser);
+    const duplicateUser = await User.findOne({ emailId: emailId });
     if (duplicateUser)
       return res.status(409).json({ message: "Duplicate User" });
-    console.log("No duplciate user found");
     const hashedPwd = await bcrypt.hash(newUser.password, 10);
     newUser.password = hashedPwd;
+    console.log("user", newUser);
     await newUser.save();
+
     res
       .status(200)
       .json({ success: `New User ${newUser.emailId} is created!` });
@@ -58,33 +58,54 @@ export const addUser = async (req, res) => {
 };
 
 export const deleteUserById = async (req, res) => {
+  const { userId } = req.params;
   try {
-    const removedUser = await User.deleteOne({
-      _id: req.params.id,
+    const removedUser = await User.findByIdAndDelete({
+      _id: userId,
     });
+    if (!removedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
-    res.status(200).json(removedUser);
+    res.status(200).json({ success: `User is removed!` });
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
 export const updateUserById = async (req, res) => {
-  try {
-    const updatedUser = await User.updateOne({
-      _id: req.params.id,
-      $set: {
-        name: req.body.name,
-        emailId: req.body.emailId,
-        creator: req.body.creator,
-        roleId: req.body.roleId,
-        status: req.body.status,
-      },
-    });
+  const { userId } = req.params;
+  const { name, status, roles } = req.body;
 
-    res.status(200).json(updatedUser);
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { name, status, roles },
+      { new: true, runValidators: true }
+    );
+    if (!updatedUser) {
+      return res.status(404).send("User not found");
+    }
+
+    res.status(200).send({ success: `User is updated!` });
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(500).send(error);
+  }
+};
+
+export const getUserById = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const getUser = await User.findOne({
+      _id: userId,
+    });
+    if (!getUser) {
+      res.status(404).json({ message: "No user found" });
+    }
+    res.status(200).json(getUser);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
 
