@@ -15,13 +15,7 @@ const UserSchema = mongoose.Schema({
     enum: ["active", "inactive"],
     default: "active",
   },
-  roles: [
-    {
-      type: String,
-      enum: ["tester", "lead"],
-      required: true,
-    },
-  ],
+  roles: [{ type: mongoose.Schema.Types.ObjectId, ref: "Role" }],
   refreshToken: {
     type: String,
   },
@@ -44,6 +38,7 @@ UserSchema.pre("findOneAndUpdate", function (next) {
 UserSchema.methods.toJSON = function () {
   const userObject = this.toObject();
   delete userObject.password;
+  //delete userObject.refreshToken;
   return userObject;
 };
 

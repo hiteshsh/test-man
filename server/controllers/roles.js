@@ -3,77 +3,86 @@ import { body, validationResult } from "express-validator";
 
 export const getRoles = async (req, res) => {
   try {
-    let limit =
-      req.query.limit && req.query.limit <= 25 ? parseInt(req.query.limit) : 10;
-    let page = 0;
-    if (req.query) {
-      if (req.query.page) {
-        req.query.page = parseInt(req.query.page);
-        page = Number.isInteger(req.query.page) ? req.query.page : 0;
-      }
-    }
-    const roles = await Role.find()
-      .limit(limit)
-      .skip(limit * page);
-    res.status(200).json(roles);
+    const roles = await Role.find();
+    res.status(200).send(roles);
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(500).send(error);
+  }
+};
+
+export const getRoleById = async (req, res) => {
+  const { roleId } = req.params;
+
+  try {
+    const role = await Role.findById(roleId);
+    if (!role) {
+      return res.status(404).send("Role not found");
+    }
+    res.status(200).send(role);
+  } catch (error) {
+    res.status(500).send(error);
   }
 };
 
 export const addRole = async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    res.status(400).json({ errors: errors.array() });
-    return;
+  const { name, permissions } = req.body;
+
+  if (!name || !permissions) {
+    return res.status(400).send("Name and permissions are required");
   }
-  const role = req.body;
-  const newRole = new Role({
-    name: req.body.name,
-    creater: req.body.creater,
-    priviledge: req.body.priviledge,
-  });
+
   try {
+    const newRole = new Role({ name, permissions });
     await newRole.save();
-    res.status(200).json(newRole);
+    res.status(201).send(newRole);
   } catch (error) {
-    res.status(409).json(error.message);
+    res.status(500).send(error);
   }
 };
 
 export const deleteRoleById = async (req, res) => {
-  try {
-    const removedRole = await Role.deleteOne({
-      _id: req.params.id,
-    });
+  const { roleId } = req.params;
 
-    res.status(200).json(removedRole);
+  try {
+    const deletedRole = await Role.findByroleIdAndDelete(roleId);
+    if (!deletedRole) {
+      return res.status(404).send("Role not found");
+    }
+    res.status(200).send(deletedRole);
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(500).send(error);
   }
 };
 
 export const updateRoleById = async (req, res) => {
+  const { roleId } = req.params;
+  const { name, permissions } = req.body;
+
+  if (!name || !permissions) {
+    return res.status(400).send("Name and permissions are required");
+  }
+
   try {
-    const updatedRole = await Role.updateOne({
-      _id: req.params.id,
-      $set: {
-        name: req.body.name,
-        creater: req.body.creater,
-        priviledge: req.body.priviledge,
-      },
-    });
+    const updatedRole = await Role.findByIdAndUpdate(
+      roleId,
+      { name, permissions },
+      { new: true, runValidators: true }
+    );
 
-    res.status(200).json(updatedRole);
-  } catch (error) {
-    res.status(404).json({ message: error.message });
-  }
-};
-
-export const validate = (method) => {
-  switch (method) {
-    case "addRole": {
-      return [body("name", "Role name cannot be empty").notEmpty()];
+    if (!updatedRole) {
+      return res.status(404).send("Role not found");
     }
+
+    res.status(200).send(updatedRole);
+  } catch (error) {
+    res.status(500).send(error);
   }
 };
+
+// export const validate = (method) => {
+//   switch (method) {
+//     case "addRole": {
+//       return [body("name", "Role name cannot be empty").notEmpty()];
+//     }
+//   }
+// };

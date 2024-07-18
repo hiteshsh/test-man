@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv/config";
 
 export const loginUser = async (req, res) => {
+  console.log("inside login");
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     res.status(400).json({ errors: errors.array() });
@@ -12,7 +13,7 @@ export const loginUser = async (req, res) => {
   }
   const { emailId, password } = req.body;
 
-  const foundUser = await User.findOne({ emailId: emailId });
+  const foundUser = await User.findOne({ emailId: emailId }).populate("roles");
   if (!foundUser || foundUser.status !== "active")
     return res.status(401).json({ message: "unauthorised" });
   const match = await bcrypt.compare(password, foundUser.password);
@@ -21,8 +22,9 @@ export const loginUser = async (req, res) => {
     const accessToken = jwt.sign(
       {
         UserInfo: {
+          id: foundUser.id,
           emailId: foundUser.emailId,
-          roles: roles,
+          roles: foundUser.roles,
         },
       },
       process.env.ACCESS_TOKEN_SECRET,

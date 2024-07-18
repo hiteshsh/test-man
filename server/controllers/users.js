@@ -1,6 +1,7 @@
 import User from "../models/user.js";
 import { body, validationResult } from "express-validator";
 import bcrypt from "bcrypt";
+import Role from "../models/role.js";
 
 export const getUsers = async (req, res) => {
   try {
@@ -14,6 +15,7 @@ export const getUsers = async (req, res) => {
       }
     }
     const users = await User.find()
+      .populate("roles")
       .limit(limit)
       .skip(limit * page);
     res.status(200).json(users);
@@ -29,24 +31,27 @@ export const addUser = async (req, res) => {
     res.status(400).json({ errors: errors.array() });
     return;
   }
-  const user = req.body;
-  console.log(user);
+
   const newUser = new User({
     name,
     emailId,
     password,
     status,
-    roles: roles && roles.length ? roles : ["tester"],
+    roles,
   });
 
   try {
-    //not working need to check
     const duplicateUser = await User.findOne({ emailId: emailId });
     if (duplicateUser)
       return res.status(409).json({ message: "Duplicate User" });
     const hashedPwd = await bcrypt.hash(newUser.password, 10);
+
+    // todo: handle if empty role is not provided then add tester role
+    const roleDocs = roles ? await Role.find({ _id: { $in: roles } }) : [];
+    newUser.roles = roleDocs.map((role) => role._id);
+
     newUser.password = hashedPwd;
-    console.log("user", newUser);
+
     await newUser.save();
 
     res
@@ -78,9 +83,10 @@ export const updateUserById = async (req, res) => {
   const { name, status, roles } = req.body;
 
   try {
+    const roleDocs = roles ? await Role.find({ _id: { $in: roles } }) : [];
     const updatedUser = await User.findByIdAndUpdate(
       userId,
-      { name, status, roles },
+      { name, status, roles: roleDocs.map((role) => role._id) },
       { new: true, runValidators: true }
     );
     if (!updatedUser) {
@@ -97,9 +103,7 @@ export const getUserById = async (req, res) => {
   const { userId } = req.params;
 
   try {
-    const getUser = await User.findOne({
-      _id: userId,
-    });
+    const getUser = await User.findById(userId).populate("roles");
     if (!getUser) {
       res.status(404).json({ message: "No user found" });
     }
