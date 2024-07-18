@@ -27,7 +27,7 @@ app.use(verifyJWT);
 app.use("/", testcaseRoutes);
 app.use("/", projectRoutes);
 app.use("/users", userRoutes);
-app.use("/roles", roleRoutes);
+app.use("/", roleRoutes);
 app.use("/", testsuites);
 app.use("/", sections);
 app.use("/", releases);
