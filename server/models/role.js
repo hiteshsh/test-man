@@ -18,7 +18,20 @@ const RoleSchema = new mongoose.Schema({
       addEdit: { type: Boolean, default: false },
       delete: { type: Boolean, default: false },
     },
-    Dashboard: {
+    user: {
+      view: { type: Boolean, default: false },
+      addEdit: { type: Boolean, default: false },
+      delete: { type: Boolean, default: false },
+    },
+    role: {
+      view: { type: Boolean, default: false },
+      addEdit: { type: Boolean, default: false },
+      delete: { type: Boolean, default: false },
+    },
+    dashboard: {
+      view: { type: Boolean, default: false },
+    },
+    report: {
       view: { type: Boolean, default: false },
     },
   },

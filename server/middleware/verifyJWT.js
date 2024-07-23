@@ -6,20 +6,26 @@ const verifyJWT = async (req, res, next) => {
   const token = req.header("Authorization").replace("Bearer ", "");
 
   if (!token) {
-    return res.status(401).json({ message: "Access denied. You do not have the required permissions." });
+    return res.status(401).json({
+      message: "Access denied. You do not have the required permissions.",
+    });
   }
 
   try {
     const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
     const user = await User.findById(decoded.UserInfo.id).populate("roles");
     if (!user) {
-      return res.status(401).json({ message: "Access denied. You do not have the required permissions." });
+      return res.status(401).json({
+        message: "Access denied. You do not have the required permissions..",
+      });
     }
 
     req.user = user;
     next();
   } catch (error) {
-    res.status(401).json({ message: "Access denied. You do not have the required permissions." });
+    res.status(401).json({
+      message: "Access denied. You do not have the required permissions...",
+    });
   }
 };
 
@@ -34,9 +40,9 @@ export const authorize = (requiredPermissions) => {
     });
 
     if (!hasPermission) {
-      return res
-        .status(403)
-        .json({ message: "Access denied. You do not have the required permissions." });
+      return res.status(403).json({
+        message: "Access denied. You do not have the required permissions....",
+      });
     }
     next();
   };
