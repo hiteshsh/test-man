@@ -80,20 +80,37 @@ export const deleteUserById = async (req, res) => {
 
 export const updateUserById = async (req, res) => {
   const { userId } = req.params;
-  const { name, status, roles } = req.body;
+  const { name, status, roles, password } = req.body;
 
   try {
-    const roleDocs = roles ? await Role.find({ _id: { $in: roles } }) : [];
-    const updatedUser = await User.findByIdAndUpdate(
-      userId,
-      { name, status, roles: roleDocs.map((role) => role._id) },
-      { new: true, runValidators: true }
-    );
+    // Build the update object dynamically
+    let updateFields = {};
+
+    if (name) updateFields.name = name;
+    if (status) updateFields.status = status;
+    if (password) {
+      updateFields.password = await bcrypt.hash(password, 10);
+    }
+    if (roles) {
+      const roleDocs = await Role.find({ _id: { $in: roles } });
+      updateFields.roles = roleDocs.map((role) => role._id);
+    }
+
+    // If updateFields is empty, return an error response
+    if (Object.keys(updateFields).length === 0) {
+      return res.status(400).send("No fields to update");
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(userId, updateFields, {
+      new: true,
+      runValidators: true,
+    });
+
     if (!updatedUser) {
       return res.status(404).send("User not found");
     }
 
-    res.status(200).send({ success: `User is updated!` });
+    res.status(200).send({ success: "User is updated!" });
   } catch (error) {
     res.status(500).send(error);
   }
