@@ -18,8 +18,13 @@ const initialValues = {
 
 function ProjectForm({ project, editForm }) {
   const [values, setValues] = useState(
-    editForm    
-      ? { name: project.name, description: project.description }: initialValues
+    editForm
+      ? {
+          id: project._id,
+          name: project.name,
+          description: project.description,
+        }
+      : initialValues
   );
 
   //useEffect(() => {}, [values]);
@@ -41,22 +46,17 @@ function ProjectForm({ project, editForm }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const project = {
+      description: values.description,
+      name: values.name,
+    };
     if (editForm) {
-      const project = {
-        id: project._id,
-        description: values.description,
-        name: values.name,
-      };
-      console.log("submit", project);
-      axiosPrivate.put("/project", project).then((res) => {
+      const projectId = values.id;
+      axiosPrivate.put("/project/" + projectId, project).then((res) => {
         window.location = "/projects";
       });
     } else {
-      const project = {
-        description: values.description,
-        name: values.name,
-      };
-      console.log("submit", project);
       axiosPrivate.post("/project", project).then((res) => {
         window.location = "/projects";
       });
@@ -100,7 +100,12 @@ function ProjectForm({ project, editForm }) {
           <Button variant="outlined" onClick={reset}>
             Reset
           </Button>
-          <Button variant="contained" type="submit" onClick={handleSubmit}>
+          <Button
+            variant="contained"
+            type="submit"
+            onClick={handleSubmit}
+            id={values.id}
+          >
             Save
           </Button>
         </Stack>

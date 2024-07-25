@@ -59,7 +59,8 @@ function Project({ project }) {
 
   const handleDeleteSubmit = (event) => {
     const projectId = event.currentTarget.id;
-    axiosPrivate.delete("/project/" + projectId)
+    axiosPrivate
+      .delete("/project/" + projectId)
       .then((response) => {
         console.log(response);
 
@@ -113,8 +114,9 @@ function Project({ project }) {
             "aria-labelledby": "basic-button",
           }}
         >
-          <MenuItem onClick={handleEdit}>Edit</MenuItem>
-          <MenuItem onClick={handleClose}>Copy</MenuItem>
+          <MenuItem onClick={handleEdit} id={project._id}>
+            Edit
+          </MenuItem>
           <MenuItem onClick={handleDelete}>Delete</MenuItem>
         </Menu>
         <Dialog
