@@ -51,7 +51,7 @@ function ProjectForm({ project, editForm }) {
       description: values.description,
       name: values.name,
     };
-    if (editForm) {
+    if (values.id) {
       const projectId = values.id;
       axiosPrivate.put("/project/" + projectId, project).then((res) => {
         window.location = "/projects";

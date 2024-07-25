@@ -158,7 +158,7 @@ function Project({ project }) {
             </div>
           </DialogTitle>
           <DialogContent>
-            <ProjectForm project={project} editForm />
+            <ProjectForm project={project} />
           </DialogContent>
         </Dialog>
 
