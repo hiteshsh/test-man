@@ -10,7 +10,7 @@ import TestCases from "./components/testcases/TestCases";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Dashboard from "./components/Dashboard";
 import Releases from "./components/releases/Releases";
-import Projects from "./components/projects/Projects";
+import Projects from "./components/projects/ProjectsMain";
 import Users from "./components/users/Users";
 import TestCaseForm from "./components/testcases/testcase/TestCaseForm";
 import TestCaseNew from "./components/testcases/testcase/TestCaseNew";
