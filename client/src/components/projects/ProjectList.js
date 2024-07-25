@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import ProjectForm from "./ProjectForm";
-import Project from "./Project";
+import Project from "./ProjectCard";
 import ProjectListAPI from "./ProjectListAPI";
 import Handlepopup from "../common/Handlepopup";
 
