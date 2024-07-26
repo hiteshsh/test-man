@@ -3,6 +3,7 @@ import dotenv from "dotenv/config";
 import User from "../models/user.js";
 
 const verifyJWT = async (req, res, next) => {
+  console.log("Inside verify JWT");
   const token = req.header("Authorization").replace("Bearer ", "");
 
   if (!token) {

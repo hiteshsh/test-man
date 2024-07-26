@@ -24,8 +24,9 @@ const linkStyle = {
   color: "inherit",
 };
 
-export default function NestedList() {
+export default function NestedList({ currentProject }) {
   const [open, setOpen] = React.useState(true);
+  console.log("current project", currentProject);
 
   const handleClick = () => {
     setOpen(!open);
@@ -57,7 +58,7 @@ export default function NestedList() {
         </ListItemIcon>
         <ListItemText
           sx={{ my: 0 }}
-          primary="Rapido"
+          primary={currentProject?.name}
           primaryTypographyProps={{
             fontSize: 20,
             fontWeight: "medium",
