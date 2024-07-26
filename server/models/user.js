@@ -28,6 +28,13 @@ const UserSchema = mongoose.Schema({
     type: Date,
     default: new Date(),
   },
+  applicationState: {
+    currentProject: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Project",
+      default: null,
+    },
+  },
 });
 
 UserSchema.pre("findOneAndUpdate", function (next) {

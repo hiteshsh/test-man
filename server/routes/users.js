@@ -3,8 +3,10 @@ import express from "express";
 import {
   addUser,
   deleteUserById,
+  getMyUser,
   getUserById,
   getUsers,
+  updateApplicationState,
   updateUserById,
 } from "../controllers/users.js";
 import { authorize } from "../middleware/verifyJWT.js";
@@ -32,5 +34,7 @@ router.delete(
   authorize([{ resource: "user", action: "view" }]),
   deleteUserById
 );
+router.post("/user/application-state", updateApplicationState);
+router.get("/me", getMyUser);
 
 export default router;

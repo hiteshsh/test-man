@@ -2,6 +2,7 @@ import User from "../models/user.js";
 import { body, validationResult } from "express-validator";
 import bcrypt from "bcrypt";
 import Role from "../models/role.js";
+import Project from "../models/project.js";
 
 export const getUsers = async (req, res) => {
   try {
@@ -113,6 +114,46 @@ export const updateUserById = async (req, res) => {
     res.status(200).send({ success: "User is updated!" });
   } catch (error) {
     res.status(500).send(error);
+  }
+};
+
+export const updateApplicationState = async (req, res) => {
+  const { currentProject } = req.body;
+
+  try {
+    // Check if the project exists
+    if (currentProject) {
+      const projectExists = await Project.findById(currentProject);
+      if (!projectExists) {
+        return res.status(404).json({ message: "Project not found" });
+      }
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user._id,
+      { "applicationState.currentProject": currentProject },
+      { new: true, runValidators: true }
+    );
+
+    res.json(updatedUser);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error updating application state", error });
+  }
+};
+
+export const getMyUser = async (req, res) => {
+  try {
+    const getUser = await User.findById(req.user._id)
+      .populate("roles")
+      .populate("applicationState.currentProject");
+    if (!getUser) {
+      res.status(404).json({ message: "No user found" });
+    }
+    res.status(200).json(getUser);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
 

@@ -18,7 +18,7 @@ const initialValues = {
 
 function ProjectForm({ project, editForm }) {
   const [values, setValues] = useState(
-    project._id
+    editForm
       ? {
           id: project._id,
           name: project.name,

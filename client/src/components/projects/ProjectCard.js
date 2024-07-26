@@ -62,7 +62,6 @@ function Project({ project }) {
     axiosPrivate
       .delete("/project/" + projectId)
       .then((response) => {
-
         if (!response.status === 200) {
           throw Error("Error deleting project");
         }
@@ -113,9 +112,7 @@ function Project({ project }) {
             "aria-labelledby": "basic-button",
           }}
         >
-          <MenuItem onClick={handleEdit} >
-            Edit
-          </MenuItem>
+          <MenuItem onClick={handleEdit}>Edit</MenuItem>
           <MenuItem onClick={handleDelete}>Delete</MenuItem>
         </Menu>
         <Dialog
@@ -157,7 +154,7 @@ function Project({ project }) {
             </div>
           </DialogTitle>
           <DialogContent>
-            <ProjectForm project={project} />
+            <ProjectForm project={project} editForm />
           </DialogContent>
         </Dialog>
 
