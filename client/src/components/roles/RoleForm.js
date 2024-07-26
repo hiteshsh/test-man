@@ -32,10 +32,7 @@ export default function RoleForm() {
     const role = {
       name: values.name,
     };
-    console.log("submit", role);
     axiosPrivate.post("/role", role).then((res) => {
-      console.log(res);
-      console.log(res.data);
       window.location = "/roles";
     });
   };

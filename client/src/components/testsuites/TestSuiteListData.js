@@ -37,8 +37,6 @@ function TestSuiteListData({
   selectedIndex,
   onSublistClick,
 }) {
-  console.log("testSuiteList", testsuites);
-
   return (
     <Paper elevation={0}>
       <List
@@ -48,7 +46,7 @@ function TestSuiteListData({
       >
         <TestSuiteListDataHeader />
         <Divider />
-        
+
         {testsuites && testsuites.length > 0 ? (
           testsuites.map((suite, index) => (
             <>

@@ -62,7 +62,6 @@ function Project({ project }) {
     axiosPrivate
       .delete("/project/" + projectId)
       .then((response) => {
-        console.log(response);
 
         if (!response.status === 200) {
           throw Error("Error deleting project");

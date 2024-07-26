@@ -35,7 +35,6 @@ const label = { inputprops: { "aria-label": "Checkbox" } };
 function TestCaseForm(props) {
   const [values, setValues] = useState(initialValues);
   const [checked, setChecked] = React.useState(false);
-  console.log("test suite in form", props.testsuites);
   const testsuites = props.testsuites;
   const [suiteId, setSuiteId] = useState("");
   const [section, setSection] = useState([]);
@@ -55,15 +54,12 @@ function TestCaseForm(props) {
       [name]: value,
     });
     setSuiteId(value);
-    console.log("suiteId", suiteId);
     const filteredSuites =
       testsuites && testsuites.length > 0
         ? testsuites.filter((ts) => ts._id === suiteId)
         : [];
-    console.log("filteredSuites", filteredSuites);
 
     if (filteredSuites.length > 0) {
-      console.log("section", filteredSuites[0].sections);
       setSection(filteredSuites[0].sections);
     }
   };
@@ -97,17 +93,14 @@ function TestCaseForm(props) {
       title: values.name,
       instructions: [],
     };
-    console.log("submit", testcase);
-    console.log("submitting");
+
     axiosPrivate.post("/testcase", testcase).then((res) => {
       window.location = "/testcases";
     });
-    console.log("submited success");
   };
 
   return (
-  <>
-      
+    <>
       <Box
         component="form"
         autoComplete="off"

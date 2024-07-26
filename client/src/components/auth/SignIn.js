@@ -43,7 +43,6 @@ const SignIn = () => {
       emailId: values.email,
       password: values.password,
     };
-    console.log("submit", login);
     axios
       .post("/login", login, {
         headers: { "Content-Type": "application/json" },
@@ -51,9 +50,7 @@ const SignIn = () => {
       })
       .then((res) => {
         const emailId = login.emailId;
-        console.log(res);
         if (!res.status === 200) {
-          console.log("error", res);
           throw Error("Couldn't load data");
         }
         const accesstoken = res?.data?.token;

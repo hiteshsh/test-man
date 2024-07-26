@@ -25,7 +25,6 @@ const TestSuiteList = () => {
     }
     setTestSuiteId(e.currentTarget.id);
     setSectionId("");
-    //console.log("test suite Id", testsuiteId);
   };
 
   const onSublistClick = (e) => {
@@ -34,8 +33,6 @@ const TestSuiteList = () => {
     const splitIds = e.currentTarget.id.split("_");
     setTestSuiteId(splitIds[0]);
     setSectionId(splitIds[1]);
-
-    //console.log("sectionId", sectionId);
   };
 
   return (

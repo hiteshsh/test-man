@@ -14,9 +14,7 @@ const RoleListAPI = () => {
       axiosPrivate
         .get("/roles")
         .then((response) => {
-          console.log("roles", response);
           if (!response.status === 200) {
-            console.log("error", response);
             throw Error("Couldn't load data");
           }
           setRoles(response.data);

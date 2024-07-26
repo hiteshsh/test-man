@@ -7,9 +7,7 @@ import Header from "../../Header";
 import SideMenu from "../../SideMenu";
 
 function TestCaseNew(props) {
-  console.log("selected project", props.projectId);
   const { testsuites, error, isLoading } = TestSuiteListAPI(props.projectId);
-  console.log("test suites", testsuites);
 
   return (
     <>
