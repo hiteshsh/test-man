@@ -113,7 +113,7 @@ function Project({ project }) {
             "aria-labelledby": "basic-button",
           }}
         >
-          <MenuItem onClick={handleEdit} id={project._id}>
+          <MenuItem onClick={handleEdit} >
             Edit
           </MenuItem>
           <MenuItem onClick={handleDelete}>Delete</MenuItem>
