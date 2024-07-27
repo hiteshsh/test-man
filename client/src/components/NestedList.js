@@ -44,53 +44,60 @@ export default function NestedList({ currentProject }) {
         ></ListSubheader>
       }
     >
-      <ListItemButton
-        component="a"
-        href="#customized-list"
-        sx={{
-          bgcolor: "#F0F0F0",
-          margin: "10px",
-          display: "flex",
-        }}
-      >
-        <ListItemIcon sx={{ fontSize: 15 }}>
-          <WorkOutline />
-        </ListItemIcon>
-        <ListItemText
-          sx={{ my: 0 }}
-          primary={currentProject?.name}
-          primaryTypographyProps={{
-            fontSize: 20,
-            fontWeight: "medium",
-            letterSpacing: 0,
-          }}
-        />
-      </ListItemButton>
-      <Link to="/dashboard" style={linkStyle}>
-        <ListItemButton sx={{ pl: 4 }}>
-          <ListItemIcon>
-            <Dashboard fontSize="small" />
-          </ListItemIcon>
-          <ListItemText primary="Dashboard" />
-        </ListItemButton>
-      </Link>
-      <Link to="/testcases" style={linkStyle}>
-        <ListItemButton sx={{ pl: 4 }}>
-          <ListItemIcon>
-            <Folder fontSize="small" />
-          </ListItemIcon>
-          <ListItemText primary="Test Cases" />
-        </ListItemButton>
-      </Link>
-      <Link to="/releases" style={linkStyle}>
-        <ListItemButton sx={{ pl: 4 }}>
-          <ListItemIcon>
-            <WorkHistory fontSize="small" />
-          </ListItemIcon>
-          <ListItemText primary="Releases" />
-        </ListItemButton>
-      </Link>
-      <Divider />
+      {currentProject ? (
+        <>
+          <ListItemButton
+            component="a"
+            href="#customized-list"
+            sx={{
+              bgcolor: "#F0F0F0",
+              margin: "10px",
+              display: "flex",
+            }}
+          >
+            <ListItemIcon sx={{ fontSize: 15 }}>
+              <WorkOutline />
+            </ListItemIcon>
+            <ListItemText
+              sx={{ my: 0 }}
+              primary={currentProject?.name}
+              primaryTypographyProps={{
+                fontSize: 20,
+                fontWeight: "medium",
+                letterSpacing: 0,
+              }}
+            />
+          </ListItemButton>
+          <Link to={`/project/${currentProject._id}/dashboard`} style={linkStyle}>
+            <ListItemButton sx={{ pl: 4 }}>
+              <ListItemIcon>
+                <Dashboard fontSize="small" />
+              </ListItemIcon>
+              <ListItemText primary="Dashboard" />
+            </ListItemButton>
+          </Link>
+          <Link to={`/project/${currentProject._id}/test-cases`} style={linkStyle}>
+            <ListItemButton sx={{ pl: 4 }}>
+              <ListItemIcon>
+                <Folder fontSize="small" />
+              </ListItemIcon>
+              <ListItemText primary="Test Cases" />
+            </ListItemButton>
+          </Link>
+          <Link to={`/project/${currentProject._id}/releases`} style={linkStyle}>
+            <ListItemButton sx={{ pl: 4 }}>
+              <ListItemIcon>
+                <WorkHistory fontSize="small" />
+              </ListItemIcon>
+              <ListItemText primary="Releases" />
+            </ListItemButton>
+          </Link>
+          <Divider />
+        </>
+      ) : (
+        <></>
+      )}
+      ;
       <Link to="/projects" style={linkStyle}>
         <ListItemButton>
           <ListItemIcon>
