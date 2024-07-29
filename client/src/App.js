@@ -6,7 +6,7 @@ import { ThemeProvider, createTheme } from "@mui/material";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import Header from "./components/Header";
-import TestCases from "./components/testcases/TestCases";
+import TestCases from "./components/testcases/TestCasesMain";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Dashboard from "./components/Dashboard";
 import Releases from "./components/releases/Releases";
@@ -52,14 +52,24 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <React.Fragment>
           <CssBaseline />
-          <AuthProvider >
+          <AuthProvider>
             <Routes>
               <Route path="/" element={<Layout />}>
                 <Route path="/" element={<SignIn />}></Route>
+                
                 <Route element={<RequireAuth />}>
-                  <Route path="/testcases" element={<TestCases />}></Route>
-                  <Route path="/dashboard" element={<Dashboard />}></Route>
-                  <Route path="/releases" element={<Releases />}></Route>
+                  <Route
+                    path="/project/:projectId/testcases"
+                    element={<TestCases />}
+                  ></Route>
+                  <Route
+                    path="/project/:projectId/dashboard"
+                    element={<Dashboard />}
+                  ></Route>
+                  <Route
+                    path="/project/:projectId/releases"
+                    element={<Releases />}
+                  ></Route>
                   <Route path="/projects" element={<Projects />}></Route>
                   <Route
                     path="/testcase/new"

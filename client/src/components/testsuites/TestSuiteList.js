@@ -5,10 +5,9 @@ import TestCaseListData from "../testcases/TestCaseListData";
 import TestSuiteListAPI from "./TestSuiteListAPI";
 import TestSuiteListData from "./TestSuiteListData";
 
-const TestSuiteList = () => {
-  const { testsuites, error, isLoading } = TestSuiteListAPI(
-    "62e02165cc1c8782f8b4188b"
-  );
+const TestSuiteList = ({ projectId }) => {
+  console.log("TestSuiteList projectId", projectId);
+  const { testsuites, error, isLoading } = TestSuiteListAPI({ projectId });
   console.log("testsuites", testsuites);
   const [selectedIndex, setSelectedIndex] = React.useState("");
   const [sectionId, setSectionId] = React.useState("");
@@ -48,7 +47,7 @@ const TestSuiteList = () => {
         </Grid>
         <Grid item md={9} padding={2}>
           <TestCaseListData
-            projectId={"62e02165cc1c8782f8b4188b"}
+            projectId={projectId}
             testsuiteId={testsuiteId}
             sectionId={sectionId}
           />

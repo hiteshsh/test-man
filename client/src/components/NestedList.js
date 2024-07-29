@@ -68,7 +68,10 @@ export default function NestedList({ currentProject }) {
               }}
             />
           </ListItemButton>
-          <Link to={`/project/${currentProject._id}/dashboard`} style={linkStyle}>
+          <Link
+            to={`/project/${currentProject._id}/dashboard`}
+            style={linkStyle}
+          >
             <ListItemButton sx={{ pl: 4 }}>
               <ListItemIcon>
                 <Dashboard fontSize="small" />
@@ -76,7 +79,10 @@ export default function NestedList({ currentProject }) {
               <ListItemText primary="Dashboard" />
             </ListItemButton>
           </Link>
-          <Link to={`/project/${currentProject._id}/test-cases`} style={linkStyle}>
+          <Link
+            to={`/project/${currentProject._id}/testcases`}
+            style={linkStyle}
+          >
             <ListItemButton sx={{ pl: 4 }}>
               <ListItemIcon>
                 <Folder fontSize="small" />
@@ -84,7 +90,10 @@ export default function NestedList({ currentProject }) {
               <ListItemText primary="Test Cases" />
             </ListItemButton>
           </Link>
-          <Link to={`/project/${currentProject._id}/releases`} style={linkStyle}>
+          <Link
+            to={`/project/${currentProject._id}/releases`}
+            style={linkStyle}
+          >
             <ListItemButton sx={{ pl: 4 }}>
               <ListItemIcon>
                 <WorkHistory fontSize="small" />

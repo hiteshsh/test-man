@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Axios from "axios";
 import { axiosPrivate } from "../../utils/axios";
 
-const TestSuiteListAPI = (projectId) => {
+const TestSuiteListAPI = ({ projectId }) => {
   const [testsuites, setTestSuites] = React.useState(null);
   const [error, setError] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(true);
@@ -10,6 +10,7 @@ const TestSuiteListAPI = (projectId) => {
   useEffect(() => {
     // invalid url will trigger an 404 error
     function getTestSuitesForProject() {
+      console.log("TestSuiteListAPI projectId", projectId);
       axiosPrivate
         .get("/testsuites?projectId=" + projectId)
         .then((response) => {
@@ -27,7 +28,7 @@ const TestSuiteListAPI = (projectId) => {
         });
     }
     getTestSuitesForProject();
-  }, []);
+  }, [projectId]);
 
   return { testsuites, error, isLoading };
 };
