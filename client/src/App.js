@@ -21,6 +21,7 @@ import SignIn from "./components/auth/SignIn";
 import { AuthProvider } from "./context/AuthProvider";
 import RequireAuth from "./components/auth/RequireAuth";
 import Layout from "./components/Layout";
+import { ProjectProvider } from "./context/ProjectProvider";
 // import { SignIn } from "./components/auth/SignIn";
 
 const appMain = css`
@@ -53,36 +54,38 @@ const App = () => {
         <React.Fragment>
           <CssBaseline />
           <AuthProvider>
-            <Routes>
-              <Route path="/" element={<Layout />}>
-                <Route path="/" element={<SignIn />}></Route>
-                
-                <Route element={<RequireAuth />}>
-                  <Route
-                    path="/project/:projectId/testcases"
-                    element={<TestCases />}
-                  ></Route>
-                  <Route
-                    path="/project/:projectId/dashboard"
-                    element={<Dashboard />}
-                  ></Route>
-                  <Route
-                    path="/project/:projectId/releases"
-                    element={<Releases />}
-                  ></Route>
-                  <Route path="/projects" element={<Projects />}></Route>
-                  <Route
-                    path="/testcase/new"
-                    element={
-                      <TestCaseNew projectId={"62e02165cc1c8782f8b4188b"} />
-                    }
-                  ></Route>
-                  <Route path="/users" element={<Users />}></Route>
-                  <Route path="/roles" element={<Roles />}></Route>
-                  <Route path="/testcase/:id" element={<TestCases />}></Route>
+            <ProjectProvider>
+              <Routes>
+                <Route path="/" element={<Layout />}>
+                  <Route path="/" element={<SignIn />}></Route>
+                  <Route element={<RequireAuth />}>
+                    <Route
+                      path="/project/:projectId/testcases"
+                      element={<TestCases />}
+                    ></Route>
+                    <Route
+                      path="/project/:projectId/dashboard"
+                      element={<Dashboard />}
+                    ></Route>
+                    <Route
+                      path="/project/:projectId/releases"
+                      element={<Releases />}
+                    ></Route>
+                    <Route path="/projects" element={<Projects />}></Route>
+                    <Route
+                      path="/testcase/new"
+                      element={
+                        <TestCaseNew projectId={"62e02165cc1c8782f8b4188b"} />
+                      }
+                    ></Route>
+
+                    <Route path="/users" element={<Users />}></Route>
+                    <Route path="/roles" element={<Roles />}></Route>
+                    <Route path="/testcase/:id" element={<TestCases />}></Route>
+                  </Route>
                 </Route>
-              </Route>
-            </Routes>
+              </Routes>
+            </ProjectProvider>
           </AuthProvider>
           <CssBaseline />
         </React.Fragment>

@@ -18,15 +18,16 @@ import {
 } from "@mui/icons-material";
 import { VerifiedUser } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import { useProject } from "../context/ProjectProvider";
 
 const linkStyle = {
   textDecoration: "none",
   color: "inherit",
 };
 
-export default function NestedList({ currentProject }) {
+export default function NestedList() {
   const [open, setOpen] = React.useState(true);
-  console.log("current project", currentProject);
+  const { selectedProject, selectProject } = useProject();
 
   const handleClick = () => {
     setOpen(!open);
@@ -44,7 +45,7 @@ export default function NestedList({ currentProject }) {
         ></ListSubheader>
       }
     >
-      {currentProject ? (
+      {selectedProject ? (
         <>
           <ListItemButton
             component="a"
@@ -60,7 +61,7 @@ export default function NestedList({ currentProject }) {
             </ListItemIcon>
             <ListItemText
               sx={{ my: 0 }}
-              primary={currentProject?.name}
+              primary={selectedProject?.name}
               primaryTypographyProps={{
                 fontSize: 20,
                 fontWeight: "medium",
@@ -69,7 +70,7 @@ export default function NestedList({ currentProject }) {
             />
           </ListItemButton>
           <Link
-            to={`/project/${currentProject._id}/dashboard`}
+            to={`/project/${selectedProject._id}/dashboard`}
             style={linkStyle}
           >
             <ListItemButton sx={{ pl: 4 }}>
@@ -80,7 +81,7 @@ export default function NestedList({ currentProject }) {
             </ListItemButton>
           </Link>
           <Link
-            to={`/project/${currentProject._id}/testcases`}
+            to={`/project/${selectedProject._id}/testcases`}
             style={linkStyle}
           >
             <ListItemButton sx={{ pl: 4 }}>
@@ -91,7 +92,7 @@ export default function NestedList({ currentProject }) {
             </ListItemButton>
           </Link>
           <Link
-            to={`/project/${currentProject._id}/releases`}
+            to={`/project/${selectedProject._id}/releases`}
             style={linkStyle}
           >
             <ListItemButton sx={{ pl: 4 }}>

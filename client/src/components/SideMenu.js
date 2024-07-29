@@ -13,10 +13,10 @@ const sideMenu = css`
   background-color: #ffffff;
 `;
 
-const SideMenu = ({ currentProject }) => {
+const SideMenu = () => {
   return (
     <div css={sideMenu}>
-      <NestedList currentProject={currentProject} />
+      <NestedList />
     </div>
   );
 };

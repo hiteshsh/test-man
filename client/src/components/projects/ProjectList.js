@@ -16,6 +16,7 @@ import ProjectForm from "./ProjectForm";
 import Project from "./ProjectCard";
 import ProjectListAPI from "./ProjectListAPI";
 import Handlepopup from "../common/Handlepopup";
+import { useProject } from "../../context/ProjectProvider";
 
 const linkStyle = {
   textDecoration: "none",
@@ -23,6 +24,7 @@ const linkStyle = {
 
 function ProjectsList() {
   const { projects, error, isLoading } = ProjectListAPI();
+  const { selectedProject, selectProject } = useProject();
 
   console.log("projects:", projects);
   const { openPopup, handleOpenPopup, handleClosePopup } = Handlepopup();
@@ -76,8 +78,7 @@ function ProjectsList() {
         {projects &&
           projects.map((project) => (
             <Grid item md={3} padding={2} key={project._id}>
-               
-              <Project project={project} />
+              <Project project={project} onSelect={() => selectProject(project)}/>
             </Grid>
           ))}
       </Grid>

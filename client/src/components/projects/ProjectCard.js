@@ -32,7 +32,7 @@ import ProjectForm from "./ProjectForm";
 import Handlepopup from "../common/Handlepopup";
 import { axiosPrivate } from "../../utils/axios";
 
-function Project({ project }) {
+function Project({ project, onSelect }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const [openDialog, setOpenDialog] = React.useState(false);
