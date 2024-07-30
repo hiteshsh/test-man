@@ -10,7 +10,6 @@ import { useProject } from "../../context/ProjectProvider";
 
 function Projects() {
   const [userData, setUserData] = useState(null);
-  //const [currentProject, setCurrentProject] = useState(null);
   const { selectedProject, selectProject } = useProject();
 
   useEffect(() => {
@@ -22,9 +21,7 @@ function Projects() {
           throw Error("Couldn't load data");
         }
         setUserData(response.data);
-        //setCurrentProject(response.data.applicationState.currentProject);
         selectProject(response.data.applicationState.currentProject);
-        //setProjects()
       } catch (error) {
         console.error("Error fetching user data:", error);
       }

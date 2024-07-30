@@ -31,12 +31,16 @@ import Axios from "axios";
 import ProjectForm from "./ProjectForm";
 import Handlepopup from "../common/Handlepopup";
 import { axiosPrivate } from "../../utils/axios";
+import { useNavigate } from "react-router-dom";
+import { useProject } from "../../context/ProjectProvider";
 
 function Project({ project, onSelect }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const [openDialog, setOpenDialog] = React.useState(false);
   const { openPopup, handleOpenPopup, handleClosePopup } = Handlepopup();
+  const { selectedProject, selectProject } = useProject();
+  const navigate = useNavigate();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -70,6 +74,11 @@ function Project({ project, onSelect }) {
       .catch((error) => {
         console.log(error.message);
       });
+  };
+
+  const handleRedirect = () => {
+    selectProject(project);
+    navigate(`/project/${project._id}/testcases`);
   };
 
   return (
@@ -186,7 +195,7 @@ function Project({ project, onSelect }) {
           </Tooltip>
 
           <Tooltip title="Test cases" placement="bottom">
-            <IconButton aria-label="Test Cases">
+            <IconButton aria-label="Test Cases" onClick={handleRedirect}>
               <Badge badgeContent={4} color="primary">
                 <Folder />
               </Badge>
