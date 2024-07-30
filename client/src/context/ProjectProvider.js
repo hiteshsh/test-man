@@ -15,7 +15,7 @@ export const ProjectProvider = ({ children }) => {
     if (savedProject) {
       setSelectedProject(JSON.parse(savedProject));
     }
-  }, [selectedProject]);
+  }, []);
 
   const selectProject = (project) => {
     setSelectedProject(project);
