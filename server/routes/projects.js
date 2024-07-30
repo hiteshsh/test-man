@@ -6,6 +6,7 @@ import {
   validate,
   deleteProjectById,
   updateProjectById,
+  getProjectById,
 } from "../controllers/Projects.js";
 import { authorize } from "../middleware/verifyJWT.js";
 
@@ -16,6 +17,13 @@ router.get(
   authorize([{ resource: "project", action: "view" }]),
   getProjects
 );
+
+router.get(
+  "/project/:projectId",
+  authorize([{ resource: "project", action: "view" }]),
+  getProjectById
+);
+
 router.post(
   "/project",
   authorize([{ resource: "project", action: "addEdit" }]),

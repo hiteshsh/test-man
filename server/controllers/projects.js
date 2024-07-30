@@ -22,6 +22,18 @@ export const getProjects = async (req, res) => {
   }
 };
 
+export const getProjectById = async (req, res) => {
+  try {
+    const { projectId } = req.params;
+    const project = await Project.findById(projectId);
+
+    res.status(200).json(project);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+
 export const createProject = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
