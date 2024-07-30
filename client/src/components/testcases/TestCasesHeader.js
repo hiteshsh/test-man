@@ -10,6 +10,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { useProject } from "../../context/ProjectProvider";
 
 function handleClick(event) {
   event.preventDefault();
@@ -17,13 +18,14 @@ function handleClick(event) {
 }
 
 const TestCasesHeader = () => {
+  const { selectedProject, selectProject } = useProject();
+
   const breadcrumbs = [
     <Link
       underline="hover"
       key="1"
       color="inherit"
-      href="/"
-      onClick={handleClick}
+      href="/projects"
       variant="body2"
     >
       Projects
@@ -36,7 +38,7 @@ const TestCasesHeader = () => {
       onClick={handleClick}
       variant="body2"
     >
-      Rapido
+      {selectedProject.name}
     </Link>,
     <Typography key="3" color="text.primary" variant="body2">
       Test cases
