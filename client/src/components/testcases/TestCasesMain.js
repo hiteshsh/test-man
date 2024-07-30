@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TestCasesHeader from "./TestCasesHeader";
 import TestSuiteList from "../testsuites/TestSuiteList";
 import Header from "../Header";
@@ -10,15 +10,27 @@ import GetProjectDetails from "../projects/GetProjectDetailsAPI";
 
 const TestCases = () => {
   const { projectId } = useParams();
-  //const { selectedProject, selectProject } = useProject();
+  const { selectedProject, selectProject } = useProject();
 
   console.log("projectId inside test cases", projectId);
-  //console.log("selectedProject", selectedProject);
-  // if (!selectedProject || (projectId != selectedProject._id)) {
-  //   const { project, error, isLoading } = GetProjectDetails({ projectId });
-  //   console.log("New project Id", project);
-  //   selectProject(project);
-  // }
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (!selectedProject || (projectId !== selectedProject._id)) {
+      setIsLoading(true);
+      GetProjectDetails(projectId)
+        .then((project) => {
+          selectProject(project);
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          setError(err.message);
+          setIsLoading(false);
+        });
+    }
+  }, [projectId, selectedProject, selectProject]);
+  
   return (
     <>
       <Header />
