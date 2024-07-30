@@ -76,9 +76,9 @@ function Project({ project, onSelect }) {
       });
   };
 
-  const handleRedirect = () => {
+  const handleRedirect = (page) => {
     selectProject(project);
-    navigate(`/project/${project._id}/testcases`);
+    navigate(`/project/${project._id}/${page}`);
   };
 
   return (
@@ -189,13 +189,19 @@ function Project({ project, onSelect }) {
         </CardContent>
         <CardActions>
           <Tooltip title="Dashboard" placement="bottom">
-            <IconButton aria-label="Dashboard">
+            <IconButton
+              aria-label="Dashboard"
+              onClick={() => handleRedirect("dashboard")}
+            >
               <Dashboard />
             </IconButton>
           </Tooltip>
 
           <Tooltip title="Test cases" placement="bottom">
-            <IconButton aria-label="Test Cases" onClick={handleRedirect}>
+            <IconButton
+              aria-label="Test Cases"
+              onClick={() => handleRedirect("testcases")}
+            >
               <Badge badgeContent={4} color="primary">
                 <Folder />
               </Badge>
@@ -203,7 +209,10 @@ function Project({ project, onSelect }) {
           </Tooltip>
 
           <Tooltip title="Active Release" placement="bottom">
-            <IconButton aria-label="Active Releases">
+            <IconButton
+              aria-label="Active Releases"
+              onClick={() => handleRedirect("releases")}
+            >
               <Badge badgeContent={1} color="error">
                 <WorkHistory />
               </Badge>
