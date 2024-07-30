@@ -19,6 +19,7 @@ function handleClick(event) {
 
 const TestCasesHeader = () => {
   const { selectedProject, selectProject } = useProject();
+  console.log("selectedProject", selectedProject);
 
   const breadcrumbs = [
     <Link

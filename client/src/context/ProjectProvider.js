@@ -3,7 +3,10 @@ import React, { createContext, useEffect, useState } from "react";
 const ProjectContext = createContext({});
 
 export const ProjectProvider = ({ children }) => {
-  const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedProject, setSelectedProject] = useState(() => {
+    const project = localStorage.getItem("selectedProject");
+    return project || null;
+  });
 
   useEffect(() => {
     // Load the default project from localStorage if it exists
@@ -12,7 +15,7 @@ export const ProjectProvider = ({ children }) => {
     if (savedProject) {
       setSelectedProject(JSON.parse(savedProject));
     }
-  }, []);
+  }, [selectedProject]);
 
   const selectProject = (project) => {
     setSelectedProject(project);

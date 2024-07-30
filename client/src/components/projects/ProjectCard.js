@@ -77,6 +77,18 @@ function Project({ project, onSelect }) {
   };
 
   const handleRedirect = (page) => {
+    // update the application state here
+    const applicationState = { currentProject: project._id };
+    axiosPrivate
+      .post("/user/application-state", applicationState)
+      .then((response) => {
+        if (!response.status === 200) {
+          throw Error("Error deleting project");
+        }
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
     selectProject(project);
     navigate(`/project/${project._id}/${page}`);
   };
