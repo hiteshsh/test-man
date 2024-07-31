@@ -182,7 +182,7 @@ export default function TestCasesData({ testcases, projectId }) {
   let rows = [];
   tests.map((test) => {
     //const rowData = createData(test.title, test._id);
-    rows.push(createData(test.title, test._id));
+    rows.push(createData(test.title, test.key));
   });
   console.log("all tests", rows);
 
