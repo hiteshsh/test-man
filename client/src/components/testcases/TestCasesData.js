@@ -105,7 +105,7 @@ EnhancedTableHead.propTypes = {
 };
 
 const EnhancedTableToolbar = (props) => {
-  const { numSelected } = props;
+  const { numSelected, projectId } = props;
 
   return (
     <Toolbar
@@ -153,6 +153,7 @@ const EnhancedTableToolbar = (props) => {
             component={Link}
             to="/testcase/new"
             variant="contained"
+            state={{ projectId: projectId }}
             size="small"
             startIcon={<Add />}
             sx={{ textTransform: "none", mt: 1, mb: 1 }}
@@ -175,7 +176,7 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-export default function TestCasesData({ testcases }) {
+export default function TestCasesData({ testcases, projectId }) {
   //console.log("rows", testcases);
   const tests = testcases;
   let rows = [];
@@ -248,7 +249,10 @@ export default function TestCasesData({ testcases }) {
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar
+          numSelected={selected.length}
+          projectId={projectId}
+        />
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}

@@ -11,6 +11,7 @@ import { useLocation } from "react-router-dom";
 
 function TestCaseNew() {
   const location = useLocation();
+  console.log("location.state", location.state);
   const { projectId } = location.state || {};
   console.log("projectId inside new test cases", projectId);
   const { testsuites, error, isLoading } = TestSuiteListAPI({ projectId });

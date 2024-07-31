@@ -77,7 +77,7 @@ function TestCaseListData({ projectId, testsuiteId, sectionId }) {
         </div>
       )}
       {testcases && testcases.length > 0 && (
-        <TestCasesData testcases={testcases} />
+        <TestCasesData testcases={testcases} projectId={projectId} />
       )}
     </Paper>
   );
