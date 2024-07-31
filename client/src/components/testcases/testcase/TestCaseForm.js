@@ -19,6 +19,7 @@ import { axiosPrivate } from "../../../utils/axios";
 import Header from "../../Header";
 import SideMenu from "../../SideMenu";
 import { useProject } from "../../../context/ProjectProvider";
+import { useNavigate } from "react-router-dom";
 
 const initialValues = {
   name: "",
@@ -34,9 +35,11 @@ const initialValues = {
 const label = { inputprops: { "aria-label": "Checkbox" } };
 
 function TestCaseForm(props) {
+  const navigate = useNavigate();
   const [values, setValues] = useState(initialValues);
   const [checked, setChecked] = React.useState(false);
   const testsuites = props.testsuites;
+  const projectId = props.projectId;
   const [suiteId, setSuiteId] = useState("");
   const [section, setSection] = useState([]);
 
@@ -82,21 +85,19 @@ function TestCaseForm(props) {
     e.preventDefault();
 
     const testcase = {
-      description: values.description,
-      name: values.name,
+      title: values.name,
+      prerequisite: values.prerequisite,
+      steps: [],
       automated: checked,
       testsuiteId: values.suiteId,
       sectionId: values.sectionId,
-      projectId: "62e02165cc1c8782f8b4188b",
+      projectId: projectId,
       type: values.type,
       priority: values.priority,
-      status: "active",
-      title: values.name,
-      instructions: [],
     };
 
     axiosPrivate.post("/testcase", testcase).then((res) => {
-      window.location = "/testcases";
+      navigate(`/project/${projectId}/testcases`);
     });
   };
 
@@ -129,13 +130,25 @@ function TestCaseForm(props) {
                 size="small"
               />
             </Grid>
+            <Grid item xs={12} padding={1}>
+              <TextField
+                variant="outlined"
+                label="Prerequisite"
+                value={values.prerequisite}
+                name="prerequisite"
+                fullWidth
+                multiline
+                rows={4}
+                onChange={handleInputChange}
+                size="small"
+              />
+            </Grid>
             <Grid item xs={6} padding={1}>
               <TextField
-                name="description"
-                required
+                name="steps"
                 variant="outlined"
                 label="Steps"
-                value={values.description}
+                value={values.instruction}
                 fullWidth
                 onChange={handleInputChange}
                 multiline
@@ -146,7 +159,6 @@ function TestCaseForm(props) {
             <Grid item xs={6} padding={1}>
               <TextField
                 name="expectedResult"
-                required
                 variant="outlined"
                 label="Expected Result"
                 value={values.expectedResult}
@@ -189,11 +201,9 @@ function TestCaseForm(props) {
               <FormControl
                 sx={{ m: 1, minWidth: 150, width: "97%" }}
                 size="small"
-                required
               >
                 <InputLabel>Section</InputLabel>
                 <Select
-                  required
                   name="sectionId"
                   variant="outlined"
                   value={values.sectionId}
@@ -221,7 +231,6 @@ function TestCaseForm(props) {
               >
                 <InputLabel>Type</InputLabel>
                 <Select
-                  required
                   name="type"
                   variant="outlined"
                   value={values.type}
@@ -239,7 +248,6 @@ function TestCaseForm(props) {
               <FormControl
                 sx={{ m: 1, minWidth: 150, width: "97%" }}
                 size="small"
-                required
               >
                 <InputLabel>Priority</InputLabel>
                 <Select

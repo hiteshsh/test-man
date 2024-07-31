@@ -44,26 +44,51 @@ export const createTestCase = async (req, res) => {
     res.status(400).json({ errors: errors.array() });
     return;
   }
-  const testcase = req.body;
-  console.log(testcase);
-  const newTestCase = new TestCase({
-    key: req.body.key,
-    title: req.body.title,
-    type: req.body.type,
-    tags: req.body.tags,
-    priority: req.body.priority,
-    status: req.body.status,
-    prerequisite: req.body.prerequisite,
-    steps: req.body.steps,
-    automated: req.body.automated,
-    projectId: req.body.projectId,
-    testsuiteId: req.body.testsuiteId,
-    sectionId: req.body.sectionId,
-  });
+  const {
+    title,
+    type,
+    tags,
+    priority,
+    prerequisite,
+    steps,
+    automated,
+    projectId,
+    testsuiteId,
+    sectionId,
+  } = req.body;
+
+  const newTestcase = new TestCase({});
+
+  if (title) newTestcase.title = title;
+  if (type) newTestcase.type = type;
+  if (prerequisite) newTestcase.prerequisite = prerequisite;
+  if (priority) newTestcase.priority = priority;
+  if (steps) newTestcase.steps = steps;
+  if (automated) newTestcase.automated = automated;
+  if (projectId) newTestcase.projectId = projectId;
+  if (testsuiteId) newTestcase.testsuiteId = testsuiteId;
+  if (sectionId) newTestcase.sectionId = sectionId;
+  if (tags) newTestcase.tags = tags;
+
+  // console.log(testcase);
+  // const newTestCase = new TestCase({
+  //   key: req.body.key,
+  //   title: req.body.title,
+  //   type: req.body.type,
+  //   tags: req.body.tags,
+  //   priority: req.body.priority,
+  //   status: req.body.status,
+  //   prerequisite: req.body.prerequisite,
+  //   steps: req.body.steps,
+  //   automated: req.body.automated,
+  //   projectId: req.body.projectId,
+  //   testsuiteId: req.body.testsuiteId,
+  //   sectionId: req.body.sectionId,
+  // });
 
   try {
-    await newTestCase.save();
-    res.status(200).json(newTestCase);
+    await newTestcase.save();
+    res.status(200).json(newTestcase);
   } catch (error) {
     res.status(409).json(error.message);
   }

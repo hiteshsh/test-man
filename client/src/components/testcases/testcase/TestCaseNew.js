@@ -41,7 +41,7 @@ function TestCaseNew() {
       <SideMenu />
       <Box sx={{ marginLeft: "250px" }}>
         <TestCaseHeader />
-        <TestCaseForm testsuites={testsuites} />
+        <TestCaseForm projectId={projectId} testsuites={testsuites} />
       </Box>
     </>
   );
