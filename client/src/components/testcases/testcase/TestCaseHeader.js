@@ -2,7 +2,7 @@ import React from "react";
 
 import { NavigateNext } from "@mui/icons-material";
 import { Breadcrumbs, Grid, Link, Paper, Typography } from "@mui/material";
-
+import { useProject } from "../../../context/ProjectProvider";
 
 function handleClick(event) {
   event.preventDefault();
@@ -10,6 +10,7 @@ function handleClick(event) {
 }
 
 const TestCaseHeader = () => {
+  const { selectedProject, selectProject } = useProject();
   const breadcrumbs = [
     <Link
       underline="hover"
@@ -28,7 +29,7 @@ const TestCaseHeader = () => {
       onClick={handleClick}
       variant="body2"
     >
-      Rapido
+      {selectedProject.name}
     </Link>,
     <Link
       underline="hover"

@@ -75,7 +75,7 @@ const App = () => {
                     <Route
                       path="/testcase/new"
                       element={
-                        <TestCaseNew projectId={"62e02165cc1c8782f8b4188b"} />
+                        <TestCaseNew/>
                       }
                     ></Route>
 

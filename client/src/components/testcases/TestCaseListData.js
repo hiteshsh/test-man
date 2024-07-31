@@ -43,12 +43,13 @@ const testCaseList = [
   },
 ];
 
-function TestCaseListData(projectId, testsuiteId, sectionId) {
-  const { testcases, error, isLoading } = TestCaseListAPI(
+function TestCaseListData({ projectId, testsuiteId, sectionId }) {
+  const { testcases, error, isLoading } = TestCaseListAPI({
     projectId,
     testsuiteId,
-    sectionId
-  );
+    sectionId,
+  });
+  console.log("TestCaseListData projectId", projectId);
 
   return (
     <Paper elevation={0}>
@@ -62,7 +63,11 @@ function TestCaseListData(projectId, testsuiteId, sectionId) {
             minHeight: "200px",
           }}
         >
-          <Link to="/testcase/new" style={linkStyle}>
+          <Link
+            to="/testcase/new"
+            state={{ projectId: projectId }}
+            style={linkStyle}
+          >
             <IconButton size="large" color="primary" aria-label="add test case">
               <AddCircle />
             </IconButton>
