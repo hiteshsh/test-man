@@ -38,13 +38,6 @@ const linkStyle = {
   },
 };
 
-function createData(name, key) {
-  return {
-    name,
-    key,
-  };
-}
-
 const headCells = [
   {
     id: "key",
@@ -182,7 +175,7 @@ export default function TestCasesData({ testcases, projectId }) {
   let rows = [];
   tests.map((test) => {
     //const rowData = createData(test.title, test._id);
-    rows.push(createData(test.title, test.key));
+    rows.push(test);
   });
   console.log("all tests", rows);
 
@@ -194,7 +187,7 @@ export default function TestCasesData({ testcases, projectId }) {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.name);
+      const newSelecteds = rows.map((n) => n.title);
       setSelected(newSelecteds);
       return;
     }
@@ -202,6 +195,7 @@ export default function TestCasesData({ testcases, projectId }) {
   };
 
   const handleClick = (event, name) => {
+    event.preventDefault();
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
 
@@ -237,13 +231,20 @@ export default function TestCasesData({ testcases, projectId }) {
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   const handleDrawerOpen = (e, key) => {
-    setOpen([...open, key]);
+    if (!open.includes(key)) {
+      setOpen([...open, key]);
+    }
+    //setOpen([...open, key]);
+    console.log("state of open", open);
   };
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   const handleDrawerClose = (e, key) => {
-    const newOpen = open.filter((t) => t !== key);
-    setOpen(newOpen);
-    navigate("/testcases");
+    console.log("key", key);
+    setOpen((prevOpen) => {
+      const newOpen = prevOpen.filter((t) => t !== key);
+      console.log("after closing update of open", newOpen);
+      return newOpen;
+    });
   };
 
   return (
@@ -270,7 +271,7 @@ export default function TestCasesData({ testcases, projectId }) {
               {rows
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
+                  const isItemSelected = isSelected(row.title);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
@@ -280,7 +281,7 @@ export default function TestCasesData({ testcases, projectId }) {
                           key={row.key}
                           selected={isItemSelected}
                           hover
-                          onClick={(event) => handleClick(event, row.name)}
+                          onClick={(event) => handleClick(event, row.title)}
                           role="checkbox"
                           sx={{ backgroundColor: "#E8E8E8" }}
                         >
@@ -295,7 +296,7 @@ export default function TestCasesData({ testcases, projectId }) {
                           </TableCell>
                           <TableCell colSpan={3} padding="none" align="left">
                             <Typography sx={{ fontWeight: 500 }}>
-                              {row.name}
+                              {row.title}
                             </Typography>
                           </TableCell>
                         </TableRow>
@@ -309,7 +310,7 @@ export default function TestCasesData({ testcases, projectId }) {
                         >
                           <TableCell
                             padding="checkbox"
-                            onClick={(event) => handleClick(event, row.name)}
+                            onClick={(event) => handleClick(event, row.title)}
                           >
                             <Checkbox
                               color="primary"
@@ -319,19 +320,24 @@ export default function TestCasesData({ testcases, projectId }) {
                               }}
                             />
                           </TableCell>
-                          <TableCell id={labelId} scope="row" padding="none">
+                          <TableCell
+                            key={row.key}
+                            id={labelId}
+                            scope="row"
+                            padding="none"
+                          >
                             {row.key}
                           </TableCell>
-                          <TableCell align="left">
-                            <Link
-                              to={"/testcase/" + row.key}
-                              style={linkStyle}
-                              onClick={(e) => handleDrawerOpen(e, row.key)}
-                            >
-                              <Typography fontWeight={500}>
-                                {row.name}
-                              </Typography>
-                            </Link>
+                          <TableCell
+                            align="left"
+                            key={row.title}
+                            onClick={(e) => handleDrawerOpen(e, row.key)}
+                            style={{ cursor: "pointer" }}
+                          >
+                            <Typography fontWeight={500}>
+                              {row.title}
+                            </Typography>
+
                             {open.indexOf(row.key) > -1 ? (
                               <TestCaseDetail
                                 open={open}
