@@ -7,6 +7,7 @@ import {
   Paper,
   Checkbox,
   FormControlLabel,
+  IconButton,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import InputLabel from "@mui/material/InputLabel";
@@ -16,6 +17,7 @@ import Select from "@mui/material/Select";
 import React from "react";
 import { axiosPrivate } from "../../../utils/axios";
 import { useNavigate } from "react-router-dom";
+import { RemoveCircle } from "@mui/icons-material";
 
 const initialValues = {
   name: "",
@@ -119,6 +121,12 @@ function TestCaseForm(props) {
     setStepsFields([...stepsFields, { step: "", expectedResult: "" }]);
   };
 
+  const deleteStepField = (index) => {
+    const newStepsFields = [...stepsFields];
+    newStepsFields.splice(index, 1);
+    setStepsFields(newStepsFields);
+  };
+
   const reset = () => {
     setValues(initialValues);
     setStepsFields([{ step: "", expectedResult: "" }]);
@@ -172,9 +180,9 @@ function TestCaseForm(props) {
         }}
         marginTop={4}
         marginLeft={3}
-        marginRight={3}
+        marginRight={4}
         border="0px solid"
-        width="70%"
+        width="90%"
       >
         <Paper elevation={0}>
           <Grid container padding={2}>
@@ -206,7 +214,7 @@ function TestCaseForm(props) {
 
             {stepsFields.map((stepField, index) => (
               <React.Fragment key={index}>
-                <Grid item xs={6} padding={1}>
+                <Grid item xs={5.5} padding={1}>
                   <TextField
                     name="step"
                     variant="outlined"
@@ -219,7 +227,7 @@ function TestCaseForm(props) {
                     size="small"
                   />
                 </Grid>
-                <Grid item xs={6} padding={1}>
+                <Grid item xs={5.5} padding={1}>
                   <TextField
                     name="expectedResult"
                     variant="outlined"
@@ -232,13 +240,30 @@ function TestCaseForm(props) {
                     size="small"
                   />
                 </Grid>
+                <Grid item xs={0.5} padding={5}>
+                  {stepsFields.length > 1 && (
+                    <IconButton
+                      variant="outlined"
+                      color="secondary"
+                      onClick={() => deleteStepField(index)}
+                    >
+                      <RemoveCircle />
+                    </IconButton>
+                  )}
+                </Grid>
               </React.Fragment>
             ))}
 
             <Grid item xs={12} padding={1}>
-              <Button variant="contained" onClick={addStepField}>
-                Add Step
-              </Button>
+              <Grid container justifyContent="center">
+                <Button
+                  variant="contained"
+                  justifyContent="center"
+                  onClick={addStepField}
+                >
+                  Add Step
+                </Button>
+              </Grid>
             </Grid>
             <Grid item xs={6} padding={1}>
               <FormControl
