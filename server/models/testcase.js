@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import generateUniqueKey from "../util/keygenerator.js";
 
 const stepsSchema = new mongoose.Schema({
-  instruction: String,
+  step: String,
   expectedResult: String,
 });
 

@@ -76,6 +76,10 @@ const App = () => {
                       path="/testcase/new"
                       element={<TestCaseNew />}
                     ></Route>
+                    <Route
+                      path="/testcase/:testcaseId"
+                      element={<TestCaseNew  />}
+                    ></Route>
 
                     <Route path="/users" element={<Users />}></Route>
                     <Route path="/roles" element={<Roles />}></Route>

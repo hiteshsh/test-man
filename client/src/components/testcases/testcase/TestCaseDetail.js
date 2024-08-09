@@ -15,15 +15,12 @@ import {
   Drawer,
   Grid,
   IconButton,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
   Paper,
-  Table,
   Typography,
 } from "@mui/material";
 import React from "react";
 import StepsTable from "./TestCaseSteps";
+import { useNavigate } from "react-router-dom";
 
 const data = [
   {
@@ -43,15 +40,18 @@ export default function TestCaseDetail({
   testDetail,
   handleDrawerClose,
 }) {
-  //const [open, setOpen] = React.useState(true);
-  console.log("testDetail", testDetail);
+  // Determine if the drawer should be open based on the key
+  const isDrawerOpen = Array.isArray(open) && open.includes(testDetail.key);
+
+ 
+
   return (
     <div sx={{ color: "#fff" }}>
       <Drawer
-        open={open}
+        open={isDrawerOpen}
         anchor={"right"}
-        onClose={handleDrawerClose}
-        variant="permanent"
+        onClose={(e) => handleDrawerClose(e, testDetail.key)}
+        variant="temporary"
       >
         <Paper
           style={{
@@ -60,12 +60,11 @@ export default function TestCaseDetail({
             backgroundColor: "#f6f8fa",
             height: "100%",
           }}
-          onClick={(e) => handleDrawerClose(e, testDetail.key)}
         >
           <Grid container alignItems="center" padding={2}>
             <Grid item xs={9}>
               <Typography variant="h5" fontWeight={500}>
-                {testDetail.name}
+                {testDetail.title}
               </Typography>
             </Grid>
 
@@ -77,7 +76,11 @@ export default function TestCaseDetail({
               <IconButton aria-label="delete" color="primary">
                 <Delete />
               </IconButton>
-              <IconButton aria-label="close" color="primary">
+              <IconButton
+                aria-label="close"
+                color="primary"
+                onClick={(e) => handleDrawerClose(e, testDetail.key)}
+              >
                 <Close />
               </IconButton>
             </Grid>
@@ -87,25 +90,25 @@ export default function TestCaseDetail({
               <Grid container padding={2}>
                 <Grid item xs={3}>
                   <Box>
-                    <Typography h6>Type</Typography>
-                    <div>Functional</div>
+                    <Typography variant="h6">Type</Typography>
+                    <div>{testDetail.type}</div>
                   </Box>
                 </Grid>
                 <Grid item xs={3}>
                   <Box>
-                    <Typography h6>Priority</Typography>
-                    <div>High</div>
+                    <Typography variant="h6">Priority</Typography>
+                    <div>{testDetail.priority}</div>
                   </Box>
                 </Grid>
                 <Grid item xs={3}>
                   <Box>
-                    <Typography h6>Automated</Typography>
-                    <div>yes</div>
+                    <Typography variant="h6">Automated</Typography>
+                    <div>{testDetail?.automated ? "yes" : "no"}</div>
                   </Box>
                 </Grid>
                 <Grid item xs={3}>
                   <Box>
-                    <Typography h6>Estimated</Typography>
+                    <Typography variant="h6">Estimated</Typography>
                     <div>15 min</div>
                   </Box>
                 </Grid>
@@ -113,20 +116,20 @@ export default function TestCaseDetail({
               <Grid container padding={2}>
                 <Grid item xs={12}>
                   <Box>
-                    <Divider flex></Divider>
+                    <Divider />
                   </Box>
                 </Grid>
               </Grid>
               <Grid container padding={2}>
                 <Grid item xs={6}>
                   <Box>
-                    <Typography h6>Created By</Typography>
+                    <Typography variant="h6">Created By</Typography>
                     <div>Hitesh Sharma</div>
                   </Box>
                 </Grid>
                 <Grid item xs={6}>
                   <Box>
-                    <Typography h6>Last Updated By</Typography>
+                    <Typography variant="h6">Last Updated By</Typography>
                     <div>Hitesh Sharma</div>
                   </Box>
                 </Grid>
@@ -134,14 +137,14 @@ export default function TestCaseDetail({
               <Grid container padding={2}>
                 <Grid item xs={12}>
                   <Box>
-                    <Divider flex></Divider>
+                    <Divider />
                   </Box>
                 </Grid>
               </Grid>
               <Grid container padding={2}>
                 <Grid item xs={12}>
                   <Box>
-                    <Typography h6>Pre-requisite</Typography>
+                    <Typography variant="h6">Pre-requisite</Typography>
                     <div>Steps for the pre conditions</div>
                   </Box>
                 </Grid>
@@ -149,14 +152,14 @@ export default function TestCaseDetail({
               <Grid container padding={2}>
                 <Grid item xs={12}>
                   <Box>
-                    <Divider flex></Divider>
+                    <Divider />
                   </Box>
                 </Grid>
               </Grid>
               <Grid container padding={2}>
                 <Grid item xs={12}>
                   <Box>
-                    <Typography h6>Steps</Typography>
+                    <Typography variant="h6">Steps</Typography>
                     <StepsTable />
                   </Box>
                 </Grid>

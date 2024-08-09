@@ -4,7 +4,6 @@ import { Box } from "@mui/system";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import DeleteIcon from "@mui/icons-material/Delete";
-
 import {
   List,
   Paper,
@@ -49,9 +48,8 @@ function TestSuiteListData({
 
         {testsuites && testsuites.length > 0 ? (
           testsuites.map((suite, index) => (
-            <>
+            <React.Fragment key={suite._id}>
               <ListItemButton
-                key={suite._id}
                 id={suite._id}
                 selected={selectedIndex === index}
                 onClick={(e) => {
@@ -72,7 +70,7 @@ function TestSuiteListData({
                   unmountOnExit
                 >
                   <List component="div" disablePadding>
-                    {suite.sections.map((section, index) => (
+                    {suite.sections.map((section) => (
                       <ListItemButton
                         key={section._id}
                         id={suite._id + "_" + section._id}
@@ -86,7 +84,7 @@ function TestSuiteListData({
                   </List>
                 </Collapse>
               )}
-            </>
+            </React.Fragment>
           ))
         ) : (
           <Typography

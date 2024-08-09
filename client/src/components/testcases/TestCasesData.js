@@ -170,6 +170,11 @@ EnhancedTableToolbar.propTypes = {
 };
 
 export default function TestCasesData({ testcases, projectId }) {
+  const navigate = useNavigate();
+
+  const handleRedirect = (id) => {
+    navigate(`/testcase/${id}`);
+  };
   //console.log("rows", testcases);
   const tests = testcases;
   let rows = [];
@@ -351,9 +356,17 @@ export default function TestCasesData({ testcases, projectId }) {
                           </TableCell>
 
                           <TableCell align="right">
-                            <IconButton>
-                              <Edit fontSize="small" />
-                            </IconButton>
+                            <Link
+                              to={`/testcase/${row._id}`}
+                              state={{ projectId: row.projectId }}
+                              style={linkStyle}
+                            >
+                              <IconButton
+                                
+                              >
+                                <Edit fontSize="small" />
+                              </IconButton>
+                            </Link>
                             <IconButton>
                               <Delete fontSize="small" />
                             </IconButton>

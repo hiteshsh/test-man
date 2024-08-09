@@ -14,11 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import React from "react";
-import { Axios } from "axios";
 import { axiosPrivate } from "../../../utils/axios";
-import Header from "../../Header";
-import SideMenu from "../../SideMenu";
-import { useProject } from "../../../context/ProjectProvider";
 import { useNavigate } from "react-router-dom";
 
 const initialValues = {
@@ -28,7 +24,6 @@ const initialValues = {
   sectionId: "",
   suiteId: "",
   priority: "",
-  expectedResult: "",
   isAutomated: false,
 };
 
@@ -36,12 +31,57 @@ const label = { inputprops: { "aria-label": "Checkbox" } };
 
 function TestCaseForm(props) {
   const navigate = useNavigate();
+  const { testcaseId, testsuites, projectId } = props; // testcaseId is passed as prop
   const [values, setValues] = useState(initialValues);
-  const [checked, setChecked] = React.useState(false);
-  const testsuites = props.testsuites;
-  const projectId = props.projectId;
+  const [checked, setChecked] = useState(false);
+  const [stepsFields, setStepsFields] = useState([
+    { step: "", expectedResult: "" },
+  ]);
   const [suiteId, setSuiteId] = useState("");
   const [section, setSection] = useState([]);
+  const [loading, setLoading] = useState(false); // Add loading state
+
+  useEffect(() => {
+    if (testcaseId) {
+      // If testcaseId is provided, fetch the test case data
+      setLoading(true);
+      axiosPrivate
+        .get(`/testcase/${testcaseId}`)
+        .then((response) => {
+          const testCaseData = response.data;
+          console.log("testData", testCaseData);
+          // Populate the form with the fetched data
+          setValues({
+            name: testCaseData.title,
+            description: testCaseData.prerequisite,
+            type: testCaseData.type,
+            sectionId: testCaseData.sectionId,
+            suiteId: testCaseData.testsuiteId,
+            priority: testCaseData.priority,
+            isAutomated: testCaseData.automated,
+          });
+          setChecked(testCaseData.automated);
+          setStepsFields(
+            testCaseData.steps || [{ step: "", expectedResult: "" }]
+          );
+          setSuiteId(testCaseData.testsuiteId);
+
+          const filteredSuites =
+            testsuites && testsuites.length > 0
+              ? testsuites.filter((ts) => ts._id === testCaseData.testsuiteId)
+              : [];
+          if (filteredSuites.length > 0) {
+            setSection(filteredSuites[0].sections);
+          }
+        })
+        .catch((error) => {
+          console.error("Failed to fetch test case data:", error);
+        })
+        .finally(() => {
+          setLoading(false); // Stop loading once data is fetched
+        });
+    }
+  }, [testcaseId]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -68,12 +108,20 @@ function TestCaseForm(props) {
     }
   };
 
-  const reset = (e) => {
+  const handleStepChange = (index, e) => {
     const { name, value } = e.target;
-    setValues({
-      ...initialValues,
-      [name]: value,
-    });
+    const newStepsFields = [...stepsFields];
+    newStepsFields[index][name] = value;
+    setStepsFields(newStepsFields);
+  };
+
+  const addStepField = () => {
+    setStepsFields([...stepsFields, { step: "", expectedResult: "" }]);
+  };
+
+  const reset = () => {
+    setValues(initialValues);
+    setStepsFields([{ step: "", expectedResult: "" }]);
     setChecked(false);
   };
 
@@ -86,8 +134,8 @@ function TestCaseForm(props) {
 
     const testcase = {
       title: values.name,
-      prerequisite: values.prerequisite,
-      steps: [],
+      prerequisite: values.description,
+      steps: stepsFields,
       automated: checked,
       testsuiteId: values.suiteId,
       sectionId: values.sectionId,
@@ -96,10 +144,22 @@ function TestCaseForm(props) {
       priority: values.priority,
     };
 
-    axiosPrivate.post("/testcase", testcase).then((res) => {
-      navigate(`/project/${projectId}/testcases`);
-    });
+    if (testcaseId) {
+      // Update existing test case
+      axiosPrivate.put(`/testcase/${testcaseId}`, testcase).then((res) => {
+        navigate(`/project/${projectId}/testcases`);
+      });
+    } else {
+      // Create new test case
+      axiosPrivate.post("/testcase", testcase).then((res) => {
+        navigate(`/project/${projectId}/testcases`);
+      });
+    }
   };
+
+  if (loading) {
+    return <div>Loading...</div>; // Display loading indicator
+  }
 
   return (
     <>
@@ -134,8 +194,8 @@ function TestCaseForm(props) {
               <TextField
                 variant="outlined"
                 label="Prerequisite"
-                value={values.prerequisite}
-                name="prerequisite"
+                value={values.description}
+                name="description"
                 fullWidth
                 multiline
                 rows={4}
@@ -143,31 +203,42 @@ function TestCaseForm(props) {
                 size="small"
               />
             </Grid>
-            <Grid item xs={6} padding={1}>
-              <TextField
-                name="steps"
-                variant="outlined"
-                label="Steps"
-                value={values.instruction}
-                fullWidth
-                onChange={handleInputChange}
-                multiline
-                rows={4}
-                size="small"
-              />
-            </Grid>
-            <Grid item xs={6} padding={1}>
-              <TextField
-                name="expectedResult"
-                variant="outlined"
-                label="Expected Result"
-                value={values.expectedResult}
-                fullWidth
-                onChange={handleInputChange}
-                multiline
-                rows={4}
-                size="small"
-              />
+
+            {stepsFields.map((stepField, index) => (
+              <React.Fragment key={index}>
+                <Grid item xs={6} padding={1}>
+                  <TextField
+                    name="step"
+                    variant="outlined"
+                    label={`Step ${index + 1}`}
+                    value={stepField.step}
+                    fullWidth
+                    onChange={(e) => handleStepChange(index, e)}
+                    multiline
+                    rows={4}
+                    size="small"
+                  />
+                </Grid>
+                <Grid item xs={6} padding={1}>
+                  <TextField
+                    name="expectedResult"
+                    variant="outlined"
+                    label={`Expected Result ${index + 1}`}
+                    value={stepField.expectedResult}
+                    fullWidth
+                    onChange={(e) => handleStepChange(index, e)}
+                    multiline
+                    rows={4}
+                    size="small"
+                  />
+                </Grid>
+              </React.Fragment>
+            ))}
+
+            <Grid item xs={12} padding={1}>
+              <Button variant="contained" onClick={addStepField}>
+                Add Step
+              </Button>
             </Grid>
             <Grid item xs={6} padding={1}>
               <FormControl
@@ -209,7 +280,6 @@ function TestCaseForm(props) {
                   value={values.sectionId}
                   label="Section"
                   onChange={handleInputChange}
-                  defaultValue=""
                 >
                   <MenuItem value="">
                     <em>-- Select Section --</em>
@@ -236,7 +306,6 @@ function TestCaseForm(props) {
                   value={values.type}
                   label="Type"
                   onChange={handleInputChange}
-                  defaultValue=""
                 >
                   <MenuItem value={"functional"}>Functional</MenuItem>
                   <MenuItem value={"performance"}>Performance</MenuItem>
