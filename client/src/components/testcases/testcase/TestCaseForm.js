@@ -81,7 +81,7 @@ function TestCaseForm(props) {
           setLoading(false); // Stop loading once data is fetched
         });
     }
-  }, [testcaseId]);
+  }, [testcaseId, testsuites]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
