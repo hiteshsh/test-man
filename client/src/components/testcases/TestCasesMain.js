@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import TestCasesHeader from "./TestCasesHeader";
-import TestSuiteList from "../testsuites/TestSuiteList";
+import TestSuiteAndTestCaseContainer from "../testsuites/TestSuiteAndTestCaseContainer";
 import Header from "../Header";
 import SideMenu from "../SideMenu";
 import { useParams } from "react-router-dom";
@@ -17,7 +17,7 @@ const TestCases = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!selectedProject || (projectId !== selectedProject._id)) {
+    if (!selectedProject || projectId !== selectedProject._id) {
       setIsLoading(true);
       GetProjectDetails(projectId)
         .then((project) => {
@@ -30,14 +30,14 @@ const TestCases = () => {
         });
     }
   }, [projectId, selectedProject, selectProject]);
-  
+
   return (
     <>
       <Header />
       <SideMenu />
       <Box sx={{ marginLeft: "250px" }}>
         <TestCasesHeader />
-        <TestSuiteList projectId={projectId} />
+        <TestSuiteAndTestCaseContainer projectId={projectId} />
       </Box>
     </>
   );

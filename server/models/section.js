@@ -10,7 +10,6 @@ const sectionSchema = mongoose.Schema({
   projectId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "project",
-    required: true,
   },
   createdAt: {
     type: Date,

@@ -13,11 +13,10 @@ const mainForm = css`
 
 const initialValues = {
   name: "",
-  description: "",
-  projectId: "",
+  testSuiteId: "",
 };
 
-function TestSuiteForm() {
+function TestSuiteSectionForm({ testSuiteId }) {
   const { selectedProject, selectProject } = useProject();
   const [values, setValues] = useState(initialValues);
 
@@ -38,16 +37,15 @@ function TestSuiteForm() {
     });
   };
 
-  const saveSuite = (e) => {
+  const saveSuiteSection = (e) => {
     e.preventDefault();
 
-    const testSuite = {
-      description: values.description,
+    const testSuiteSection = {
       name: values.name,
-      projectId: selectedProject,
+      testSuiteId: testSuiteId,
     };
 
-    axiosPrivate.post("/testsuite", testSuite).then((res) => {
+    axiosPrivate.post("/section", testSuiteSection).then((res) => {
       window.location = "/project/" + selectedProject._id + "/testcases";
     });
   };
@@ -72,24 +70,12 @@ function TestSuiteForm() {
         size="small"
       />
 
-      <TextField
-        name="description"
-        variant="outlined"
-        label="Description"
-        value={values.description}
-        fullWidth
-        onChange={handleInputChange}
-        multiline
-        rows={4}
-        size="small"
-      />
-
       <div>
         <Stack spacing={2} direction="row" sx={{ float: "right" }}>
           <Button variant="outlined" onClick={reset}>
             Reset
           </Button>
-          <Button variant="contained" type="submit" onClick={saveSuite}>
+          <Button variant="contained" type="submit" onClick={saveSuiteSection}>
             Save
           </Button>
         </Stack>
@@ -98,4 +84,4 @@ function TestSuiteForm() {
   );
 }
 
-export default TestSuiteForm;
+export default TestSuiteSectionForm;

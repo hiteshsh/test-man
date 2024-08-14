@@ -1,60 +1,214 @@
-import { Grid } from "@mui/material";
-import { Box } from "@mui/system";
-import React from "react";
-import TestCaseListData from "../testcases/TestCaseListData";
-import TestSuiteListAPI from "./TestSuiteListAPI";
-import TestSuiteListData from "./TestSuiteListData";
+import React, { useState } from "react";
+import {
+  Edit,
+  FolderOutlined,
+  Group,
+  Delete,
+  ExpandLess,
+  ExpandMore,
+  PostAdd,
+  Close,
+} from "@mui/icons-material";
 
-const TestSuiteList = ({ projectId }) => {
-  console.log("TestSuiteList projectId", projectId);
-  const { testsuites, error, isLoading } = TestSuiteListAPI({ projectId });
-  console.log("testsuites", testsuites);
-  const [selectedIndex, setSelectedIndex] = React.useState("");
-  const [sectionId, setSectionId] = React.useState("");
-  const [testsuiteId, setTestSuiteId] = React.useState("");
-  //const [selected]
+import {
+  Box,
+  Paper,
+  List,
+  Typography,
+  Divider,
+  ListItemButton,
+  ListItemText,
+  ListItemIcon,
+  Collapse,
+  IconButton,
+  Popper,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Button,
+} from "@mui/material";
+import TestSuiteListDataHeader from "./TestSuiteListDataHeader";
+import { useProject } from "../../context/ProjectProvider";
+import { onDeleteSuite } from "./TestSuiteAPI";
+import TestSuiteSectionForm from "./TestSuiteSectionForm";
+import Handlepopup from "../common/Handlepopup";
 
-  const handleClick = (e, index) => {
-    //setOpen(!open);
-    e.preventDefault();
-    if (selectedIndex === index) {
-      setSelectedIndex("");
-    } else {
-      setSelectedIndex(index);
-    }
-    setTestSuiteId(e.currentTarget.id);
-    setSectionId("");
+function TestSuiteListData({
+  testsuites,
+  handleClick,
+  selectedIndex,
+  onSublistClick,
+}) {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [suiteToDelete, setSuiteToDelete] = useState(null);
+  const { selectedProject } = useProject();
+  const { openPopup, handleOpenPopup, handleClosePopup } = Handlepopup();
+
+  const handleMouseEnter = (event, index) => {
+    setAnchorEl(event.currentTarget);
+    setHoveredIndex(index);
   };
 
-  const onSublistClick = (e) => {
-    //setOpen(!open);
-    e.preventDefault();
-    const splitIds = e.currentTarget.id.split("_");
-    setTestSuiteId(splitIds[0]);
-    setSectionId(splitIds[1]);
+  const handleMouseLeave = () => {
+    setAnchorEl(null);
+    setHoveredIndex(null);
+  };
+
+  const open = Boolean(anchorEl);
+
+  const handleDeleteClick = (event, suiteId) => {
+    event.stopPropagation(); // Prevents the ListItemButton click
+    setSuiteToDelete(suiteId);
+    setOpenDialog(true);
+  };
+
+  const handleDialogClose = () => {
+    setOpenDialog(false);
+    setSuiteToDelete(null);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (suiteToDelete) {
+      try {
+        await onDeleteSuite(suiteToDelete); // API call to delete the suite
+
+        window.location = `/project/${selectedProject._id}/testcases`;
+
+        // Close the dialog
+        handleDialogClose();
+      } catch (error) {
+        console.error("Failed to delete test suite or navigate:", error);
+      }
+    }
   };
 
   return (
-    <Box border="0px solid">
-      <Grid container minHeight="315px" padding={2}>
-        <Grid item md={3} padding={2}>
-          <TestSuiteListData
-            testsuites={testsuites}
-            handleClick={handleClick}
-            selectedIndex={selectedIndex}
-            onSublistClick={onSublistClick}
-          />
-        </Grid>
-        <Grid item md={9} padding={2}>
-          <TestCaseListData
-            projectId={projectId}
-            testsuiteId={testsuiteId}
-            sectionId={sectionId}
-          />
-        </Grid>
-      </Grid>
-    </Box>
-  );
-};
+    <Paper elevation={0}>
+      <List
+        sx={{ width: "100%", bgcolor: "background.paper" }}
+        component="nav"
+        aria-labelledby="nested-list-subheader"
+      >
+        <TestSuiteListDataHeader />
+        <Divider />
 
-export default TestSuiteList;
+        {testsuites && testsuites.length > 0 ? (
+          testsuites.map((suite, index) => (
+            <React.Fragment key={suite._id}>
+              <ListItemButton
+                id={suite._id}
+                selected={selectedIndex === index}
+                onClick={(e) => {
+                  handleClick(e, index, suite._id);
+                }}
+                onMouseEnter={(e) => handleMouseEnter(e, index)}
+                onMouseLeave={handleMouseLeave}
+              >
+                <ListItemIcon>
+                  <FolderOutlined />
+                </ListItemIcon>
+                <ListItemText inset primary={suite.name} sx={{ pl: 0 }} />
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  {index === selectedIndex ? <ExpandLess /> : <ExpandMore />}
+                </Box>
+
+                {hoveredIndex === index && (
+                  <Popper
+                    open={open}
+                    anchorEl={anchorEl}
+                    placement="right"
+                    disablePortal
+                  >
+                    <Paper elevation={2} sx={{ display: "flex", padding: 1 }}>
+                      <IconButton
+                        onClick={(event) => event.stopPropagation()}
+                        sx={{ color: "#3b82f6" }}
+                      >
+                        <PostAdd />
+                      </IconButton>
+                      <IconButton
+                        onClick={(event) => event.stopPropagation()}
+                        sx={{ color: "#3b82f6" }}
+                      >
+                        <Edit />
+                      </IconButton>
+                      <IconButton
+                        onClick={(event) => handleDeleteClick(event, suite._id)}
+                        sx={{ color: "#3b82f6" }}
+                      >
+                        <Delete />
+                      </IconButton>
+                    </Paper>
+                  </Popper>
+                )}
+              </ListItemButton>
+
+              {suite.sections && (
+                <Collapse
+                  in={index === selectedIndex}
+                  timeout="auto"
+                  unmountOnExit
+                >
+                  <List component="div" disablePadding>
+                    {suite.sections.map((section) => (
+                      <ListItemButton
+                        key={section._id}
+                        id={suite._id + "_" + section._id}
+                        onClick={(e) => {
+                          onSublistClick(e);
+                        }}
+                      >
+                        <ListItemText primary={section.name} sx={{ pl: 8 }} />
+                      </ListItemButton>
+                    ))}
+                  </List>
+                </Collapse>
+              )}
+            </React.Fragment>
+          ))
+        ) : (
+          <Typography
+            variant="body1"
+            color="rgb(101, 116, 139)"
+            minHeight={"300px"}
+            padding="20px"
+          >
+            There are no Suites
+          </Typography>
+        )}
+      </List>
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog
+        open={openDialog}
+        onClose={handleDialogClose}
+        aria-labelledby="delete-dialog-title"
+        aria-describedby="delete-dialog-description"
+      >
+        <DialogTitle id="delete-dialog-title">Delete Test Suite</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="delete-dialog-description">
+            Are you sure you want to delete this test suite? This action cannot
+            be undone.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleDeleteConfirm} color="error">
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      
+    </Paper>
+  );
+}
+
+export default TestSuiteListData;
