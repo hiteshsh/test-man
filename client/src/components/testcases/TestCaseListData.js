@@ -10,39 +10,6 @@ const linkStyle = {
   color: "inherit",
 };
 
-const testCaseList = [
-  {
-    id: "tc1",
-    key: "TC-1",
-    name: "test case 1",
-    description: "test case 2",
-    steps: [
-      {
-        instructions: "",
-        expectedResult: "",
-      },
-      {
-        instructions: "",
-        expectedResult: "",
-      },
-    ],
-    project: {
-      id: "1234",
-      name: "project1",
-    },
-    testsuite: {
-      _id: "suite1",
-    },
-    section: {
-      id: "sec1",
-      name: "Listing",
-    },
-    type: "functional",
-    createdBy: "",
-    lastModifiedBy: "",
-  },
-];
-
 function TestCaseListData({ projectId, testsuiteId, sectionId }) {
   const { testcases, error, isLoading } = TestCaseListAPI({
     projectId,

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   Edit,
   FolderOutlined,
@@ -49,29 +49,32 @@ function TestSuiteListData({
   const { selectedProject } = useProject();
   const { openPopup, handleOpenPopup, handleClosePopup } = Handlepopup();
 
-  const handleMouseEnter = (event, index) => {
+  const handleMouseEnter = useCallback((event, index) => {
     setAnchorEl(event.currentTarget);
     setHoveredIndex(index);
-  };
+  }, []);
 
-  const handleMouseLeave = () => {
+  const handleMouseLeave = useCallback(() => {
     setAnchorEl(null);
     setHoveredIndex(null);
-  };
+  }, []);
 
-  const openTestSectionForm = (event, suiteId) => {
-    event.stopPropagation();
-    setSuiteToEdit(suiteId); // Store the suite ID
-    handleOpenPopup();
-  };
+  const openTestSectionForm = useCallback(
+    (event, suiteId) => {
+      event.stopPropagation();
+      setSuiteToEdit(suiteId);
+      handleOpenPopup();
+    },
+    [handleOpenPopup]
+  );
 
   const open = Boolean(anchorEl);
 
-  const handleDeleteClick = (event, suiteId) => {
-    event.stopPropagation(); // Prevents the ListItemButton click
+  const handleDeleteClick = useCallback((event, suiteId) => {
+    event.stopPropagation();
     setSuiteToDelete(suiteId);
     setOpenDialog(true);
-  };
+  }, []);
 
   const handleDialogClose = () => {
     setOpenDialog(false);
@@ -161,6 +164,7 @@ function TestSuiteListData({
                   in={index === selectedIndex}
                   timeout="auto"
                   unmountOnExit
+                  key={suite._id}
                 >
                   <List component="div" disablePadding>
                     {suite.sections.map((section) => (
