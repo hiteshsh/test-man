@@ -8,12 +8,12 @@ import {
   Checkbox,
   FormControlLabel,
   IconButton,
+  InputLabel,
+  MenuItem,
+  FormControl,
+  Select,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 import React from "react";
 import { axiosPrivate } from "../../../utils/axios";
 import { useNavigate } from "react-router-dom";
@@ -34,12 +34,13 @@ const label = { inputprops: { "aria-label": "Checkbox" } };
 function TestCaseForm(props) {
   const navigate = useNavigate();
   const { testcaseId, testsuites, projectId } = props; // testcaseId is passed as prop
-  console.log("testsuite", testsuites);
+  //console.log("testsuite", testsuites);
   const [values, setValues] = useState(initialValues);
   const [checked, setChecked] = useState(false);
-  const [stepsFields, setStepsFields] = useState([
-    { step: "", expectedResult: "" },
-  ]);
+  const [stepsFields, setStepsFields] = useState(
+    initialValues.steps || [{ step: "", expectedResult: "" }]
+  );
+
   const [suiteId, setSuiteId] = useState("");
   const [section, setSection] = useState([]);
   const [loading, setLoading] = useState(false); // Add loading state
@@ -88,31 +89,15 @@ function TestCaseForm(props) {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setValues({
-      ...values,
+    setValues((prevValues) => ({
+      ...prevValues,
       [name]: value,
-    });
-  };
+    }));
 
-  const handleDropDownChange = (e) => {
-    const { name, value } = e.target;
-    setValues({
-      ...values,
-      [name]: value,
-    });
-    setSuiteId(value);
-    const filteredSuites =
-      testsuites && testsuites.length > 0
-        ? testsuites.filter((ts) => ts._id === value)
-        : [];
-
-    console.log("filteredSuites", filteredSuites);
-    //console.log("sections", filteredSuites[0].sections);
-
-    if (filteredSuites.length > 0) {
-      setSection(filteredSuites[0].sections);
-    } else {
-      setSection([]); // Clear sections if no suites are found
+    if (name === "suiteId") {
+      setSuiteId(value);
+      const filteredSuites = testsuites.filter((ts) => ts._id === value);
+      setSection(filteredSuites.length > 0 ? filteredSuites[0].sections : []);
     }
   };
 
@@ -284,7 +269,7 @@ function TestCaseForm(props) {
                   variant="outlined"
                   value={values.suiteId}
                   label="Suite"
-                  onChange={handleDropDownChange}
+                  onChange={handleInputChange}
                 >
                   <MenuItem value="">
                     <em>-- Select Suite --</em>
@@ -379,21 +364,24 @@ function TestCaseForm(props) {
                 />
               </FormControl>
             </Grid>
-            <Grid item xs={12} padding={2}>
-              <div style={{ float: "right", margin: "10px" }}>
-                <Stack spacing={2} direction="row">
-                  <Button variant="outlined" onClick={reset}>
-                    Reset
-                  </Button>
+            <Grid
+              item
+              xs={12}
+              padding={2}
+              sx={{ display: "flex", justifyContent: "flex-end" }}
+            >
+              <Stack spacing={2} direction="row">
+                <Button variant="outlined" onClick={reset}>
+                  Reset
+                </Button>
 
-                  <Button variant="outlined" type="submit">
-                    Save & Add more
-                  </Button>
-                  <Button variant="contained" type="submit" onClick={onSubmit}>
-                    Save
-                  </Button>
-                </Stack>
-              </div>
+                <Button variant="outlined" type="submit">
+                  Save & Add more
+                </Button>
+                <Button variant="contained" type="submit" onClick={onSubmit}>
+                  Save
+                </Button>
+              </Stack>
             </Grid>
           </Grid>
         </Paper>
