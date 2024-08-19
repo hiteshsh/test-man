@@ -17,6 +17,7 @@ const initialValues = {
 };
 
 function TestSuiteSectionForm({ testSuiteId }) {
+  console.log("testSuiteId", testSuiteId);
   const { selectedProject, selectProject } = useProject();
   const [values, setValues] = useState(initialValues);
 
@@ -44,6 +45,7 @@ function TestSuiteSectionForm({ testSuiteId }) {
       name: values.name,
       testSuiteId: testSuiteId,
     };
+    console.log("testSuiteSection", testSuiteSection);
 
     axiosPrivate.post("/section", testSuiteSection).then((res) => {
       window.location = "/project/" + selectedProject._id + "/testcases";

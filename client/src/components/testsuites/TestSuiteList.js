@@ -45,6 +45,7 @@ function TestSuiteListData({
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [openDialog, setOpenDialog] = useState(false);
   const [suiteToDelete, setSuiteToDelete] = useState(null);
+  const [suiteToEdit, setSuiteToEdit] = useState(null); // Added state to hold the suite ID for the "Add Section" form
   const { selectedProject } = useProject();
   const { openPopup, handleOpenPopup, handleClosePopup } = Handlepopup();
 
@@ -56,6 +57,12 @@ function TestSuiteListData({
   const handleMouseLeave = () => {
     setAnchorEl(null);
     setHoveredIndex(null);
+  };
+
+  const openTestSectionForm = (event, suiteId) => {
+    event.stopPropagation();
+    setSuiteToEdit(suiteId); // Store the suite ID
+    handleOpenPopup();
   };
 
   const open = Boolean(anchorEl);
@@ -125,7 +132,9 @@ function TestSuiteListData({
                   >
                     <Paper elevation={2} sx={{ display: "flex", padding: 1 }}>
                       <IconButton
-                        onClick={(event) => event.stopPropagation()}
+                        onClick={(event) =>
+                          openTestSectionForm(event, suite._id)
+                        }
                         sx={{ color: "#3b82f6" }}
                       >
                         <PostAdd />
@@ -206,7 +215,26 @@ function TestSuiteListData({
         </DialogActions>
       </Dialog>
 
-      
+      {/* Add Section Dialog */}
+      <Dialog open={openPopup} onClose={handleClosePopup}>
+        <DialogTitle>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <Typography variant="h6">Add Section</Typography>
+            <IconButton onClick={handleClosePopup}>
+              <Close />
+            </IconButton>
+          </div>
+        </DialogTitle>
+        <DialogContent>
+          <TestSuiteSectionForm testSuiteId={suiteToEdit} />
+        </DialogContent>
+      </Dialog>
     </Paper>
   );
 }
