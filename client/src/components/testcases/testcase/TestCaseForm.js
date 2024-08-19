@@ -34,6 +34,7 @@ const label = { inputprops: { "aria-label": "Checkbox" } };
 function TestCaseForm(props) {
   const navigate = useNavigate();
   const { testcaseId, testsuites, projectId } = props; // testcaseId is passed as prop
+  console.log("testsuite", testsuites);
   const [values, setValues] = useState(initialValues);
   const [checked, setChecked] = useState(false);
   const [stepsFields, setStepsFields] = useState([
@@ -102,11 +103,16 @@ function TestCaseForm(props) {
     setSuiteId(value);
     const filteredSuites =
       testsuites && testsuites.length > 0
-        ? testsuites.filter((ts) => ts._id === suiteId)
+        ? testsuites.filter((ts) => ts._id === value)
         : [];
+
+    console.log("filteredSuites", filteredSuites);
+    //console.log("sections", filteredSuites[0].sections);
 
     if (filteredSuites.length > 0) {
       setSection(filteredSuites[0].sections);
+    } else {
+      setSection([]); // Clear sections if no suites are found
     }
   };
 
